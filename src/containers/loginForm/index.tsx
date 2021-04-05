@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { selectUser, setEmail, setPassword, setUUID } from './loginSlice';
-import { useHistory } from "react-router-dom";
 
-
-const LoginForm = () => {
+const LoginForm = (): JSX.Element => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,7 +15,7 @@ const LoginForm = () => {
     dispatch(setEmail(String(userEmail)));
     dispatch(setPassword(String(userPassword)));
     dispatch(setUUID());
-    history.push("/hub");
+    history.push('/hub');
   }
 
   return (
@@ -27,18 +26,22 @@ const LoginForm = () => {
           name="email"
           type="text"
           value={userEmail}
-          placeholder="Email Address" 
-          onChange={event => setUserEmail(event.target.value)}/>
+          placeholder="Email Address"
+          onChange={(event) => setUserEmail(event.target.value)}
+        />
         <input
           name="password"
           type="text"
           value={userPassword}
-          placeholder="Password" 
-          onChange={event => setUserPassword(event.target.value)}/>
-        <button onClick={() => submitUser()}>Submit</button>
+          placeholder="Password"
+          onChange={(event) => setUserPassword(event.target.value)}
+        />
+        <button type="submit" onClick={() => submitUser()}>
+          Submit
+        </button>
       </form>
     </>
   );
-}
+};
 
 export default LoginForm;
