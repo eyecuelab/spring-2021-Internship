@@ -11,13 +11,13 @@
     },
     {
       "name": "Kaila",
-      "email": "replace-me",
-      "url": "replace-me"
+      "email": "kaila.sprague@icloud.com",
+      "url": "https://github.com/kaila-spraguemcrae"
     },
     {
-      "name": "Zahnen",
-      "email": "replace-me",
-      "url": "replace-me"
+      "name": "Zahnen Garner",
+      "email": "hello@zahnen.co",
+      "url": "https://github.com/Zahnen"
     }
   ],
   "version": "0.1.0",
@@ -32,12 +32,15 @@
     "@types/react": "^16.14.5",
     "@types/react-dom": "^16.9.12",
     "@types/react-redux": "^7.1.16",
+    "@types/redux-persist": "^4.3.1",
     "@types/uuid": "^8.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.2.3",
     "typescript": "~3.8.2",
     "uuid": "^8.3.2"
