@@ -3,11 +3,9 @@ import { combineReducers } from 'redux';
 /* eslint-disable import/no-cycle */
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import counterReducer from '../features/counter/counterSlice';
 import userReducer from '../containers/loginForm/loginSlice';
 
 const reducers = combineReducers({
-  counter: counterReducer,
   user: userReducer,
 });
 
