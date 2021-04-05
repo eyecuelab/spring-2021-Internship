@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectUser, setEmail, setPassword, setUUID } from './loginSlice';
+import { setEmail, setPassword, setUUID } from './loginSlice';
 
 const LoginForm = (): JSX.Element => {
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const history = useHistory();
   const [userEmail, setUserEmail] = useState('');
@@ -21,7 +19,7 @@ const LoginForm = (): JSX.Element => {
   return (
     <>
       <p>Sign In:</p>
-      <form>
+      <form id="signInForm">
         <input
           name="email"
           type="text"
@@ -31,7 +29,7 @@ const LoginForm = (): JSX.Element => {
         />
         <input
           name="password"
-          type="text"
+          type="password"
           value={userPassword}
           placeholder="Password"
           onChange={(event) => setUserPassword(event.target.value)}
