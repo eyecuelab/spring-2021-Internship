@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { useSelector } from 'react-redux';
 import LoginForm from './containers/loginForm';
 import UserHub from './containers/userHub';
+import Project from './containers/project';
 import './App.css';
 import { RootState } from './store/store';
 
@@ -12,6 +13,9 @@ function App(): JSX.Element {
   return (
     <Router>
       <Switch>
+        <Route path="/project">
+          <Project />
+        </Route>
         <Route path="/hub">
           <UserHub />
         </Route>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import NewProjectModal from '../../components/newProjectModal';
 import { setProjectName, setId } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showModal, setModalView] = useState(false);
   // const [projectName, setProjectName] = useState('');
@@ -15,6 +17,7 @@ const UserHub = (): JSX.Element => {
   const handleNameUpdate = (name: string) => {
     dispatch(setProjectName(name));
     dispatch(setId());
+    history.push('/project');
   };
 
   return (
