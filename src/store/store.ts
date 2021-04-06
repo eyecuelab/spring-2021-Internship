@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 /* eslint-disable import/no-cycle */
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import userReducer from '../containers/loginForm/loginSlice';
+import userReducer from './slices/loginSlice';
 
 const reducers = combineReducers({
   user: userReducer,

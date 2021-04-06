@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 // eslint-disable-next-line
-import { RootState } from '../../app/store';
+import { RootState } from '../store';
 
 interface LoginState {
   email: string;
