@@ -1,25 +1,32 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 type ModalProps = {
-  nameUpdate: (name: string) => void;
+  nameUpdate: (projectName: string) => void;
+};
+
+type Inputs = {
+  projectName: string;
 };
 
 const NewProjectModal = ({ nameUpdate }: ModalProps): JSX.Element => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit = (data: any) => nameUpdate(data.projectName);
+
   return (
     <>
-      {/* <form> */}
-      <input
-        type="text"
-        name="projectName"
-        placeholder="Project Name"
-        onChange={(e) => nameUpdate(e.target.value)}
-      />
-      <button type="submit">Start</button>
-      {/* </form> */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* eslint-disable react/jsx-props-no-spreading */}
+        <input defaultValue="test" {...register('projectName', { required: true })} />
+        {errors.projectName && <p>This field is required</p>}
+        <input type="submit" />
+      </form>
     </>
   );
 };
-
-NewProjectModal.propTypes = {};
 
 export default NewProjectModal;

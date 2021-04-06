@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LoginForm from './containers/loginForm';
 import UserHub from './containers/userHub';
 import './App.css';
+import { RootState } from './store/store';
 
 function App(): JSX.Element {
-  const store = useStore();
-  const loggedIn = store.getState().user.uuid;
+  const loggedIn = useSelector((state: RootState) => state.user.uuid);
 
   return (
     <Router>

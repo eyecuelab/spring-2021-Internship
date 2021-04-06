@@ -1,47 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { setEmail, setPassword, setUUID } from '../../store/slices/loginSlice';
-import { RootState } from '../../store/store';
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const currentUUID = useSelector((state: RootState) => state.user.uuid);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  function cleanUp() {
-    setUserEmail('');
-    setUserPassword('');
-  }
-  useEffect(() => {
-    return cleanUp();
-  }, [currentUUID]);
-
-  function submitUser() {
-    dispatch(setEmail(String(userEmail)));
-    dispatch(setPassword(String(userPassword)));
+  function submitUser(email: string, password: string) {
+    dispatch(setEmail(email));
+    dispatch(setPassword(password));
     dispatch(setUUID());
   }
+
+  const onSubmit = (data: any) => submitUser(data.email, data.password);
 
   return (
     <>
       <p>Sign In:</p>
-      <form id="signInForm">
-        <input
-          name="email"
-          type="text"
-          placeholder="Email Address"
-          onChange={(event) => setUserEmail(event.target.value)}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={(event) => setUserPassword(event.target.value)}
-        />
-        <button type="submit" onClick={() => submitUser()}>
-          Submit
-        </button>
+      <form id="signInForm" onSubmit={handleSubmit(onSubmit)}>
+        {/* eslint-disable react/jsx-props-no-spreading */}
+        <input placeholder="Email Address" {...register('email', { required: true })} />
+        {errors.email && <p>This field is required</p>}
+        {/* eslint-disable react/jsx-props-no-spreading */}
+        <input placeholder="Password" {...register('password', { required: true })} />
+        {errors.password && <p>This field is required</p>}
+        <input type="submit" />
       </form>
     </>
   );
