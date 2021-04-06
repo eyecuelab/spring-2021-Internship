@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import NewProjectModal from '../../components/newProjectModal';
 
 const UserHub = (): JSX.Element => {

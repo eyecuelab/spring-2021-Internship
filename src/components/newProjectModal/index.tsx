@@ -5,13 +5,6 @@ type ModalProps = {
 };
 
 const NewProjectModal = ({ nameUpdate }: ModalProps): JSX.Element => {
-  function handleNewProjSubmission(e: SyntheticEvent) {
-    e.preventDefault();
-    // props. ({
-    //   projectName: e.target.projectName.value;
-    // })
-  }
-
   return (
     <>
       {/* <form> */}

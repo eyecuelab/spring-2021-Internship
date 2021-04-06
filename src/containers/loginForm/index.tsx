@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail, setPassword, setUUID } from './loginSlice';
-import { RootState } from '../../app/store';
+import { setEmail, setPassword, setUUID } from '../../store/slices/loginSlice';
+import { RootState } from '../../store/store';
 
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
