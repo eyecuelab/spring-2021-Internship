@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import NewProjectModal from '../../components/newProjectModal';
+import { setProjectName, setId } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
+  const dispatch = useDispatch();
   const [showModal, setModalView] = useState(false);
-  const [projectName, setProjectName] = useState('');
+  // const [projectName, setProjectName] = useState('');
 
   const handleToggle = () => {
     setModalView(!showModal);
   };
 
   const handleNameUpdate = (name: string) => {
-    setProjectName(name);
+    dispatch(setProjectName(name));
+    dispatch(setId());
   };
 
   return (
@@ -20,7 +24,6 @@ const UserHub = (): JSX.Element => {
         Add New Project
       </button>
       {showModal && <NewProjectModal nameUpdate={handleNameUpdate} />}
-      {projectName !== '' ? <p>{projectName}</p> : null}
     </>
   );
 };

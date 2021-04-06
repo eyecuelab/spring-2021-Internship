@@ -33,6 +33,6 @@ export const loginSlice = createSlice({
 
 export const { setEmail, setPassword, setUUID } = loginSlice.actions;
 
-export const selectUser = (state: RootState): LoginState => state.user;
+// export const selectUser = (state: RootState): LoginState => state.user;
 
 export default loginSlice.reducer;
