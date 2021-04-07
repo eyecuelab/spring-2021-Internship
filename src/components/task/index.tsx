@@ -7,7 +7,7 @@ type TaskProps = {
 const Task = ({ taskName }: TaskProps): JSX.Element => {
   return (
     <>
-      <h1>{taskName}</h1>
+      <h2>{taskName}</h2>
     </>
   );
 };
