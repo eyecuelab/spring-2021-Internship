@@ -9,6 +9,7 @@ import Task from '../../components/task';
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const projectName = useSelector((state: RootState) => state.project.projectName);
+  const taskList = useSelector((state: RootState) => state.project.tasks);
   const [showModal, setModalView] = useState(false);
 
   const handleToggle = () => {
@@ -24,22 +25,35 @@ const Project = (): JSX.Element => {
     setModalView(!showModal);
   };
 
-  // const array
-  // const todoItems = array.map() =>
-  // <li>{task}</li>
+  const toDoArray = taskList.filter((e) => e.taskStatus === 'To Do');
+  const doingArray = taskList.filter((e) => e.taskStatus === 'Doing');
+  const doneArray = taskList.filter((e) => e.taskStatus === 'Done');
 
-  // forEach task where task status are =
-  // create an array of these Tasks
+  const toDoItems = toDoArray.map((e) => {
+    return <Task taskName={e.taskName} />;
+  });
+
+  const doingItems = doingArray.map((e) => {
+    return <Task taskName={e.taskName} />;
+  });
+
+  const doneItems = doneArray.map((e) => {
+    return <Task taskName={e.taskName} />;
+  });
 
   return (
     <>
       <h1>{projectName}</h1>
       {showModal && <NewTaskModal addNewTask={handleAddingTask} />}
       <List title="To Do" toggleModal={handleToggle}>
-        <Task />
+        {toDoItems}
       </List>
-      <List title="Doing" toggleModal={handleToggle} />
-      <List title="Done" toggleModal={handleToggle} />
+      <List title="Doing" toggleModal={handleToggle}>
+        {doingItems}
+      </List>
+      <List title="Done" toggleModal={handleToggle}>
+        {doneItems}
+      </List>
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
       </button>
