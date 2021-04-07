@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type ListProps = {
   title: string;
   toggleModal: () => void;
-  children?: JSX.Element;
+  children?: JSX.Element[];
 };
 
 const Box = styled.div`
@@ -25,7 +25,7 @@ const List = ({ title, toggleModal, children }: ListProps): JSX.Element => {
     <>
       <Box>
         <h1>{title}</h1>
-        <p>{children}</p>
+        {children}
         <button type="button" onClick={toggleModal}>
           add new task
         </button>
