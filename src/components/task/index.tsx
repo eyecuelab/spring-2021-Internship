@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Task = (): JSX.Element => {
+type TaskProps = {
+  taskName: string;
+};
+
+const Task = ({ taskName }: TaskProps): JSX.Element => {
   return (
     <>
-      <h1>This is a task.</h1>
+      <h1>{taskName}</h1>
     </>
   );
 };
