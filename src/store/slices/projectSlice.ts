@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface TaskItem {
   taskName: string;
   taskStatus: string;
+  id: string;
 }
 
 interface ProjectState {
@@ -36,7 +37,11 @@ export const projectSlice = createSlice({
     addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
       state.tasks = [
         ...state.tasks,
-        { taskName: action.payload.taskName, taskStatus: action.payload.taskStatus },
+        {
+          taskName: action.payload.taskName,
+          taskStatus: action.payload.taskStatus,
+          id: idMaker(action.payload.taskName),
+        },
       ];
     },
     clearTasks: (state) => {
