@@ -28,10 +28,9 @@ const LoginForm = (): JSX.Element => {
     <>
       <p>Sign In:</p>
       <form id="signInForm" onSubmit={handleSubmit(onSubmit)}>
-        {/* eslint-disable react/jsx-props-no-spreading */}
         <input placeholder="Email Address" {...register('email', { required: true })} />
         {errors.email && <p>This field is required</p>}
-        {/* eslint-disable react/jsx-props-no-spreading */}
+
         <input placeholder="Password" {...register('password', { required: true })} />
         {errors.password && <p>This field is required</p>}
         <input type="submit" />

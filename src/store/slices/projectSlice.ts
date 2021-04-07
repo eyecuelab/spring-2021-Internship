@@ -3,11 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ProjectState {
   projectName: string;
   id: string;
+  tasks: Array<string>;
 }
+
+// { taskName: string; taskStatus: string }
 
 const initialState: ProjectState = {
   projectName: '',
   id: '',
+  tasks: [],
 };
 
 function idMaker(projectName: string) {
@@ -25,6 +29,9 @@ export const projectSlice = createSlice({
     },
     setId: (state) => {
       state.id = idMaker(state.projectName);
+    },
+    addTask: (state, action: PayloadAction<string>) => {
+      state.tasks = [...state.tasks, action.payload];
     },
   },
 });

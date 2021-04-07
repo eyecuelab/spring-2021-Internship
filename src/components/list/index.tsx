@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 type ListProps = {
   title: string;
+  toggleModal: () => void;
 };
 
 const Box = styled.div`
@@ -18,11 +19,14 @@ const Box = styled.div`
   }
 `;
 
-const List = ({ title }: ListProps) => {
+const List = ({ title, toggleModal }: ListProps) => {
   return (
     <>
       <Box>
         <h1>{title}</h1>
+        <button type="button" onClick={toggleModal}>
+          add new task
+        </button>
       </Box>
     </>
   );
