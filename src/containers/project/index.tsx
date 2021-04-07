@@ -29,16 +29,28 @@ const Project = (): JSX.Element => {
   const doingArray = taskList.filter((e) => e.taskStatus === 'Doing');
   const doneArray = taskList.filter((e) => e.taskStatus === 'Done');
 
-  const toDoItems = toDoArray.map((e) => {
-    return <Task taskName={e.taskName} />;
+  const toDoItems: JSX.Element[] = toDoArray.map((e) => {
+    return (
+      <div key={e.id}>
+        <Task taskName={e.taskName} />
+      </div>
+    );
   });
 
-  const doingItems = doingArray.map((e) => {
-    return <Task taskName={e.taskName} />;
+  const doingItems: JSX.Element[] = doingArray.map((e) => {
+    return (
+      <div key={e.id}>
+        <Task taskName={e.taskName} />
+      </div>
+    );
   });
 
-  const doneItems = doneArray.map((e) => {
-    return <Task taskName={e.taskName} />;
+  const doneItems: JSX.Element[] = doneArray.map((e) => {
+    return (
+      <div key={e.id}>
+        <Task taskName={e.taskName} />
+      </div>
+    );
   });
 
   return (
