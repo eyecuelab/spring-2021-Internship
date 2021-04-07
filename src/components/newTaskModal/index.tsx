@@ -39,8 +39,8 @@ const NewTaskModal = ({ addNewTask }: ModalProps): JSX.Element => {
 
           <select {...register('taskStatus', { required: true })}>
             <option value="To Do">To Do</option>
-            <option value=" Doing"> Doing</option>
-            <option value=" Done"> Done</option>
+            <option value="Doing"> Doing</option>
+            <option value="Done"> Done</option>
           </select>
 
           <input type="submit" />
