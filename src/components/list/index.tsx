@@ -4,6 +4,7 @@ import styled from 'styled-components';
 type ListProps = {
   title: string;
   toggleModal: () => void;
+  children?: JSX.Element;
 };
 
 const Box = styled.div`
@@ -19,11 +20,12 @@ const Box = styled.div`
   }
 `;
 
-const List = ({ title, toggleModal }: ListProps) => {
+const List = ({ title, toggleModal, children }: ListProps): JSX.Element => {
   return (
     <>
       <Box>
         <h1>{title}</h1>
+        <p>{children}</p>
         <button type="button" onClick={toggleModal}>
           add new task
         </button>
@@ -33,3 +35,7 @@ const List = ({ title, toggleModal }: ListProps) => {
 };
 
 export default List;
+
+List.defaultProps = {
+  children: null,
+};
