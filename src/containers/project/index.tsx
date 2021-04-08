@@ -56,7 +56,7 @@ const Project = (): JSX.Element => {
   return (
     <>
       <h1>{projectName}</h1>
-      {showModal && <NewTaskModal addNewTask={handleAddingTask} />}
+      {showModal && <NewTaskModal toggleModal={handleToggle} addNewTask={handleAddingTask} />}
       <List title="To Do" toggleModal={handleToggle}>
         {toDoItems}
       </List>

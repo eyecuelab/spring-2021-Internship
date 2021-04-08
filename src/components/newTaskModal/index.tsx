@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { Modal } from '../modal';
 
 type ModalProps = {
   addNewTask: (taskName: string, taskStatus: string) => void;
+  toggleModal: () => void;
 };
 
 type Inputs = {
@@ -11,18 +12,7 @@ type Inputs = {
   taskStatus: string;
 };
 
-const Wrapper = styled.div`
-  position: fixed;
-  justify-content: center;
-  z-index: 9;
-  background: white;
-  display: block;
-  margin-left: 30vw;
-  margin-right: 30vw;
-  width: 40vw;
-`;
-
-const NewTaskModal = ({ addNewTask }: ModalProps): JSX.Element => {
+const NewTaskModal = ({ addNewTask, toggleModal }: ModalProps): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -33,7 +23,7 @@ const NewTaskModal = ({ addNewTask }: ModalProps): JSX.Element => {
 
   return (
     <>
-      <Wrapper>
+      <Modal toggleModal={toggleModal} width="350px">
         <form onSubmit={handleSubmit(onSubmit)}>
           <input defaultValue="test" {...register('taskName', { required: true })} />
           {errors.taskName && <p>This field is required</p>}
@@ -43,10 +33,9 @@ const NewTaskModal = ({ addNewTask }: ModalProps): JSX.Element => {
             <option value="Doing"> Doing</option>
             <option value="Done"> Done</option>
           </select>
-
           <input type="submit" />
         </form>
-      </Wrapper>
+      </Modal>
     </>
   );
 };

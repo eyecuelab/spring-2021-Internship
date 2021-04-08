@@ -26,7 +26,7 @@ const UserHub = (): JSX.Element => {
       <button type="button" onClick={handleToggle}>
         Add New Project
       </button>
-      {showModal && <NewProjectModal nameUpdate={handleNameUpdate} />}
+      {showModal && <NewProjectModal toggleModal={handleToggle} nameUpdate={handleNameUpdate} />}
     </>
   );
 };
