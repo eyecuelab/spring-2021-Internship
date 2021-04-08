@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+// eslint-disable-next-line
+import { RootState } from '../store';
 
 interface TaskItem {
   taskName: string;
@@ -6,7 +8,7 @@ interface TaskItem {
   id: string;
 }
 
-interface ProjectState {
+export interface ProjectState {
   projectName: string;
   id: string;
   tasks: Array<TaskItem>;
@@ -51,5 +53,7 @@ export const projectSlice = createSlice({
 });
 
 export const { setProjectName, setId, addTask, clearTasks } = projectSlice.actions;
+
+export const selectProject = (state: RootState): ProjectState => state.project;
 
 export default projectSlice.reducer;

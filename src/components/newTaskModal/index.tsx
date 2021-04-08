@@ -28,6 +28,7 @@ const NewTaskModal = ({ addNewTask }: ModalProps): JSX.Element => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  // eslint-disable-next-line
   const onSubmit = (data: any) => addNewTask(data.taskName, data.taskStatus);
 
   return (

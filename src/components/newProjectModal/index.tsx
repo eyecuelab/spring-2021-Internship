@@ -15,6 +15,7 @@ const NewProjectModal = ({ nameUpdate }: ModalProps): JSX.Element => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  // eslint-disable-next-line
   const onSubmit = (data: any) => nameUpdate(data.projectName);
 
   return (
