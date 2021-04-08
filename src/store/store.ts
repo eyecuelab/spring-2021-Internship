@@ -1,22 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
 /* eslint-disable import/no-cycle */
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import userReducer from './slices/loginSlice';
-import projectReducer from './slices/projectSlice';
+import createRootReducer from './slices/rootReducer';
 
-const reducers = combineReducers({
-  user: userReducer,
-  project: projectReducer,
-});
-
+const rootReducer = createRootReducer();
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
