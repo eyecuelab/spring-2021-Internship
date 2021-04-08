@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { setEmail, setPassword, setUUID } from '../../store/slices/loginSlice';
+import { setEmail, setPassword, setUUID } from '../../store/slices/authSlice';
 
 type Inputs = {
   email: string;
@@ -21,7 +21,7 @@ const LoginForm = (): JSX.Element => {
     dispatch(setPassword(password));
     dispatch(setUUID());
   }
-
+  // eslint-disable-next-line
   const onSubmit = (data: any) => submitUser(data.email, data.password);
 
   return (

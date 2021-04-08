@@ -3,19 +3,19 @@ import { v4 } from 'uuid';
 // eslint-disable-next-line
 import { RootState } from '../store';
 
-interface LoginState {
+interface AuthState {
   email: string;
   password: string;
   uuid: string;
 }
 
-const initialState: LoginState = {
+const initialState: AuthState = {
   email: '',
   password: '',
   uuid: '',
 };
 
-export const loginSlice = createSlice({
+export const authSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -31,8 +31,8 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { setEmail, setPassword, setUUID } = loginSlice.actions;
+export const { setEmail, setPassword, setUUID } = authSlice.actions;
 
-// export const selectUser = (state: RootState): LoginState => state.user;
+export const selectAuth = (state: RootState): AuthState => state.user;
 
-export default loginSlice.reducer;
+export default authSlice.reducer;
