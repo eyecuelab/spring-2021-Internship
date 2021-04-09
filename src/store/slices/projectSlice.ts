@@ -8,16 +8,22 @@ interface TaskItem {
   id: string;
 }
 
+interface FinanceItem {
+  itemName: string;
+}
+
 export interface ProjectState {
   projectName: string;
   id: string;
   tasks: Array<TaskItem>;
+  items: Array<FinanceItem>;
 }
 
 const initialState: ProjectState = {
   projectName: '',
   id: '',
   tasks: [],
+  items: [],
 };
 
 function idMaker(projectName: string) {
@@ -38,7 +44,7 @@ export const projectSlice = createSlice({
     },
     addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
       state.tasks = [
-        ...state.tasks,
+        ...(state.tasks || []),
         {
           taskName: action.payload.taskName,
           taskStatus: action.payload.taskStatus,
@@ -49,10 +55,18 @@ export const projectSlice = createSlice({
     clearTasks: (state) => {
       state.tasks = [];
     },
+    addLineItem: (state, action: PayloadAction<{ itemName: string }>) => {
+      state.items = [
+        ...(state.items || []),
+        {
+          itemName: action.payload.itemName,
+        },
+      ];
+    },
   },
 });
 
-export const { setProjectName, setId, addTask, clearTasks } = projectSlice.actions;
+export const { setProjectName, setId, addTask, clearTasks, addLineItem } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
 

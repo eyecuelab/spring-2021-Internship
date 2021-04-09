@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { addTask, clearTasks } from '../../store/slices/projectSlice';
+import { addTask, clearTasks, addLineItem } from '../../store/slices/projectSlice';
 import NewTaskModal from '../../components/newTaskModal';
+import NewFinance from '../../components/newFinance';
 import List from '../../components/list';
 import Task from '../../components/task';
 
@@ -10,10 +11,15 @@ const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const projectName = useSelector((state: RootState) => state.project.projectName);
   const taskList = useSelector((state: RootState) => state.project.tasks);
-  const [showModal, setModalView] = useState(false);
+  const [showTaskModal, setTaskModalView] = useState(false);
+  const [showFinanceModal, setFinanceModalView] = useState(false);
 
-  const handleToggle = () => {
-    setModalView(!showModal);
+  const handleToggleNewTask = () => {
+    setTaskModalView(!showTaskModal);
+  };
+
+  const handleToggleFinance = () => {
+    setFinanceModalView(!showFinanceModal);
   };
 
   const handleClearingTasks = () => {
@@ -22,7 +28,12 @@ const Project = (): JSX.Element => {
 
   const handleAddingTask = (taskName: string, taskStatus: string) => {
     dispatch(addTask({ taskName, taskStatus }));
-    setModalView(!showModal);
+    setTaskModalView(!showTaskModal);
+  };
+
+  const handleAddingFinance = (itemName: string) => {
+    dispatch(addLineItem({ itemName }));
+    setFinanceModalView(!showFinanceModal);
   };
 
   const toDoArray = taskList.filter((e) => e.taskStatus === 'To Do');
@@ -56,18 +67,26 @@ const Project = (): JSX.Element => {
   return (
     <>
       <h1>{projectName}</h1>
-      {showModal && <NewTaskModal toggleModal={handleToggle} addNewTask={handleAddingTask} />}
-      <List title="To Do" toggleModal={handleToggle}>
+      {showTaskModal && (
+        <NewTaskModal toggleModal={handleToggleNewTask} addNewTask={handleAddingTask} />
+      )}
+      {showFinanceModal && (
+        <NewFinance toggleModal={handleToggleFinance} addNewFinance={handleAddingFinance} />
+      )}
+      <List title="To Do" toggleModal={handleToggleNewTask}>
         {toDoItems}
       </List>
-      <List title="Doing" toggleModal={handleToggle}>
+      <List title="Doing" toggleModal={handleToggleNewTask}>
         {doingItems}
       </List>
-      <List title="Done" toggleModal={handleToggle}>
+      <List title="Done" toggleModal={handleToggleNewTask}>
         {doneItems}
       </List>
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
+      </button>
+      <button type="button" onClick={handleToggleFinance}>
+        Add Line Item
       </button>
     </>
   );
