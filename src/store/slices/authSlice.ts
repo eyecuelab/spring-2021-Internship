@@ -28,10 +28,15 @@ export const authSlice = createSlice({
     setUUID: (state) => {
       state.uuid = v4();
     },
+    signout: (state) => {
+      state.email = '';
+      state.password = '';
+      state.uuid = '';
+    },
   },
 });
 
-export const { setEmail, setPassword, setUUID } = authSlice.actions;
+export const { setEmail, setPassword, setUUID, signout } = authSlice.actions;
 
 export const selectAuth = (state: RootState): AuthState => state.user;
 
