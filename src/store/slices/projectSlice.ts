@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line
 import { RootState } from '../store';
 
-interface TaskItem {
+export interface TaskItem {
   taskName: string;
   taskStatus: string;
   id: string;
 }
 
-interface FinanceItem {
+export interface FinanceItem {
   itemName: string;
   itemPrice: string;
   quantity: number;
