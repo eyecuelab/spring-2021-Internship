@@ -32,7 +32,7 @@ type ModalProps = {
   toggleModal: () => void;
 };
 
-export const Modal = ({ width, children, toggleModal }: ModalProps) => {
+export const Modal = ({ width, children, toggleModal }: ModalProps): JSX.Element => {
   return ReactDOM.createPortal(
     <Flex onClick={toggleModal}>
       <Card onClick={(e) => e.stopPropagation()} style={{ width: `${width}` }}>
