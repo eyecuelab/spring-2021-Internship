@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
 import { addTask, clearTasks, addLineItem } from '../../store/slices/projectSlice';
+import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
 import NewFinance from '../../components/newFinance';
 import List from '../../components/list';
@@ -9,8 +9,8 @@ import Task from '../../components/task';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
-  const projectName = useSelector((state: RootState) => state.project.projectName);
-  const taskList = useSelector((state: RootState) => state.project.tasks);
+  const projectName = useSelector(selectors.selectProjectName);
+  const taskList = useSelector(selectors.selectProjectTasks);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
 
