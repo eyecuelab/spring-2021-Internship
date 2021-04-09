@@ -11,6 +11,10 @@ export const selectProjectName = createSelector(
 
 export const selectProjectTasks = createSelector([projectSelector], (project) => project.tasks);
 
+export const selectProjectItems = createSelector([projectSelector], (project) => project.items);
+
+export const selectProjectTotals = createSelector([projectSelector], (project) => project.totals);
+
 export const authSelector = createSelector(selectAuth, (user) => user);
 
 export const selectUUID = createSelector([authSelector], (user) => user.uuid);
