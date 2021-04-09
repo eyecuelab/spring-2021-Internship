@@ -3,13 +3,13 @@ import { useForm } from 'react-hook-form';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  addNewFinance: (itemName: string, itemPrice: number, quantity: number) => void;
+  addNewFinance: (itemName: string, itemPrice: string, quantity: number) => void;
   toggleModal: () => void;
 };
 
 type Inputs = {
   itemName: string;
-  itemPrice: number;
+  itemPrice: string;
   quantity: number;
 };
 
