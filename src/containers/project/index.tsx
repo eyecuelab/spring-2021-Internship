@@ -12,11 +12,15 @@ import NewTaskModal from '../../components/newTaskModal';
 import NewFinance from '../../components/newFinance';
 import List from '../../components/list';
 import Task from '../../components/task';
+import Finance from '../../components/finance';
+import Item from '../../components/item';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const projectName = useSelector(selectors.selectProjectName);
   const taskList = useSelector(selectors.selectProjectTasks);
+  const itemList = useSelector(selectors.selectProjectItems);
+  const projectTotals = useSelector(selectors.selectProjectTotals);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
 
@@ -41,7 +45,7 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
-  const handleAddingFinance = (itemName: string, itemPrice: number, quantity: number) => {
+  const handleAddingFinance = (itemName: string, itemPrice: string, quantity: number) => {
     dispatch(addLineItem({ itemName, itemPrice, quantity }));
     dispatch(calculateTotals());
     setFinanceModalView(!showFinanceModal);
@@ -75,6 +79,13 @@ const Project = (): JSX.Element => {
     );
   });
 
+  const lineItems: JSX.Element[] = itemList.map((e) => {
+    return (
+      <div>
+        <Item itemName={e.itemName} itemPrice={e.itemPrice} quantity={e.quantity} />
+      </div>
+    );
+  });
   return (
     <>
       <h1>{projectName}</h1>
@@ -96,6 +107,7 @@ const Project = (): JSX.Element => {
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
       </button>
+      <Finance totals={projectTotals}>{lineItems}</Finance>
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item
       </button>
