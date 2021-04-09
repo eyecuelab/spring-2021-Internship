@@ -1,4 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Grid, Cell } from 'styled-css-grid';
+
+const LineItem = styled.h2`
+  margin: 0 10px 0 10px;
+`;
 
 type ItemProps = {
   itemName: string;
@@ -9,9 +15,17 @@ type ItemProps = {
 const Item = ({ itemName, itemPrice, quantity }: ItemProps): JSX.Element => {
   return (
     <>
-      <h2>{itemName}</h2>
-      <h2>{itemPrice}</h2>
-      <h2>{quantity}</h2>
+      <Grid columns={3}>
+        <Cell>
+          <LineItem>{itemName}</LineItem>
+        </Cell>
+        <Cell>
+          <LineItem>{quantity}</LineItem>
+        </Cell>
+        <Cell>
+          <LineItem>{itemPrice}</LineItem>
+        </Cell>
+      </Grid>
     </>
   );
 };

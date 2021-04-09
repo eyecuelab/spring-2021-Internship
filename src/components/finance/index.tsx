@@ -1,4 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Grid, Cell } from 'styled-css-grid';
+
+const Wrapper = styled.div`
+  margin: 10px;
+`;
+
+const Name = styled.h2`
+  margin: 0 10px 0 10px;
+`;
 
 type FinanceProps = {
   totals: number;
@@ -7,11 +17,26 @@ type FinanceProps = {
 
 const Finance = ({ children, totals }: FinanceProps): JSX.Element => {
   return (
-    <div>
+    <Wrapper>
       <h1>This is a finance componennt</h1>
+      <Grid columns={3}>
+        <Cell>
+          <Name>Item Name</Name>
+        </Cell>
+        <Cell>
+          <Name>Item Quantity</Name>
+        </Cell>
+        <Cell>
+          <Name>Item Price</Name>
+        </Cell>
+      </Grid>
       {children}
-      <h2>Total: {totals}</h2>
-    </div>
+      <Grid columns={3}>
+        <Cell left={3}>
+          <h2>Total: {totals}</h2>
+        </Cell>
+      </Grid>
+    </Wrapper>
   );
 };
 
