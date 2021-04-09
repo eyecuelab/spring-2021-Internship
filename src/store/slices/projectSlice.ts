@@ -10,6 +10,8 @@ interface TaskItem {
 
 interface FinanceItem {
   itemName: string;
+  itemPrice: string;
+  quantity: number;
 }
 
 export interface ProjectState {
@@ -17,6 +19,7 @@ export interface ProjectState {
   id: string;
   tasks: Array<TaskItem>;
   items: Array<FinanceItem>;
+  totals: number;
 }
 
 const initialState: ProjectState = {
@@ -24,12 +27,21 @@ const initialState: ProjectState = {
   id: '',
   tasks: [],
   items: [],
+  totals: 0,
 };
 
 function idMaker(projectName: string) {
   const a = Math.floor(Math.random() * 100);
   const b = projectName[0];
   return b + a;
+}
+
+function calculateTotal(items: FinanceItem[]): number {
+  let total = 0;
+  items.forEach((e) => {
+    total += parseInt(e.itemPrice, 10);
+  });
+  return total;
 }
 
 export const projectSlice = createSlice({
@@ -55,18 +67,42 @@ export const projectSlice = createSlice({
     clearTasks: (state) => {
       state.tasks = [];
     },
-    addLineItem: (state, action: PayloadAction<{ itemName: string }>) => {
+    addLineItem: (
+      state,
+      action: PayloadAction<{
+        itemName: string;
+        itemPrice: string;
+        quantity: number;
+      }>
+    ) => {
       state.items = [
         ...(state.items || []),
         {
           itemName: action.payload.itemName,
+          itemPrice: action.payload.itemPrice,
+          quantity: action.payload.quantity,
         },
       ];
+    },
+    clearItems: (state) => {
+      state.items = [];
+      state.totals = 0;
+    },
+    calculateTotals: (state) => {
+      state.totals = calculateTotal(state.items);
     },
   },
 });
 
-export const { setProjectName, setId, addTask, clearTasks, addLineItem } = projectSlice.actions;
+export const {
+  setProjectName,
+  setId,
+  addTask,
+  clearTasks,
+  addLineItem,
+  clearItems,
+  calculateTotals,
+} = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
 

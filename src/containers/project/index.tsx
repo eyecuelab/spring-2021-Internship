@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTask, clearTasks, addLineItem } from '../../store/slices/projectSlice';
+import {
+  addTask,
+  clearTasks,
+  addLineItem,
+  clearItems,
+  calculateTotals,
+} from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
 import NewFinance from '../../components/newFinance';
@@ -26,13 +32,18 @@ const Project = (): JSX.Element => {
     dispatch(clearTasks());
   };
 
+  const handleClearingItems = () => {
+    dispatch(clearItems());
+  };
+
   const handleAddingTask = (taskName: string, taskStatus: string) => {
     dispatch(addTask({ taskName, taskStatus }));
     setTaskModalView(!showTaskModal);
   };
 
-  const handleAddingFinance = (itemName: string) => {
-    dispatch(addLineItem({ itemName }));
+  const handleAddingFinance = (itemName: string, itemPrice: number, quantity: number) => {
+    dispatch(addLineItem({ itemName, itemPrice, quantity }));
+    dispatch(calculateTotals());
     setFinanceModalView(!showFinanceModal);
   };
 
@@ -87,6 +98,9 @@ const Project = (): JSX.Element => {
       </button>
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item
+      </button>
+      <button type="submit" onClick={handleClearingItems}>
+        Clear Items
       </button>
     </>
   );
