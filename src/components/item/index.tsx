@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid, Cell } from 'styled-css-grid';
 
-const LineItem = styled.h2`
+const LineItem = styled.h3`
   margin: 0 10px 0 10px;
 `;
 
 type ItemProps = {
   itemName: string;
-  itemPrice: string;
+  itemPrice?: string;
   quantity?: number;
-  minutes?: number;
+  minutes?: any;
   category?: string;
   date?: Date;
 };
@@ -23,6 +23,10 @@ const Item = ({
   category,
   date,
 }: ItemProps): JSX.Element => {
+  const laborDate = date ? new Date(date) : null;
+  const stringDate = laborDate ? laborDate.toDateString() : null;
+
+  const laborTime = parseFloat(minutes || 0 / 60).toFixed(2);
   return (
     <>
       <Grid columns={3}>
@@ -30,10 +34,10 @@ const Item = ({
           <LineItem>{itemName}</LineItem>
         </Cell>
         <Cell>
-          <LineItem>{quantity}</LineItem>
+          <LineItem>{category === 'labor' ? laborTime : quantity}</LineItem>
         </Cell>
         <Cell>
-          <LineItem>{itemPrice}</LineItem>
+          <LineItem>{category === 'labor' ? stringDate : `$${itemPrice}.00`}</LineItem>
         </Cell>
       </Grid>
     </>
@@ -43,8 +47,9 @@ const Item = ({
 export default Item;
 
 Item.defaultProps = {
+  itemPrice: null,
   quantity: null,
   minutes: null,
-  date: null,
+  date: Date.now,
   category: null,
 };
