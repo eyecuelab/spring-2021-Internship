@@ -45,8 +45,13 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
-  const handleAddingFinance = (itemName: string, itemPrice: string, quantity: number) => {
-    dispatch(addLineItem({ itemName, itemPrice, quantity }));
+  const handleAddingFinance = (
+    itemName: string,
+    itemPrice: string,
+    quantity: number,
+    category: string
+  ) => {
+    dispatch(addLineItem({ itemName, itemPrice, quantity, category }));
     dispatch(calculateTotals());
     setFinanceModalView(!showFinanceModal);
   };

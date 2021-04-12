@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  addNewFinance: (itemName: string, itemPrice: string, quantity: number) => void;
+  addNewFinance: (itemName: string, itemPrice: string, quantity: number, category: string) => void;
   toggleModal: () => void;
 };
 
@@ -23,8 +23,9 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
     formState: { errors },
   } = useForm<Inputs>();
   // eslint-disable-next-line
-  const onSubmit = (data: any) => addNewFinance(data.itemName, data.itemPrice, data.quantity);
   const [formType, setFormType] = useState('material');
+  const onSubmit = (data: any) =>
+    addNewFinance(data.itemName, data.itemPrice, data.quantity, formType);
 
   const handleChange = (event: any) => {
     setFormType(event.target.value);
@@ -72,7 +73,6 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
             <option value="labor">Labor</option>
             <option value="other">Other</option>
           </select>
-
           {formType === 'material' && <MaterialForm />}
           {formType === 'labor' && <LaborForm />}
           {formType === 'other' && <OtherForm />}
