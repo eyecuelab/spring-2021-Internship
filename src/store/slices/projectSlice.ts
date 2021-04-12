@@ -17,6 +17,7 @@ export interface FinanceItem {
 
 export interface ProjectState {
   projectName: string;
+  dueDate: Date;
   id: string;
   tasks: Array<TaskItem>;
   items: Array<FinanceItem>;
@@ -25,6 +26,7 @@ export interface ProjectState {
 
 const initialState: ProjectState = {
   projectName: '',
+  dueDate: new Date('01/01/2021'),
   id: '',
   tasks: [],
   items: [],
@@ -51,6 +53,9 @@ export const projectSlice = createSlice({
   reducers: {
     setProjectName: (state, action: PayloadAction<string>) => {
       state.projectName = action.payload;
+    },
+    setProjectDueDate: (state, action: PayloadAction<Date>) => {
+      state.dueDate = action.payload;
     },
     setId: (state) => {
       state.id = idMaker(state.projectName);
@@ -105,6 +110,7 @@ export const {
   addLineItem,
   clearItems,
   calculateTotals,
+  setProjectDueDate,
 } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;

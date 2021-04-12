@@ -21,6 +21,7 @@ const Project = (): JSX.Element => {
   const taskList = useSelector(selectors.selectProjectTasks);
   const itemList = useSelector(selectors.selectProjectItems);
   const projectTotals = useSelector(selectors.selectProjectTotals);
+  const dueDate = useSelector(selectors.selectProjectDueDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
 
@@ -91,9 +92,14 @@ const Project = (): JSX.Element => {
       </div>
     );
   });
+
+  const currentDate = new Date(dueDate);
+  const stringDate = currentDate.toDateString();
+
   return (
     <>
       <h1>{projectName}</h1>
+      <h1>{stringDate}</h1>
       {showTaskModal && (
         <NewTaskModal toggleModal={handleToggleNewTask} addNewTask={handleAddingTask} />
       )}
