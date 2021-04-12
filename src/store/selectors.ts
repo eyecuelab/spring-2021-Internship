@@ -13,8 +13,6 @@ export const selectProjectTasks = createSelector([projectSelector], (project) =>
 
 export const selectProjectItems = createSelector([projectSelector], (project) => project.items);
 
-export const selectProjectTotals = createSelector([projectSelector], (project) => project.totals);
-
 export const selectProjectDueDate = createSelector([projectSelector], (project) => project.dueDate);
 
 export const authSelector = createSelector(selectAuth, (user) => user);
