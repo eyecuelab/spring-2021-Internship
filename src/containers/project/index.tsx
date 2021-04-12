@@ -50,9 +50,11 @@ const Project = (): JSX.Element => {
     itemName: string,
     itemPrice: string,
     quantity: number,
-    category: string
+    category: string,
+    date: Date,
+    minutes: number
   ) => {
-    dispatch(addLineItem({ itemName, itemPrice, quantity, category }));
+    dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes }));
     dispatch(calculateTotals());
     setFinanceModalView(!showFinanceModal);
   };

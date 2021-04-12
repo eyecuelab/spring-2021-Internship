@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  addNewFinance: (itemName: string, itemPrice: string, quantity: number, category: string) => void;
+  addNewFinance: (
+    itemName: string,
+    itemPrice: string,
+    quantity: number,
+    category: string,
+    date: Date,
+    minutes: number
+  ) => void;
   toggleModal: () => void;
 };
 
@@ -20,12 +29,13 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<Inputs>();
   // eslint-disable-next-line
   const [formType, setFormType] = useState('material');
   const onSubmit = (data: any) =>
-    addNewFinance(data.itemName, data.itemPrice, data.quantity, formType);
+    addNewFinance(data.itemName, data.itemPrice, data.quantity, formType, data.date, data.minutes);
 
   const handleChange = (event: any) => {
     setFormType(event.target.value);
@@ -48,7 +58,13 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
         <input defaultValue="test" {...register('itemName', { required: true })} />
         {errors.itemName && <p>This field is required</p>}
         <input type="number" placeholder="minutes" {...register('minutes')} />
-        <input type="number" placeholder="date" {...register('date')} />
+        <Controller
+          control={control}
+          name="date"
+          render={({ field: { onChange, onBlur, value, ref } }) => (
+            <ReactDatePicker onChange={onChange} onBlur={onBlur} selected={value} />
+          )}
+        />
       </>
     );
   };

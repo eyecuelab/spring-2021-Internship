@@ -13,6 +13,8 @@ export interface FinanceItem {
   itemPrice: string;
   quantity: number;
   category: string;
+  date: Date;
+  minutes: number;
 }
 
 export interface ProjectState {
@@ -80,6 +82,8 @@ export const projectSlice = createSlice({
         itemPrice: string;
         quantity: number;
         category: string;
+        date: Date;
+        minutes: number;
       }>
     ) => {
       state.items = [
@@ -89,6 +93,8 @@ export const projectSlice = createSlice({
           itemPrice: action.payload.itemPrice,
           quantity: action.payload.quantity,
           category: action.payload.category,
+          date: action.payload.date,
+          minutes: action.payload.minutes,
         },
       ];
     },
