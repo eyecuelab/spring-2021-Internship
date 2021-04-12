@@ -14,7 +14,7 @@ type FinanceProps = {
   columnOne: string;
   columnTwo: string;
   columnThree: string;
-  totals: number;
+  totals: any;
   children?: JSX.Element[];
 };
 
@@ -41,7 +41,7 @@ const Finance = ({
       {children}
       <Grid columns={3}>
         <Cell left={3}>
-          <h2>Total: {totals}</h2>
+          {columnOne === 'Activity' ? <h2>Total Hours {totals}</h2> : <h2>Total ${totals}.00</h2>}
         </Cell>
       </Grid>
     </Wrapper>
