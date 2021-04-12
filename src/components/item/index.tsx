@@ -9,10 +9,20 @@ const LineItem = styled.h2`
 type ItemProps = {
   itemName: string;
   itemPrice: string;
-  quantity: number;
+  quantity?: number;
+  minutes?: number;
+  category?: string;
+  date?: Date;
 };
 
-const Item = ({ itemName, itemPrice, quantity }: ItemProps): JSX.Element => {
+const Item = ({
+  itemName,
+  itemPrice,
+  quantity,
+  minutes,
+  category,
+  date,
+}: ItemProps): JSX.Element => {
   return (
     <>
       <Grid columns={3}>
@@ -31,3 +41,10 @@ const Item = ({ itemName, itemPrice, quantity }: ItemProps): JSX.Element => {
 };
 
 export default Item;
+
+Item.defaultProps = {
+  quantity: null,
+  minutes: null,
+  date: null,
+  category: null,
+};

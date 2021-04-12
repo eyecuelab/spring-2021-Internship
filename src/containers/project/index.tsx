@@ -107,7 +107,20 @@ const Project = (): JSX.Element => {
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
       </button>
-      <Finance totals={projectTotals}>{lineItems}</Finance>
+      <Finance columnOne="Material" columnTwo="Quantity" columnThree="Cost" totals={projectTotals}>
+        {lineItems}
+      </Finance>
+      <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={projectTotals}>
+        {lineItems}
+      </Finance>
+      <Finance
+        columnOne="Description"
+        columnTwo="placeholder"
+        columnThree="Cost"
+        totals={projectTotals}
+      >
+        {lineItems}
+      </Finance>
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item
       </button>

@@ -11,23 +11,31 @@ const Name = styled.h2`
 `;
 
 type FinanceProps = {
+  columnOne: string;
+  columnTwo: string;
+  columnThree: string;
   totals: number;
   children?: JSX.Element[];
 };
 
-const Finance = ({ children, totals }: FinanceProps): JSX.Element => {
+const Finance = ({
+  columnOne,
+  columnTwo,
+  columnThree,
+  children,
+  totals,
+}: FinanceProps): JSX.Element => {
   return (
     <Wrapper>
-      <h1>This is a finance componennt</h1>
       <Grid columns={3}>
         <Cell>
-          <Name>Item Name</Name>
+          <Name>{columnOne}</Name>
         </Cell>
         <Cell>
-          <Name>Item Quantity</Name>
+          <Name>{columnTwo}</Name>
         </Cell>
         <Cell>
-          <Name>Item Price</Name>
+          <Name>{columnThree}</Name>
         </Cell>
       </Grid>
       {children}
