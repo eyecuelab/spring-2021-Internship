@@ -21,6 +21,7 @@ type Inputs = {
   itemName: string;
   itemPrice: string;
   quantity: number;
+  hours: number;
   minutes: number;
   date: Date;
 };
@@ -35,7 +36,14 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
   // eslint-disable-next-line
   const [formType, setFormType] = useState('material');
   const onSubmit = (data: any) =>
-    addNewFinance(data.itemName, data.itemPrice, data.quantity, formType, data.date, data.minutes);
+    addNewFinance(
+      data.itemName,
+      data.itemPrice,
+      data.quantity,
+      formType,
+      data.date,
+      data.minutes + data.hours / 60
+    );
 
   const handleChange = (event: any) => {
     setFormType(event.target.value);
@@ -44,10 +52,10 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
   const MaterialForm = () => {
     return (
       <>
-        <input defaultValue="test" {...register('itemName', { required: true })} />
+        <input placeholder="Material Name" {...register('itemName', { required: true })} />
         {errors.itemName && <p>This field is required</p>}
-        <input type="number" placeholder="itemPrice" {...register('itemPrice')} />
-        <input type="number" placeholder="quantity" {...register('quantity')} />
+        <input type="number" placeholder="Price (per unit)" {...register('itemPrice')} />
+        <input type="number" placeholder="Quantity" {...register('quantity')} />
       </>
     );
   };
@@ -57,6 +65,7 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       <>
         <input defaultValue="test" {...register('itemName', { required: true })} />
         {errors.itemName && <p>This field is required</p>}
+        <input type="number" placeholder="hour(s)" {...register('hours')} />
         <input type="number" placeholder="minutes" {...register('minutes')} />
         <Controller
           control={control}
