@@ -5,7 +5,7 @@ import {
   clearTasks,
   addLineItem,
   clearItems,
-  calculateTotals,
+  FinanceItem,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -20,7 +20,6 @@ const Project = (): JSX.Element => {
   const projectName = useSelector(selectors.selectProjectName);
   const taskList = useSelector(selectors.selectProjectTasks);
   const itemList = useSelector(selectors.selectProjectItems);
-  const projectTotals = useSelector(selectors.selectProjectTotals);
   const dueDate = useSelector(selectors.selectProjectDueDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
@@ -55,7 +54,6 @@ const Project = (): JSX.Element => {
     minutes: number
   ) => {
     dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes }));
-    dispatch(calculateTotals());
     setFinanceModalView(!showFinanceModal);
   };
 
@@ -87,16 +85,66 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const lineItems: JSX.Element[] = itemList.map((e) => {
+  const currentDate = new Date(dueDate);
+  const stringDate = currentDate.toDateString();
+
+  const materialArray = itemList.filter((e) => e.category === 'material');
+  const laborArray = itemList.filter((e) => e.category === 'labor');
+  const otherArray = itemList.filter((e) => e.category === 'other');
+
+  function calculateMaterialTotal(arr: Array<FinanceItem>): number {
+    let total = 0;
+    arr.forEach((e: FinanceItem) => {
+      total += parseInt(e.itemPrice, 10) * e.quantity;
+    });
+    return total;
+  }
+
+  function calculateLaborTotal(arr: Array<FinanceItem>): string {
+    let total = 0;
+    arr.forEach((e: FinanceItem) => {
+      total += e.minutes;
+    });
+    return (total / 60).toFixed(2);
+  }
+
+  function calculateOtherTotal(arr: Array<FinanceItem>): number {
+    let total = 0;
+    arr.forEach((e: FinanceItem) => {
+      total += parseInt(e.itemPrice, 10);
+    });
+    return total;
+  }
+
+  const materialItems: JSX.Element[] = materialArray.map((e) => {
     return (
-      <div>
-        <Item itemName={e.itemName} itemPrice={e.itemPrice} quantity={e.quantity} />
-      </div>
+      <Item
+        itemName={e.itemName}
+        itemPrice={e.itemPrice}
+        quantity={e.quantity}
+        category={e.category}
+      />
     );
   });
 
-  const currentDate = new Date(dueDate);
-  const stringDate = currentDate.toDateString();
+  const laborItems: JSX.Element[] = laborArray.map((e) => {
+    return <Item itemName={e.itemName} minutes={e.minutes} date={e.date} category={e.category} />;
+  });
+
+  const otherItems: JSX.Element[] = otherArray.map((e) => {
+    return (
+      <Item
+        itemName={e.itemName}
+        itemPrice={e.itemPrice}
+        quantity={e.quantity}
+        category={e.category}
+      />
+    );
+  });
+
+  const materialTotals = calculateMaterialTotal(materialArray);
+  const laborTotals = calculateLaborTotal(laborArray);
+  const otherTotals = calculateOtherTotal(otherArray);
 
   return (
     <>
@@ -120,19 +168,24 @@ const Project = (): JSX.Element => {
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
       </button>
-      <Finance columnOne="Material" columnTwo="Quantity" columnThree="Cost" totals={projectTotals}>
-        {lineItems}
+      <Finance
+        columnOne="Material"
+        columnTwo="Quantity"
+        columnThree="Cost (Per Unit)"
+        totals={materialTotals}
+      >
+        {materialItems}
       </Finance>
-      <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={projectTotals}>
-        {lineItems}
+      <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={laborTotals}>
+        {laborItems}
       </Finance>
       <Finance
         columnOne="Description"
         columnTwo="placeholder"
         columnThree="Cost"
-        totals={projectTotals}
+        totals={otherTotals}
       >
-        {lineItems}
+        {otherItems}
       </Finance>
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item
