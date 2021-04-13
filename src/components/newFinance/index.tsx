@@ -42,7 +42,8 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       data.quantity,
       formType,
       data.date,
-      data.minutes + data.hours / 60
+      // prettier-ignore
+      data.minutes + (data.hours * 60)
     );
 
   const handleChange = (event: any) => {
@@ -70,7 +71,7 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
         <Controller
           control={control}
           name="date"
-          render={({ field: { onChange, onBlur, value, ref } }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <ReactDatePicker onChange={onChange} onBlur={onBlur} selected={value} />
           )}
         />

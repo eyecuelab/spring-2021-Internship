@@ -34,7 +34,7 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
           <Controller
             control={control}
             name="dueDate"
-            render={({ field: { onChange, onBlur, value, ref } }) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <ReactDatePicker onChange={onChange} onBlur={onBlur} selected={value} />
             )}
           />

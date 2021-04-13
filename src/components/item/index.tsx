@@ -26,7 +26,7 @@ const Item = ({
   const laborDate = date ? new Date(date) : null;
   const stringDate = laborDate ? laborDate.toDateString() : null;
 
-  const laborTime = parseFloat(minutes || 0 / 60).toFixed(2);
+  const laborTime = (minutes / 60).toFixed(2);
   return (
     <>
       <Grid columns={3}>
