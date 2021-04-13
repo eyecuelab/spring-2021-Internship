@@ -11,10 +11,12 @@ import {
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
 import NewFinance from '../../components/newFinance';
-import List from '../../components/list';
+import ProjTask from '../../components/projTasks';
+// import List from '../../components/list';
 import Task from '../../components/task';
-import Finance from '../../components/finance';
+// import Finance from '../../components/finance';
 import Item from '../../components/item';
+import ProjFinance from '../../components/projFinance';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -171,37 +173,23 @@ const Project = (): JSX.Element => {
       {showFinanceModal && (
         <NewFinance toggleModal={handleToggleFinance} addNewFinance={handleAddingFinance} />
       )}
-      <List title="To Do" toggleModal={handleToggleNewTask}>
-        {toDoItems}
-      </List>
-      <List title="Doing" toggleModal={handleToggleNewTask}>
-        {doingItems}
-      </List>
-      <List title="Done" toggleModal={handleToggleNewTask}>
-        {doneItems}
-      </List>
+      <ProjTask
+        toDoItems={toDoItems}
+        doingItems={doingItems}
+        doneItems={doneItems}
+        handleToggleNewTask={handleToggleNewTask}
+      />
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
       </button>
-      <Finance
-        columnOne="Material"
-        columnTwo="Quantity"
-        columnThree="Cost (Per Unit)"
-        totals={materialTotals}
-      >
-        {materialItems}
-      </Finance>
-      <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={laborTotals}>
-        {laborItems}
-      </Finance>
-      <Finance
-        columnOne="Description"
-        columnTwo="placeholder"
-        columnThree="Cost"
-        totals={otherTotals}
-      >
-        {otherItems}
-      </Finance>
+      <ProjFinance
+        materialTotals={materialTotals}
+        laborTotals={laborTotals}
+        otherTotals={otherTotals}
+        materialItems={materialItems}
+        laborItems={laborItems}
+        otherItems={otherItems}
+      />
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item
       </button>
