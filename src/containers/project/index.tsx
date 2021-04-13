@@ -51,9 +51,10 @@ const Project = (): JSX.Element => {
     quantity: number,
     category: string,
     date: Date,
-    minutes: number
+    minutes: number,
+    hours: number
   ) => {
-    dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes }));
+    dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes, hours }));
     setFinanceModalView(!showFinanceModal);
   };
 

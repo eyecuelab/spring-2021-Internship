@@ -11,7 +11,8 @@ type ModalProps = {
     quantity: number,
     category: string,
     date: Date,
-    minutes: number
+    minutes: number,
+    hours: number
   ) => void;
   toggleModal: () => void;
 };
@@ -35,7 +36,7 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
   } = useForm<Inputs>();
   // eslint-disable-next-line
   const [formType, setFormType] = useState('material');
-  const onSubmit = (data: any) =>
+  const onSubmit = (data: Inputs) =>
     addNewFinance(
       data.itemName,
       data.itemPrice,
@@ -43,7 +44,8 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       formType,
       data.date,
       // prettier-ignore
-      data.minutes + (data.hours * 60)
+      data.minutes,
+      data.hours
     );
 
   const handleChange = (event: any) => {

@@ -74,6 +74,7 @@ export const projectSlice = createSlice({
         category: string;
         date: Date;
         minutes: number;
+        hours: number;
       }>
     ) => {
       state.items = [
@@ -84,7 +85,7 @@ export const projectSlice = createSlice({
           quantity: action.payload.quantity,
           category: action.payload.category,
           date: action.payload.date,
-          minutes: action.payload.minutes,
+          minutes: Math.floor(action.payload.minutes) + Math.floor(action.payload.hours * 60),
         },
       ];
     },
