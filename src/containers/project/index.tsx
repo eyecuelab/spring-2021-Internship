@@ -6,6 +6,7 @@ import {
   addLineItem,
   clearItems,
   FinanceItem,
+  updateTaskStatus,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -45,6 +46,10 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
+  const handleUpdatingTask = (taskName: string, taskStatus: string, id: string) => {
+    dispatch(updateTaskStatus({ taskName, taskStatus, id }));
+  };
+
   const handleAddingFinance = (
     itemName: string,
     itemPrice: string,
@@ -64,25 +69,34 @@ const Project = (): JSX.Element => {
 
   const toDoItems: JSX.Element[] = toDoArray.map((e) => {
     return (
-      <div key={e.id}>
-        <Task taskName={e.taskName} />
-      </div>
+      <Task
+        taskName={e.taskName}
+        // taskStatus={e.taskStatus}
+        id={e.id}
+        updateTask={handleUpdatingTask}
+      />
     );
   });
 
   const doingItems: JSX.Element[] = doingArray.map((e) => {
     return (
-      <div key={e.id}>
-        <Task taskName={e.taskName} />
-      </div>
+      <Task
+        taskName={e.taskName}
+        // taskStatus={e.taskStatus}
+        id={e.id}
+        updateTask={handleUpdatingTask}
+      />
     );
   });
 
   const doneItems: JSX.Element[] = doneArray.map((e) => {
     return (
-      <div key={e.id}>
-        <Task taskName={e.taskName} />
-      </div>
+      <Task
+        taskName={e.taskName}
+        // taskStatus={e.taskStatus}
+        id={e.id}
+        updateTask={handleUpdatingTask}
+      />
     );
   });
 
