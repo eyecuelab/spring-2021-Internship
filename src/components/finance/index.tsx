@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Grid, Cell } from 'styled-css-grid';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ open: boolean }>`
   margin: 10px;
   max-height: ${(props) => (props.open ? '100%' : '0')};
   overflow: hidden;
