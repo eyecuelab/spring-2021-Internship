@@ -92,6 +92,20 @@ export const projectSlice = createSlice({
     clearItems: (state) => {
       state.items = [];
     },
+    updateTaskStatus: (
+      state,
+      action: PayloadAction<{ taskName: string; taskStatus: string; id: string }>
+    ) => {
+      state.tasks = state.tasks.filter((e) => e.id !== action.payload.id);
+      state.tasks = [
+        ...(state.tasks || []),
+        {
+          taskName: action.payload.taskName,
+          taskStatus: action.payload.taskStatus,
+          id: action.payload.id,
+        },
+      ];
+    },
   },
 });
 
@@ -103,6 +117,7 @@ export const {
   addLineItem,
   clearItems,
   setProjectDueDate,
+  updateTaskStatus,
 } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
