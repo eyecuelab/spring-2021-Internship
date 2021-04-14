@@ -35,7 +35,7 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
     formState: { errors },
   } = useForm<Inputs>();
   // eslint-disable-next-line
-  const [formType, setFormType] = useState('material');
+  const [formType, setFormType] = useState('materials');
   const onSubmit = (data: Inputs) =>
     addNewFinance(
       data.itemName,
@@ -97,11 +97,11 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <select onChange={handleChange}>
-            <option value="material">Material</option>
+            <option value="materials">Material</option>
             <option value="labor">Labor</option>
             <option value="other">Other</option>
           </select>
-          {formType === 'material' && <MaterialForm />}
+          {formType === 'materials' && <MaterialForm />}
           {formType === 'labor' && <LaborForm />}
           {formType === 'other' && <OtherForm />}
           <input type="submit" />

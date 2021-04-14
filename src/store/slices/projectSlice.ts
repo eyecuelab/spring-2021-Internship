@@ -23,16 +23,20 @@ export interface ProjectState {
   projectName: string;
   dueDate: Date;
   id: string;
+  items: {
+    materials: Array<FinanceItem>;
+    labor: Array<FinanceItem>;
+    other: Array<FinanceItem>;
+  };
   tasks: Record<TaskArrays, Array<TaskItem>>;
-  items: Array<FinanceItem>;
 }
 
 const initialState: ProjectState = {
   projectName: '',
   dueDate: new Date('01/01/2021'),
   id: '',
+  items: { materials: [], labor: [], other: [] },
   tasks: { todo: [], doing: [], done: [] },
-  items: [],
 };
 
 function idMaker(projectName: string) {
@@ -81,8 +85,8 @@ export const projectSlice = createSlice({
         hours: number;
       }>
     ) => {
-      state.items = [
-        ...(state.items || []),
+      state.items[action.payload.category] = [
+        ...(state.items[action.payload.category] || []),
         {
           itemName: action.payload.itemName,
           itemPrice: action.payload.itemPrice,
@@ -94,7 +98,7 @@ export const projectSlice = createSlice({
       ];
     },
     clearItems: (state) => {
-      state.items = [];
+      state.items = initialState.items;
     },
     updateTaskStatus: (
       state,
