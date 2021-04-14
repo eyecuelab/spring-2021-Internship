@@ -70,24 +70,18 @@ const Project = (): JSX.Element => {
   const handleOnDragEnd = (result: any) => {
     if (result.destination !== null) {
       if (result.source.droppableId === 'To Do') {
-        // eslint-disable-next-line
-        const taskName = toDoArray[result.source.index].taskName;
-        // eslint-disable-next-line
-        const id = toDoArray[result.source.index].id;
+        const { taskName } = toDoArray[result.source.index];
+        const { id } = toDoArray[result.source.index];
         const taskStatus = result.destination.droppableId;
         dispatch(updateTaskStatus({ taskName, taskStatus, id }));
       } else if (result.source.droppableId === 'Doing') {
-        // eslint-disable-next-line
-        const taskName = doingArray[result.source.index].taskName;
-        // eslint-disable-next-line
-        const id = doingArray[result.source.index].id;
+        const { taskName } = doingArray[result.source.index];
+        const { id } = doingArray[result.source.index];
         const taskStatus = result.destination.droppableId;
         dispatch(updateTaskStatus({ taskName, taskStatus, id }));
       } else if (result.source.droppableId === 'Done') {
-        // eslint-disable-next-line
-        const taskName = doneArray[result.source.index].taskName;
-        // eslint-disable-next-line
-        const id = doneArray[result.source.index].id;
+        const { taskName } = doneArray[result.source.index];
+        const { id } = doneArray[result.source.index];
         const taskStatus = result.destination.droppableId;
         dispatch(updateTaskStatus({ taskName, taskStatus, id }));
       }
