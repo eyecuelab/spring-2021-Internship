@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { bindActionCreators, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line
 import { RootState } from '../store';
 
@@ -7,6 +7,8 @@ export interface TaskItem {
   taskStatus: string;
   id: string;
 }
+
+type TaskArrays = 'todo' | 'doing' | 'done';
 
 export interface FinanceItem {
   itemName: string;
@@ -21,7 +23,7 @@ export interface ProjectState {
   projectName: string;
   dueDate: Date;
   id: string;
-  tasks: Array<TaskItem>;
+  tasks: Record<TaskArrays, Array<TaskItem>>;
   items: Array<FinanceItem>;
 }
 
@@ -29,7 +31,7 @@ const initialState: ProjectState = {
   projectName: '',
   dueDate: new Date('01/01/2021'),
   id: '',
-  tasks: [],
+  tasks: { todo: [], doing: [], done: [] },
   items: [],
 };
 
@@ -53,8 +55,8 @@ export const projectSlice = createSlice({
       state.id = idMaker(state.projectName);
     },
     addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
-      state.tasks = [
-        ...(state.tasks || []),
+      state.tasks[action.payload.taskStatus] = [
+        ...(state.tasks[action.payload.taskStatus] || []),
         {
           taskName: action.payload.taskName,
           taskStatus: action.payload.taskStatus,
@@ -63,7 +65,9 @@ export const projectSlice = createSlice({
       ];
     },
     clearTasks: (state) => {
-      state.tasks = [];
+      state.tasks.todo = [];
+      state.tasks.doing = [];
+      state.tasks.done = [];
     },
     addLineItem: (
       state,
@@ -94,11 +98,18 @@ export const projectSlice = createSlice({
     },
     updateTaskStatus: (
       state,
-      action: PayloadAction<{ taskName: string; taskStatus: string; id: string }>
+      action: PayloadAction<{
+        taskName: string;
+        taskStatus: string;
+        id: string;
+        formerStatus: string;
+      }>
     ) => {
-      state.tasks = state.tasks.filter((e) => e.id !== action.payload.id);
-      state.tasks = [
-        ...(state.tasks || []),
+      state.tasks[action.payload.formerStatus] = state.tasks[action.payload.formerStatus].filter(
+        (e) => e.id !== action.payload.id
+      );
+      state.tasks[action.payload.taskStatus] = [
+        ...(state.tasks[action.payload.taskStatus] || []),
         {
           taskName: action.payload.taskName,
           taskStatus: action.payload.taskStatus,

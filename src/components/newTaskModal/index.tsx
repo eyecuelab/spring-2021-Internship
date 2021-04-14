@@ -29,9 +29,9 @@ const NewTaskModal = ({ addNewTask, toggleModal }: ModalProps): JSX.Element => {
           {errors.taskName && <p>This field is required</p>}
 
           <select {...register('taskStatus', { required: true })}>
-            <option value="To Do">To Do</option>
-            <option value="Doing"> Doing</option>
-            <option value="Done"> Done</option>
+            <option value="todo">To Do</option>
+            <option value="doing"> Doing</option>
+            <option value="done"> Done</option>
           </select>
           <input type="submit" />
         </form>
