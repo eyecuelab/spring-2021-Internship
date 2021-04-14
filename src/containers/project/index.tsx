@@ -21,11 +21,12 @@ const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const project = useSelector(selectors.projectSelector);
   const projectName = useSelector(selectors.selectProjectName);
-  const taskList = useSelector(selectors.selectProjectTasks);
-  // const itemList = useSelector(selectors.selectProjectItems);
   const materialItemList = useSelector(selectors.selectMaterialItems);
   const laborItemList = useSelector(selectors.selectLaborItems);
   const otherItemList = useSelector(selectors.selectOtherItems);
+  const toDoList = useSelector(selectors.selectProjToDoTasks);
+  const doingList = useSelector(selectors.selectProjDoingTasks);
+  const doneList = useSelector(selectors.selectProjDoneTasks);
   const dueDate = useSelector(selectors.selectProjectDueDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
@@ -63,32 +64,33 @@ const Project = (): JSX.Element => {
     dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes, hours }));
     setFinanceModalView(!showFinanceModal);
   };
-  const toDoArray = taskList.filter((e) => e.taskStatus === 'To Do');
-  const doingArray = taskList.filter((e) => e.taskStatus === 'Doing');
-  const doneArray = taskList.filter((e) => e.taskStatus === 'Done');
 
   const handleOnDragEnd = (result: any) => {
     if (result.destination !== null) {
-      if (result.source.droppableId === 'To Do') {
-        const { taskName } = toDoArray[result.source.index];
-        const { id } = toDoArray[result.source.index];
+      console.log(result.destination);
+      if (result.source.droppableId === 'todo') {
+        const { taskName } = toDoList[result.source.index];
+        const { id } = toDoList[result.source.index];
         const taskStatus = result.destination.droppableId;
-        dispatch(updateTaskStatus({ taskName, taskStatus, id }));
-      } else if (result.source.droppableId === 'Doing') {
-        const { taskName } = doingArray[result.source.index];
-        const { id } = doingArray[result.source.index];
+        const formerStatus = result.source.droppableId;
+        dispatch(updateTaskStatus({ taskName, taskStatus, id, formerStatus }));
+      } else if (result.source.droppableId === 'doing') {
+        const { taskName } = doingList[result.source.index];
+        const { id } = doingList[result.source.index];
         const taskStatus = result.destination.droppableId;
-        dispatch(updateTaskStatus({ taskName, taskStatus, id }));
-      } else if (result.source.droppableId === 'Done') {
-        const { taskName } = doneArray[result.source.index];
-        const { id } = doneArray[result.source.index];
+        const formerStatus = result.source.droppableId;
+        dispatch(updateTaskStatus({ taskName, taskStatus, id, formerStatus }));
+      } else if (result.source.droppableId === 'done') {
+        const { taskName } = doneList[result.source.index];
+        const { id } = doneList[result.source.index];
         const taskStatus = result.destination.droppableId;
-        dispatch(updateTaskStatus({ taskName, taskStatus, id }));
+        const formerStatus = result.source.droppableId;
+        dispatch(updateTaskStatus({ taskName, taskStatus, id, formerStatus }));
       }
     }
   };
 
-  const toDoItems: JSX.Element[] = toDoArray.map((e, index) => {
+  const toDoItems: JSX.Element[] = toDoList.map((e, index) => {
     return (
       <Draggable key={e.id} draggableId={e.id} index={index}>
         {/* eslint-disable-next-line */}
@@ -106,7 +108,7 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const doingItems: JSX.Element[] = doingArray.map((e, index) => {
+  const doingItems: JSX.Element[] = doingList.map((e, index) => {
     return (
       <Draggable key={e.id} draggableId={e.id} index={index}>
         {/* eslint-disable-next-line */}
@@ -124,7 +126,7 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const doneItems: JSX.Element[] = doneArray.map((e, index) => {
+  const doneItems: JSX.Element[] = doneList.map((e, index) => {
     return (
       <Draggable key={e.id} draggableId={e.id} index={index}>
         {/* eslint-disable-next-line */}

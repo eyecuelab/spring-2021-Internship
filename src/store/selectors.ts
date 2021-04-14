@@ -9,7 +9,20 @@ export const selectProjectName = createSelector(
   (project) => project.projectName
 );
 
-export const selectProjectTasks = createSelector([projectSelector], (project) => project.tasks);
+export const selectProjToDoTasks = createSelector(
+  [projectSelector],
+  (project) => project.tasks.todo
+);
+
+export const selectProjDoingTasks = createSelector(
+  [projectSelector],
+  (project) => project.tasks.doing
+);
+
+export const selectProjDoneTasks = createSelector(
+  [projectSelector],
+  (project) => project.tasks.done
+);
 
 export const selectProjectItems = createSelector([projectSelector], (project) => project.items);
 
