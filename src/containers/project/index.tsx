@@ -19,7 +19,6 @@ import ProjFinance from '../../components/projFinance';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
-  const project = useSelector(selectors.projectSelector);
   const projectName = useSelector(selectors.selectProjectName);
   const materialItemList = useSelector(selectors.selectMaterialItems);
   const laborItemList = useSelector(selectors.selectLaborItems);
@@ -147,10 +146,6 @@ const Project = (): JSX.Element => {
   const currentDate = new Date(dueDate);
   const stringDate = currentDate.toDateString();
 
-  // const materialArray = materialItemList.filter((e) => e.category === 'material');
-  // const laborArray = laborItemList.filter((e) => e.category === 'labor');
-  // const otherArray = otherItemList.filter((e) => e.category === 'other');
-
   function calculateMaterialTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
@@ -231,6 +226,7 @@ const Project = (): JSX.Element => {
         materialItems={materialItems}
         laborItems={laborItems}
         otherItems={otherItems}
+        handleToggleFinance={handleToggleFinance}
       />
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item

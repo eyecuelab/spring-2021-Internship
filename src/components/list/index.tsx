@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FaPlus } from 'react-icons/fa';
 
 type ListProps = {
   title: string;
@@ -24,11 +25,9 @@ const List = ({ title, toggleModal, children }: ListProps): JSX.Element => {
   return (
     <>
       <Box>
+        <FaPlus onClick={toggleModal} />
         <h1>{title}</h1>
         {children}
-        <button type="button" onClick={toggleModal}>
-          add new task
-        </button>
       </Box>
     </>
   );

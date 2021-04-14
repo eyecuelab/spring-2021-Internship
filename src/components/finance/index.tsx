@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { Grid, Cell } from 'styled-css-grid';
 
 const Wrapper = styled.div<{ open: boolean }>`
@@ -10,10 +11,21 @@ const Wrapper = styled.div<{ open: boolean }>`
   transition: all 0.3s ease-out;
 `;
 
+const HeadingContainer = styled.div`
+  background: #d1cfcf;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
 const HeadingName = styled.h2`
   margin: 0 10px 0 10px;
   padding: 3px;
-  background: #d1cfcf;
+  display: flex;
+`;
+
+const HeadingTotal = styled.h4<{ open: boolean }>`
+  opacity: ${(props) => (props.open ? 0 : 1)};
+  display: flex;
 `;
 
 const Name = styled.h3`
@@ -42,7 +54,15 @@ const Finance = ({
 
   return (
     <>
-      <HeadingName onClick={handleClick}>{columnOne}</HeadingName>
+      <HeadingContainer>
+        <HeadingName onClick={handleClick}>
+          {isOpen ? <RiArrowDownSLine /> : <RiArrowRightSLine />}
+          {columnOne}{' '}
+          <HeadingTotal open={isOpen}>
+            {columnOne === 'Activity' ? `Total Hours ${totals}` : `Total $${totals}.00`}
+          </HeadingTotal>
+        </HeadingName>
+      </HeadingContainer>
       <Wrapper open={isOpen}>
         <Grid columns={3}>
           <Cell>
