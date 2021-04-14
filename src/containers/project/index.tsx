@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Draggable } from 'react-beautiful-dnd';
 import {
   addTask,
   clearTasks,
@@ -12,9 +13,7 @@ import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
 import NewFinance from '../../components/newFinance';
 import ProjTask from '../../components/projTasks';
-// import List from '../../components/list';
 import Task from '../../components/task';
-// import Finance from '../../components/finance';
 import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
 
@@ -64,41 +63,88 @@ const Project = (): JSX.Element => {
     dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes, hours }));
     setFinanceModalView(!showFinanceModal);
   };
-
   const toDoArray = taskList.filter((e) => e.taskStatus === 'To Do');
   const doingArray = taskList.filter((e) => e.taskStatus === 'Doing');
   const doneArray = taskList.filter((e) => e.taskStatus === 'Done');
 
-  const toDoItems: JSX.Element[] = toDoArray.map((e) => {
+  const handleOnDragEnd = (result: any) => {
+    if (result.destination !== null) {
+      if (result.source.droppableId === 'To Do') {
+        // eslint-disable-next-line
+        const taskName = toDoArray[result.source.index].taskName;
+        // eslint-disable-next-line
+        const id = toDoArray[result.source.index].id;
+        const taskStatus = result.destination.droppableId;
+        dispatch(updateTaskStatus({ taskName, taskStatus, id }));
+      } else if (result.source.droppableId === 'Doing') {
+        // eslint-disable-next-line
+        const taskName = doingArray[result.source.index].taskName;
+        // eslint-disable-next-line
+        const id = doingArray[result.source.index].id;
+        const taskStatus = result.destination.droppableId;
+        dispatch(updateTaskStatus({ taskName, taskStatus, id }));
+      } else if (result.source.droppableId === 'Done') {
+        // eslint-disable-next-line
+        const taskName = doneArray[result.source.index].taskName;
+        // eslint-disable-next-line
+        const id = doneArray[result.source.index].id;
+        const taskStatus = result.destination.droppableId;
+        dispatch(updateTaskStatus({ taskName, taskStatus, id }));
+      }
+    }
+  };
+
+  const toDoItems: JSX.Element[] = toDoArray.map((e, index) => {
     return (
-      <Task
-        taskName={e.taskName}
-        // taskStatus={e.taskStatus}
-        id={e.id}
-        updateTask={handleUpdatingTask}
-      />
+      <Draggable key={e.id} draggableId={e.id} index={index}>
+        {/* eslint-disable-next-line */}
+        {(provided) => (
+          <li
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            key={e.id}
+          >
+            <Task taskName={e.taskName} id={e.id} updateTask={handleUpdatingTask} />
+          </li>
+        )}
+      </Draggable>
     );
   });
 
-  const doingItems: JSX.Element[] = doingArray.map((e) => {
+  const doingItems: JSX.Element[] = doingArray.map((e, index) => {
     return (
-      <Task
-        taskName={e.taskName}
-        // taskStatus={e.taskStatus}
-        id={e.id}
-        updateTask={handleUpdatingTask}
-      />
+      <Draggable key={e.id} draggableId={e.id} index={index}>
+        {/* eslint-disable-next-line */}
+        {(provided) => (
+          <li
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            key={e.id}
+          >
+            <Task taskName={e.taskName} id={e.id} updateTask={handleUpdatingTask} />
+          </li>
+        )}
+      </Draggable>
     );
   });
 
-  const doneItems: JSX.Element[] = doneArray.map((e) => {
+  const doneItems: JSX.Element[] = doneArray.map((e, index) => {
     return (
-      <Task
-        taskName={e.taskName}
-        // taskStatus={e.taskStatus}
-        id={e.id}
-        updateTask={handleUpdatingTask}
-      />
+      <Draggable key={e.id} draggableId={e.id} index={index}>
+        {/* eslint-disable-next-line */}
+        {(provided) => (
+          <li
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            key={e.id}
+          >
+            <Task taskName={e.taskName} id={e.id} updateTask={handleUpdatingTask} />
+          </li>
+        )}
+      </Draggable>
     );
   });
 
@@ -178,6 +224,7 @@ const Project = (): JSX.Element => {
         doingItems={doingItems}
         doneItems={doneItems}
         handleToggleNewTask={handleToggleNewTask}
+        handleOnDragEnd={handleOnDragEnd}
       />
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
