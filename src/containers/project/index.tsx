@@ -19,9 +19,13 @@ import ProjFinance from '../../components/projFinance';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
+  const project = useSelector(selectors.projectSelector);
   const projectName = useSelector(selectors.selectProjectName);
   const taskList = useSelector(selectors.selectProjectTasks);
-  const itemList = useSelector(selectors.selectProjectItems);
+  // const itemList = useSelector(selectors.selectProjectItems);
+  const materialItemList = useSelector(selectors.selectMaterialItems);
+  const laborItemList = useSelector(selectors.selectLaborItems);
+  const otherItemList = useSelector(selectors.selectOtherItems);
   const dueDate = useSelector(selectors.selectProjectDueDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
@@ -141,9 +145,9 @@ const Project = (): JSX.Element => {
   const currentDate = new Date(dueDate);
   const stringDate = currentDate.toDateString();
 
-  const materialArray = itemList.filter((e) => e.category === 'material');
-  const laborArray = itemList.filter((e) => e.category === 'labor');
-  const otherArray = itemList.filter((e) => e.category === 'other');
+  // const materialArray = materialItemList.filter((e) => e.category === 'material');
+  // const laborArray = laborItemList.filter((e) => e.category === 'labor');
+  // const otherArray = otherItemList.filter((e) => e.category === 'other');
 
   function calculateMaterialTotal(arr: Array<FinanceItem>): number {
     let total = 0;
@@ -169,7 +173,7 @@ const Project = (): JSX.Element => {
     return total;
   }
 
-  const materialItems: JSX.Element[] = materialArray.map((e) => {
+  const materialItems: JSX.Element[] = materialItemList.map((e) => {
     return (
       <Item
         itemName={e.itemName}
@@ -180,11 +184,11 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const laborItems: JSX.Element[] = laborArray.map((e) => {
+  const laborItems: JSX.Element[] = laborItemList.map((e) => {
     return <Item itemName={e.itemName} minutes={e.minutes} date={e.date} category={e.category} />;
   });
 
-  const otherItems: JSX.Element[] = otherArray.map((e) => {
+  const otherItems: JSX.Element[] = otherItemList.map((e) => {
     return (
       <Item
         itemName={e.itemName}
@@ -195,10 +199,9 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const materialTotals = calculateMaterialTotal(materialArray);
-  const laborTotals = calculateLaborTotal(laborArray);
-  const otherTotals = calculateOtherTotal(otherArray);
-
+  const materialTotals = calculateMaterialTotal(materialItemList);
+  const laborTotals = calculateLaborTotal(laborItemList);
+  const otherTotals = calculateOtherTotal(otherItemList);
   return (
     <>
       <h1>{projectName}</h1>
