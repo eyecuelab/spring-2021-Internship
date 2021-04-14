@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type ListProps = {
   title: string;
   toggleModal: () => void;
-  children?: JSX.Element[];
+  children?: JSX.Element;
 };
 
 const Box = styled.div`
