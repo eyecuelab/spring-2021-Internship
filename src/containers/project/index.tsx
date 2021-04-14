@@ -47,10 +47,6 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
-  const handleUpdatingTask = (taskName: string, taskStatus: string, id: string) => {
-    dispatch(updateTaskStatus({ taskName, taskStatus, id }));
-  };
-
   const handleAddingFinance = (
     itemName: string,
     itemPrice: string,
@@ -99,7 +95,7 @@ const Project = (): JSX.Element => {
             {...provided.dragHandleProps}
             key={e.id}
           >
-            <Task taskName={e.taskName} id={e.id} updateTask={handleUpdatingTask} />
+            <Task taskName={e.taskName} />
           </li>
         )}
       </Draggable>
@@ -117,7 +113,7 @@ const Project = (): JSX.Element => {
             {...provided.dragHandleProps}
             key={e.id}
           >
-            <Task taskName={e.taskName} id={e.id} updateTask={handleUpdatingTask} />
+            <Task taskName={e.taskName} />
           </li>
         )}
       </Draggable>
@@ -135,7 +131,7 @@ const Project = (): JSX.Element => {
             {...provided.dragHandleProps}
             key={e.id}
           >
-            <Task taskName={e.taskName} id={e.id} updateTask={handleUpdatingTask} />
+            <Task taskName={e.taskName} />
           </li>
         )}
       </Draggable>
