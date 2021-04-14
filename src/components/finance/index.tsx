@@ -38,7 +38,6 @@ const Finance = ({
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
-    console.log('clicked');
   };
 
   return (
