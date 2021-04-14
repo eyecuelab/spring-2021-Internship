@@ -4,11 +4,9 @@ import { RootState } from '../store';
 
 export interface TaskItem {
   taskName: string;
-  taskStatus: string;
+  taskStatus: any;
   id: string;
 }
-
-type TaskArrays = 'todo' | 'doing' | 'done';
 
 export interface FinanceItem {
   itemName: string;
@@ -23,12 +21,8 @@ export interface ProjectState {
   projectName: string;
   dueDate: Date;
   id: string;
-  items: {
-    materials: Array<FinanceItem>;
-    labor: Array<FinanceItem>;
-    other: Array<FinanceItem>;
-  };
-  tasks: Record<TaskArrays, Array<TaskItem>>;
+  items: Record<string, Array<FinanceItem>>;
+  tasks: Record<string, Array<TaskItem>>;
 }
 
 const initialState: ProjectState = {
