@@ -8,6 +8,7 @@ import {
   clearItems,
   FinanceItem,
   updateTaskStatus,
+  TaskItem,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -16,6 +17,7 @@ import ProjTask from '../../components/projTasks';
 import Task from '../../components/task';
 import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
+import TaskDetail from '../../components/taskDetail';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -29,6 +31,8 @@ const Project = (): JSX.Element => {
   const dueDate = useSelector(selectors.selectProjectDueDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
+  const [showTaskDetail, setTaskDetailView] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
 
   const handleToggleNewTask = () => {
     setTaskModalView(!showTaskModal);
@@ -36,6 +40,10 @@ const Project = (): JSX.Element => {
 
   const handleToggleFinance = () => {
     setFinanceModalView(!showFinanceModal);
+  };
+
+  const handleToggleTaskDetail = () => {
+    setTaskDetailView(!showTaskDetail);
   };
 
   const handleClearingTasks = () => {
@@ -66,7 +74,6 @@ const Project = (): JSX.Element => {
 
   const handleOnDragEnd = (result: any) => {
     if (result.destination !== null) {
-      console.log(result.destination);
       if (result.source.droppableId === 'todo') {
         const { taskName } = toDoList[result.source.index];
         const { id } = toDoList[result.source.index];
@@ -100,7 +107,12 @@ const Project = (): JSX.Element => {
             {...provided.dragHandleProps}
             key={e.id}
           >
-            <Task taskName={e.taskName} />
+            <Task
+              taskName={e.taskName}
+              id={e.id}
+              selectTask={setSelectedTask}
+              toggleModal={handleToggleTaskDetail}
+            />
           </li>
         )}
       </Draggable>
@@ -118,7 +130,12 @@ const Project = (): JSX.Element => {
             {...provided.dragHandleProps}
             key={e.id}
           >
-            <Task taskName={e.taskName} />
+            <Task
+              taskName={e.taskName}
+              id={e.id}
+              selectTask={setSelectedTask}
+              toggleModal={handleToggleTaskDetail}
+            />
           </li>
         )}
       </Draggable>
@@ -136,7 +153,12 @@ const Project = (): JSX.Element => {
             {...provided.dragHandleProps}
             key={e.id}
           >
-            <Task taskName={e.taskName} />
+            <Task
+              taskName={e.taskName}
+              id={e.id}
+              selectTask={setSelectedTask}
+              toggleModal={handleToggleTaskDetail}
+            />
           </li>
         )}
       </Draggable>
@@ -209,6 +231,7 @@ const Project = (): JSX.Element => {
       {showFinanceModal && (
         <NewFinance toggleModal={handleToggleFinance} addNewFinance={handleAddingFinance} />
       )}
+      {showTaskDetail && <TaskDetail toggleModal={handleToggleTaskDetail} task={selectedTask} />}
       <ProjTask
         toDoItems={toDoItems}
         doingItems={doingItems}
