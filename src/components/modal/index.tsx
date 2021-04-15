@@ -9,7 +9,7 @@ const Flex = styled.div`
   right: 0;
   position: fixed;
   z-index: 998;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   justify-content: center;
   align-items: center;
 `;
@@ -17,11 +17,11 @@ const Flex = styled.div`
 const Card = styled.div`
   border-radius: 8px;
   margin: auto;
-  margin-top: auto;
+  margin-top: 100px;
   height: auto;
   z-index: 100000;
   padding: 20px 0 20px 0;
-  background-color: red;
+  background-color: DarkSeaGreen;
   justify-content: center;
   text-align: center;
 `;

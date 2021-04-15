@@ -109,6 +109,7 @@ const Project = (): JSX.Element => {
             <Task
               taskName={e.taskName}
               id={e.id}
+              status={e.taskStatus}
               selectTask={setSelectedTask}
               toggleModal={handleToggleTaskDetail}
             />
@@ -132,6 +133,7 @@ const Project = (): JSX.Element => {
             <Task
               taskName={e.taskName}
               id={e.id}
+              status={e.taskStatus}
               selectTask={setSelectedTask}
               toggleModal={handleToggleTaskDetail}
             />
@@ -155,6 +157,7 @@ const Project = (): JSX.Element => {
             <Task
               taskName={e.taskName}
               id={e.id}
+              status={e.taskStatus}
               selectTask={setSelectedTask}
               toggleModal={handleToggleTaskDetail}
             />
