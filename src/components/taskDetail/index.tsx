@@ -8,11 +8,15 @@ type TaskDetailProps = {
 };
 
 const TaskDetail = ({ toggleModal, task }: TaskDetailProps): JSX.Element => {
+  console.log({ task });
   return (
     <>
-      console.log({task})
-      <Modal width="350" toggleModal={toggleModal}>
-        <p>Task Detail</p>
+      <Modal width="350px" toggleModal={toggleModal}>
+        <>
+          <h2>Task Detail</h2>
+          <h3>{task?.taskName}</h3>
+          <h4>Status: {task?.taskStatus}</h4>
+        </>
       </Modal>
     </>
   );

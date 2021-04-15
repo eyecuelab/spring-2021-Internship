@@ -12,32 +12,45 @@ const Wrapper = styled.div`
 
 type TaskProps = {
   taskName: string;
-  // id: string;
-  // selectTask: (task: TaskItem) => void;
-  // toggleModal: () => void;
+  id: string;
+  status: string;
+  selectTask: (task: TaskItem) => void;
+  toggleModal: () => void;
 };
 
-const Task = ({ taskName }: TaskProps): JSX.Element => {
-  // const toDoList = useSelector(selectors.selectProjToDoTasks);
+const Task = ({ taskName, toggleModal, id, status, selectTask }: TaskProps): JSX.Element => {
+  const toDoList = useSelector(selectors.selectProjToDoTasks);
+  const doingList = useSelector(selectors.selectProjDoingTasks);
+  const doneList = useSelector(selectors.selectProjDoneTasks);
+  const filterForToDoTask = (taskId: string): TaskItem => {
+    const taskSelected = toDoList.filter((task) => task.id === taskId);
+    return taskSelected[0];
+  };
+  const filterForDoingTask = (taskId: string): TaskItem => {
+    const taskSelected = doingList.filter((task) => task.id === taskId);
+    return taskSelected[0];
+  };
 
-  // function thisTask(taskId: string) {
-  //   const selectedTask = toDoList.filter((task) => task.id === taskId);
-  //   console.log(selectedTask[0]);
-  //   return selectedTask[0];
-  // }
-  // window.addEventListener('click', (event: MouseEvent) => {
-  //   if (event.defaultPrevented) {
-  //     return;
-  //   }
-  //   toggleModal();
-  //   selectTask(thisTask(id));
-  // });
+  const filterForDoneTask = (taskId: string): TaskItem => {
+    const taskSelected = doneList.filter((task) => task.id === taskId);
+    return taskSelected[0];
+  };
+
+  const clickAction = (taskStatus: string) => {
+    toggleModal();
+    console.log(taskStatus);
+    if (status === 'todo') {
+      selectTask(filterForToDoTask(id));
+    } else if (status === 'doing') {
+      selectTask(filterForDoingTask(id));
+    } else if (status === 'done') {
+      selectTask(filterForDoneTask(id));
+    }
+  };
 
   return (
     <>
-      <Wrapper>
-        <p>{taskName}</p>
-      </Wrapper>
+      <Wrapper onClick={() => clickAction(status)}>{taskName}</Wrapper>
     </>
   );
 };
