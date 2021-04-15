@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { FaPlus } from 'react-icons/fa';
 
 type ListProps = {
@@ -10,8 +11,8 @@ type ListProps = {
 
 const Box = styled.div`
   background: pink;
-  width: 20vw;
-  height: 100vh;
+  width: 30%;
+  height: 750px;
   margin: 10px;
   padding: 5px;
   display: inline-block;

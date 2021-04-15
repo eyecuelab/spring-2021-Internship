@@ -18,6 +18,14 @@ const Heading = styled.h2`
   background: #d1cfcf;
 `;
 
+const TaskContainer = styled.div`
+  background: green;
+`;
+
+const TaskUl = styled.ul`
+  height: 600px;
+`;
+
 type ProjTasksProps = {
   toDoItems: JSX.Element[];
   doingItems: JSX.Element[];
@@ -46,31 +54,52 @@ const ProjTasks = ({
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="todo">
             {(provided) => (
-              <List title="To Do" toggleModal={handleToggleNewTask}>
-                <ul className="todo" {...provided.droppableProps} ref={provided.innerRef}>
-                  {toDoItems}
-                  {provided.placeholder}
-                </ul>
+              <List title="todo" toggleModal={handleToggleNewTask}>
+                <TaskContainer>
+                  <TaskUl
+                    className="todo"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{ listStyleType: 'none' }}
+                  >
+                    {toDoItems}
+                    {provided.placeholder}
+                  </TaskUl>
+                </TaskContainer>
               </List>
             )}
           </Droppable>
           <Droppable droppableId="doing">
             {(provided) => (
-              <List title="Doing" toggleModal={handleToggleNewTask}>
-                <ul className="doing" {...provided.droppableProps} ref={provided.innerRef}>
-                  {doingItems}
-                  {provided.placeholder}
-                </ul>
+              <List title="doing" toggleModal={handleToggleNewTask}>
+                <TaskContainer>
+                  <TaskUl
+                    className="doing"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{ listStyleType: 'none' }}
+                  >
+                    {doingItems}
+                    {provided.placeholder}
+                  </TaskUl>
+                </TaskContainer>
               </List>
             )}
           </Droppable>
           <Droppable droppableId="done">
             {(provided) => (
-              <List title="Done" toggleModal={handleToggleNewTask}>
-                <ul className="done" {...provided.droppableProps} ref={provided.innerRef}>
-                  {doneItems}
-                  {provided.placeholder}
-                </ul>
+              <List title="done" toggleModal={handleToggleNewTask}>
+                <TaskContainer>
+                  <TaskUl
+                    className="done"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{ listStyleType: 'none' }}
+                  >
+                    {doneItems}
+                    {provided.placeholder}
+                  </TaskUl>
+                </TaskContainer>
               </List>
             )}
           </Droppable>
