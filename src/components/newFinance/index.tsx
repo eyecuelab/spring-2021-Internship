@@ -43,7 +43,6 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       data.quantity,
       formType,
       data.date,
-      // prettier-ignore
       data.minutes,
       data.hours
     );
@@ -86,7 +85,6 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
         <input defaultValue="test" {...register('itemName', { required: true })} />
         {errors.itemName && <p>This field is required</p>}
         <input type="number" placeholder="itemPrice" {...register('itemPrice')} />
-        <input type="number" placeholder="quantity" {...register('quantity')} />
       </>
     );
   };

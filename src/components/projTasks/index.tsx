@@ -6,7 +6,8 @@ import List from '../list';
 
 const Wrapper = styled.div<{ open: boolean }>`
   margin: 10px;
-  align-items: center;
+  align-items: flex-start;
+  display: flex;
   max-height: ${(props) => (props.open ? '100%' : '0')};
   overflow: hidden;
   padding: ${(props) => (props.open ? '25px 0' : '0')};
@@ -19,11 +20,12 @@ const Heading = styled.h2`
 `;
 
 const TaskContainer = styled.div`
-  background: green;
+  background: #dbdbdb;
 `;
 
 const TaskUl = styled.ul`
   height: 600px;
+  padding: 5px 10px;
 `;
 
 type ProjTasksProps = {

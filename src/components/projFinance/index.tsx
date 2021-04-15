@@ -61,12 +61,7 @@ const ProjFinance = ({
         <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={laborTotals}>
           {laborItems}
         </Finance>
-        <Finance
-          columnOne="Description"
-          columnTwo="placeholder"
-          columnThree="Cost"
-          totals={otherTotals}
-        >
+        <Finance columnOne="Other Cost" columnTwo="" columnThree="Cost" totals={otherTotals}>
           {otherItems}
         </Finance>
       </Wrapper>

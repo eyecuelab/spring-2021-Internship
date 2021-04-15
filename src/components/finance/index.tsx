@@ -14,6 +14,8 @@ const Wrapper = styled.div<{ open: boolean }>`
 const HeadingContainer = styled.div`
   background: #d1cfcf;
   display: flex;
+  align-items: center;
+
   justify-content: space-between;
   width: 100%;
 `;
@@ -26,6 +28,7 @@ const HeadingName = styled.h2`
 const HeadingTotal = styled.h4<{ open: boolean }>`
   opacity: ${(props) => (props.open ? 0 : 1)};
   display: flex;
+  margin: 0px 10px;
 `;
 
 const Name = styled.h3`
@@ -57,11 +60,11 @@ const Finance = ({
       <HeadingContainer>
         <HeadingName onClick={handleClick}>
           {isOpen ? <RiArrowDownSLine /> : <RiArrowRightSLine />}
-          {columnOne}{' '}
-          <HeadingTotal open={isOpen}>
-            {columnOne === 'Activity' ? `Total Hours ${totals}` : `Total $${totals}.00`}
-          </HeadingTotal>
+          {columnOne}
         </HeadingName>
+        <HeadingTotal open={isOpen}>
+          {columnOne === 'Activity' ? `Total: ${totals} hrs` : `Total: $${totals}.00`}
+        </HeadingTotal>
       </HeadingContainer>
       <Wrapper open={isOpen}>
         <Grid columns={3}>

@@ -11,10 +11,10 @@ type ListProps = {
 
 const Box = styled.div`
   background: pink;
-  width: 30%;
+  width: 340px;
   height: 750px;
   margin: 10px;
-  padding: 5px;
+  padding: 15px;
   display: inline-block;
 
   @media screen and (max-width: 768px) {
