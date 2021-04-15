@@ -7,8 +7,9 @@ import {
   addLineItem,
   clearItems,
   FinanceItem,
-  updateTaskStatus,
+  // updateTaskStatus,
   TaskItem,
+  moveTask,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -73,25 +74,23 @@ const Project = (): JSX.Element => {
   };
 
   const handleOnDragEnd = (result: any) => {
+    const taskStatus = result.destination.droppableId;
+    const formerStatus = result.source.droppableId;
+    const fromIndex = result.source.index;
+    const toIndex = result.destination.index;
     if (result.destination !== null) {
       if (result.source.droppableId === 'todo') {
         const { taskName } = toDoList[result.source.index];
         const { id } = toDoList[result.source.index];
-        const taskStatus = result.destination.droppableId;
-        const formerStatus = result.source.droppableId;
-        dispatch(updateTaskStatus({ taskName, taskStatus, id, formerStatus }));
+        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
       } else if (result.source.droppableId === 'doing') {
         const { taskName } = doingList[result.source.index];
         const { id } = doingList[result.source.index];
-        const taskStatus = result.destination.droppableId;
-        const formerStatus = result.source.droppableId;
-        dispatch(updateTaskStatus({ taskName, taskStatus, id, formerStatus }));
+        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
       } else if (result.source.droppableId === 'done') {
         const { taskName } = doneList[result.source.index];
         const { id } = doneList[result.source.index];
-        const taskStatus = result.destination.droppableId;
-        const formerStatus = result.source.droppableId;
-        dispatch(updateTaskStatus({ taskName, taskStatus, id, formerStatus }));
+        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
       }
     }
   };
