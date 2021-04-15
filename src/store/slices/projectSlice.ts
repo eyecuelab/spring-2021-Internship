@@ -62,10 +62,30 @@ export const projectSlice = createSlice({
         },
       ];
     },
+    moveTask: (
+      state,
+      action: PayloadAction<{
+        taskName: string;
+        id: string;
+        formerStatus: string;
+        taskStatus: string;
+        fromIndex: number;
+        toIndex: number;
+      }>
+    ) => {
+      state.tasks[action.payload.formerStatus] = state.tasks[action.payload.formerStatus].filter(
+        (e) => e.id !== action.payload.id
+      );
+      const updatedDestinationArray = [...state.tasks[action.payload.taskStatus]];
+      updatedDestinationArray.splice(action.payload.toIndex, 0, {
+        taskName: action.payload.taskName,
+        taskStatus: action.payload.taskStatus,
+        id: action.payload.id,
+      });
+      state.tasks[action.payload.taskStatus] = updatedDestinationArray;
+    },
     clearTasks: (state) => {
-      state.tasks.todo = [];
-      state.tasks.doing = [];
-      state.tasks.done = [];
+      state.tasks = initialState.tasks;
     },
     addLineItem: (
       state,
@@ -94,27 +114,27 @@ export const projectSlice = createSlice({
     clearItems: (state) => {
       state.items = initialState.items;
     },
-    updateTaskStatus: (
-      state,
-      action: PayloadAction<{
-        taskName: string;
-        taskStatus: string;
-        id: string;
-        formerStatus: string;
-      }>
-    ) => {
-      state.tasks[action.payload.formerStatus] = state.tasks[action.payload.formerStatus].filter(
-        (e) => e.id !== action.payload.id
-      );
-      state.tasks[action.payload.taskStatus] = [
-        ...(state.tasks[action.payload.taskStatus] || []),
-        {
-          taskName: action.payload.taskName,
-          taskStatus: action.payload.taskStatus,
-          id: action.payload.id,
-        },
-      ];
-    },
+    // updateTaskStatus: (
+    //   state,
+    //   action: PayloadAction<{
+    //     taskName: string;
+    //     taskStatus: string;
+    //     id: string;
+    //     formerStatus: string;
+    //   }>
+    // ) => {
+    //   state.tasks[action.payload.formerStatus] = state.tasks[action.payload.formerStatus].filter(
+    //     (e) => e.id !== action.payload.id
+    //   );
+    //   state.tasks[action.payload.taskStatus] = [
+    //     ...(state.tasks[action.payload.taskStatus] || []),
+    //     {
+    //       taskName: action.payload.taskName,
+    //       taskStatus: action.payload.taskStatus,
+    //       id: action.payload.id,
+    //     },
+    //   ];
+    // },
   },
 });
 
@@ -127,6 +147,7 @@ export const {
   clearItems,
   setProjectDueDate,
   updateTaskStatus,
+  moveTask,
 } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
