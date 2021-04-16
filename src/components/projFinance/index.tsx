@@ -48,20 +48,14 @@ const ProjFinance = ({
     hourlyRate: 15,
     markUp: 30,
   });
+  const { units, materials, labor, other, hourlyRate, markUp } = projectValues;
 
   useEffect(() => {
-    const hourly = projectValues.labor * projectValues.hourlyRate;
-    const markUpPercent = projectValues.markUp / 100 + 1;
-    setCostPerUnit((projectValues.materials + hourly + projectValues.other) / projectValues.units);
+    const hourly = labor * hourlyRate;
+    const markUpPercent = markUp / 100 + 1;
+    setCostPerUnit((materials + hourly + other) / units);
     setPricePerUnit(costPerUnit * markUpPercent);
-  }, [
-    projectValues,
-    projectValues.materials,
-    projectValues.other,
-    projectValues.units,
-    costPerUnit,
-    projectValues.markUp,
-  ]);
+  }, [projectValues, materials, other, units, costPerUnit, hourlyRate, labor, markUp]);
 
   const handleCostClick = () => {
     setcostIsOpen(!costIsOpen);
@@ -143,7 +137,7 @@ const ProjFinance = ({
             <input
               type="number"
               name="hourlyRate"
-              defaultValue={projectValues.hourlyRate}
+              defaultValue={hourlyRate}
               onChange={(e) =>
                 setProjectValues({
                   ...projectValues,
@@ -171,7 +165,7 @@ const ProjFinance = ({
             <input
               type="number"
               name="units"
-              defaultValue={projectValues.units}
+              defaultValue={units}
               onChange={(e) =>
                 setProjectValues({
                   ...projectValues,
@@ -185,7 +179,7 @@ const ProjFinance = ({
             <input
               type="number"
               name="markUp"
-              defaultValue={projectValues.markUp}
+              defaultValue={markUp}
               onChange={(e) =>
                 setProjectValues({
                   ...projectValues,
