@@ -1,14 +1,26 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { Modal } from '../modal';
 import { TaskItem } from '../../store/slices/projectSlice';
 
 type TaskDetailProps = {
   toggleModal: () => void;
-  task: TaskItem | null;
+  task: TaskItem;
 };
 
 const TaskDetail = ({ toggleModal, task }: TaskDetailProps): JSX.Element => {
   console.log({ task });
+  const ActivityItems: JSX.Element[] = task.activity.map((e) => {
+    const date = dayjs(e.dateTime).format('ddd MM/DD/YYYY h:mm a');
+    return (
+      <>
+        <div style={{ background: 'grey', margin: '5px' }}>
+          <p>{e.description}</p>
+          <p>{date}</p>
+        </div>
+      </>
+    );
+  });
   return (
     <>
       <Modal width="350px" toggleModal={toggleModal}>
@@ -18,7 +30,7 @@ const TaskDetail = ({ toggleModal, task }: TaskDetailProps): JSX.Element => {
           <h4>Status: {task?.taskStatus}</h4>
           <div>
             <h4>Activity:</h4>
-            <div>{task?.activity}</div>
+            {ActivityItems}
           </div>
         </>
       </Modal>
