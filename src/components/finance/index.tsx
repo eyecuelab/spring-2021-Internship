@@ -40,7 +40,7 @@ type FinanceProps = {
   columnTwo: string;
   columnThree: string;
   totals: any;
-  children?: JSX.Element[];
+  children?: JSX.Element;
 };
 
 const Finance = ({

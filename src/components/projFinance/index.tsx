@@ -53,16 +53,23 @@ const ProjFinance = ({
           columnThree="Cost (Per Unit)"
           totals={materialTotals}
         >
-          {materialItems}
+          <>
+            {materialItems}
+            <FaPlus onClick={handleToggleFinance} />
+          </>
         </Finance>
-        <button type="button" onClick={handleToggleFinance}>
-          Add Line Item
-        </button>
+
         <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={laborTotals}>
-          {laborItems}
+          <>
+            {laborItems}
+            <FaPlus onClick={handleToggleFinance} />
+          </>
         </Finance>
         <Finance columnOne="Other Cost" columnTwo="" columnThree="Cost" totals={otherTotals}>
-          {otherItems}
+          <>
+            {otherItems}
+            <FaPlus onClick={handleToggleFinance} />
+          </>
         </Finance>
       </Wrapper>
     </>
