@@ -39,19 +39,29 @@ const ProjFinance = ({
   const [costIsOpen, setcostIsOpen] = useState(true);
   const [analysisIsOpen, setanalysisIsOpen] = useState(true);
   const [costPerUnit, setCostPerUnit] = useState(0);
-  const [units, setUnits] = useState(1);
-  const [updatedMaterials, setUpdatedMaterials] = useState(materialTotals);
-  const [updatedLabor, setUpdatedLabor] = useState(laborTotals);
-  const [updatedOther, setUpdatedOther] = useState(otherTotals);
-  const [updatedHourly, setUpdatedHourly] = useState(15);
-  const [markup, setMarkup] = useState(1.35);
   const [pricePerUnit, setPricePerUnit] = useState(0);
-  const hourly = updatedLabor * updatedHourly;
+  const [projectValues, setProjectValues] = useState({
+    units: 1,
+    materials: materialTotals,
+    labor: laborTotals,
+    other: otherTotals,
+    hourlyRate: 15,
+    markUp: 30,
+  });
 
   useEffect(() => {
-    setCostPerUnit((updatedMaterials + hourly + updatedOther) / units);
-    setPricePerUnit(costPerUnit * markup);
-  }, [updatedMaterials, hourly, updatedOther, units, costPerUnit, markup]);
+    const hourly = projectValues.labor * projectValues.hourlyRate;
+    const markUpPercent = projectValues.markUp / 100 + 1;
+    setCostPerUnit((projectValues.materials + hourly + projectValues.other) / projectValues.units);
+    setPricePerUnit(costPerUnit * markUpPercent);
+  }, [
+    projectValues,
+    projectValues.materials,
+    projectValues.other,
+    projectValues.units,
+    costPerUnit,
+    projectValues.markUp,
+  ]);
 
   const handleCostClick = () => {
     setcostIsOpen(!costIsOpen);
@@ -106,7 +116,12 @@ const ProjFinance = ({
               type="number"
               name="materials"
               defaultValue={materialTotals}
-              onChange={(e) => setUpdatedMaterials(parseInt(e.target.value, 10))}
+              onChange={(e) =>
+                setProjectValues({
+                  ...projectValues,
+                  [e.target.name]: parseInt(e.target.value, 10),
+                })
+              }
             />
           </label>
           <label htmlFor="labor">
@@ -115,25 +130,40 @@ const ProjFinance = ({
               type="number"
               name="labor"
               defaultValue={laborTotals}
-              onChange={(e) => setUpdatedLabor(parseInt(e.target.value, 10))}
+              onChange={(e) =>
+                setProjectValues({
+                  ...projectValues,
+                  [e.target.name]: parseInt(e.target.value, 10),
+                })
+              }
             />
           </label>
-          <label htmlFor="labor">
+          <label htmlFor="hourlyRate">
             Hourly Rate
             <input
               type="number"
-              name="hourly"
-              defaultValue={updatedHourly}
-              onChange={(e) => setUpdatedHourly(parseInt(e.target.value, 10))}
+              name="hourlyRate"
+              defaultValue={projectValues.hourlyRate}
+              onChange={(e) =>
+                setProjectValues({
+                  ...projectValues,
+                  [e.target.name]: parseInt(e.target.value, 10),
+                })
+              }
             />
           </label>
-          <label htmlFor="labor">
+          <label htmlFor="other">
             Other Costs:
             <input
               type="number"
               name="other"
               defaultValue={otherTotals}
-              onChange={(e) => setUpdatedOther(parseInt(e.target.value, 10))}
+              onChange={(e) =>
+                setProjectValues({
+                  ...projectValues,
+                  [e.target.name]: parseInt(e.target.value, 10),
+                })
+              }
             />
           </label>
           <label htmlFor="units">
@@ -141,17 +171,27 @@ const ProjFinance = ({
             <input
               type="number"
               name="units"
-              defaultValue={units}
-              onChange={(e) => setUnits(parseInt(e.target.value, 10))}
+              defaultValue={projectValues.units}
+              onChange={(e) =>
+                setProjectValues({
+                  ...projectValues,
+                  [e.target.name]: parseInt(e.target.value, 10),
+                })
+              }
             />
           </label>
-          <label htmlFor="markup">
+          <label htmlFor="markUp">
             Desired Markup (%):
             <input
               type="number"
-              name="markup"
-              defaultValue={(markup - 1) * 100}
-              onChange={(e) => setMarkup(parseInt(e.target.value, 10) / 100 + 1)}
+              name="markUp"
+              defaultValue={projectValues.markUp}
+              onChange={(e) =>
+                setProjectValues({
+                  ...projectValues,
+                  [e.target.name]: parseInt(e.target.value, 10),
+                })
+              }
             />
           </label>
           <h1>Cost per Unit: {costPerUnit}</h1>
