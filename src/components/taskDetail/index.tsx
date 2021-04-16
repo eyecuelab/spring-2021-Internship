@@ -9,7 +9,6 @@ type TaskDetailProps = {
 };
 
 const TaskDetail = ({ toggleModal, task }: TaskDetailProps): JSX.Element => {
-  console.log({ task });
   const ActivityItems: JSX.Element[] = task.activity.map((e) => {
     const date = dayjs(e.dateTime).format('ddd MM/DD/YYYY h:mm a');
     return (
