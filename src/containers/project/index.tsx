@@ -21,6 +21,11 @@ import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
 
+type ProjectTypes = {
+  formerStatus: string;
+  todo: string;
+};
+
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const projectName = useSelector(selectors.selectProjectName);
@@ -79,30 +84,27 @@ const Project = (): JSX.Element => {
     dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes, hours }));
     setFinanceModalView(!showFinanceModal);
   };
-
   const handleOnDragEnd = (result: any) => {
     if (result.destination !== null) {
+      const LISTS: any = {
+        todo: toDoList,
+        doing: doingList,
+        done: doneList,
+      };
       const taskStatus = result.destination.droppableId;
       const formerStatus = result.source.droppableId;
       const fromIndex = result.source.index;
       const toIndex = result.destination.index;
-      if (result.source.droppableId === 'todo') {
-        const { taskName, id, activity } = toDoList[result.source.index];
+      if (LISTS[formerStatus]) {
+        if (formerStatus !== LISTS) {
+          console.error(`Former Status Unrecognized:"${formerStatus}"`);
+        }
+        const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
         dispatch(
           moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
         );
-      } else if (result.source.droppableId === 'doing') {
-        const { taskName, id, activity } = doingList[result.source.index];
-        dispatch(
-          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
-        );
-      } else if (result.source.droppableId === 'done') {
-        const { taskName, id, activity } = doneList[result.source.index];
-        // const { taskName } = doneList[result.source.index];
-        // const { id } = doneList[result.source.index];
-        dispatch(
-          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
-        );
+      } else {
+        console.error(`Unrecognized result.source.droppableId: "${result.source.droppableId}".`);
       }
     }
   };
@@ -189,12 +191,12 @@ const Project = (): JSX.Element => {
     return total;
   }
 
-  function calculateLaborTotal(arr: Array<FinanceItem>): string {
+  function calculateLaborTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
       total += e.minutes;
     });
-    return (total / 60).toFixed(2);
+    return total / 60;
   }
 
   function calculateOtherTotal(arr: Array<FinanceItem>): number {
