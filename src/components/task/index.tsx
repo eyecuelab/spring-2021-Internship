@@ -36,9 +36,8 @@ const Task = ({ taskName, toggleModal, id, status, selectTask }: TaskProps): JSX
     return taskSelected[0];
   };
 
-  const clickAction = (taskStatus: string) => {
+  const clickAction = () => {
     toggleModal();
-    console.log(taskStatus);
     if (status === 'todo') {
       selectTask(filterForToDoTask(id));
     } else if (status === 'doing') {
@@ -50,7 +49,7 @@ const Task = ({ taskName, toggleModal, id, status, selectTask }: TaskProps): JSX
 
   return (
     <>
-      <Wrapper onClick={() => clickAction(status)}>{taskName}</Wrapper>
+      <Wrapper onClick={clickAction}>{taskName}</Wrapper>
     </>
   );
 };

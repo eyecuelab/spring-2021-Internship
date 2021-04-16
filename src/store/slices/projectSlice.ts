@@ -1,11 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 // eslint-disable-next-line
 import { RootState } from '../store';
+
+interface ActivityItem {
+  dateTime: dayjs.Dayjs;
+  description: string;
+}
 
 export interface TaskItem {
   taskName: string;
   taskStatus: any;
   id: string;
+  activity: Array<ActivityItem>;
 }
 
 export interface FinanceItem {
@@ -39,6 +46,8 @@ function idMaker(projectName: string) {
   return b + a;
 }
 
+const now = dayjs();
+
 export const projectSlice = createSlice({
   name: 'project',
   initialState,
@@ -52,6 +61,7 @@ export const projectSlice = createSlice({
     setId: (state) => {
       state.id = idMaker(state.projectName);
     },
+
     addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
       state.tasks[action.payload.taskStatus] = [
         ...(state.tasks[action.payload.taskStatus] || []),
@@ -59,6 +69,12 @@ export const projectSlice = createSlice({
           taskName: action.payload.taskName,
           taskStatus: action.payload.taskStatus,
           id: idMaker(action.payload.taskName),
+          activity: [
+            {
+              dateTime: now,
+              description: `${action.payload.taskName} created and added to ${action.payload.taskStatus}`,
+            },
+          ],
         },
       ];
     },
@@ -69,6 +85,7 @@ export const projectSlice = createSlice({
         id: string;
         formerStatus: string;
         taskStatus: string;
+        activity: Array<ActivityItem>;
         fromIndex: number;
         toIndex: number;
       }>
@@ -81,6 +98,13 @@ export const projectSlice = createSlice({
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
         id: action.payload.id,
+        activity: [
+          ...action.payload.activity,
+          {
+            dateTime: now,
+            description: `${action.payload.taskName} was moved to ${action.payload.taskStatus}`,
+          },
+        ],
       });
       state.tasks[action.payload.taskStatus] = updatedDestinationArray;
     },

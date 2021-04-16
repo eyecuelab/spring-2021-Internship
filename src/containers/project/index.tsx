@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
+import dayjs from 'dayjs';
 import {
   addTask,
   clearTasks,
@@ -33,7 +34,12 @@ const Project = (): JSX.Element => {
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
+  const [selectedTask, setSelectedTask] = useState<TaskItem>({
+    taskName: '',
+    taskStatus: '',
+    id: '',
+    activity: [],
+  });
 
   const handleToggleNewTask = () => {
     setTaskModalView(!showTaskModal);
@@ -56,6 +62,7 @@ const Project = (): JSX.Element => {
   };
 
   const handleAddingTask = (taskName: string, taskStatus: string) => {
+    // const activity = now
     dispatch(addTask({ taskName, taskStatus }));
     setTaskModalView(!showTaskModal);
   };
@@ -80,17 +87,22 @@ const Project = (): JSX.Element => {
       const fromIndex = result.source.index;
       const toIndex = result.destination.index;
       if (result.source.droppableId === 'todo') {
-        const { taskName } = toDoList[result.source.index];
-        const { id } = toDoList[result.source.index];
-        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
+        const { taskName, id, activity } = toDoList[result.source.index];
+        dispatch(
+          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+        );
       } else if (result.source.droppableId === 'doing') {
-        const { taskName } = doingList[result.source.index];
-        const { id } = doingList[result.source.index];
-        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
+        const { taskName, id, activity } = doingList[result.source.index];
+        dispatch(
+          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+        );
       } else if (result.source.droppableId === 'done') {
-        const { taskName } = doneList[result.source.index];
-        const { id } = doneList[result.source.index];
-        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
+        const { taskName, id, activity } = doneList[result.source.index];
+        // const { taskName } = doneList[result.source.index];
+        // const { id } = doneList[result.source.index];
+        dispatch(
+          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+        );
       }
     }
   };
@@ -167,8 +179,7 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const currentDate = new Date(dueDate);
-  const stringDate = currentDate.toDateString();
+  const projDate = dayjs(dueDate).format('MM/DD/YYYY');
 
   function calculateMaterialTotal(arr: Array<FinanceItem>): number {
     let total = 0;
@@ -226,7 +237,7 @@ const Project = (): JSX.Element => {
   return (
     <>
       <h1>{projectName}</h1>
-      <h1>{stringDate}</h1>
+      <h2>Due Date: {projDate}</h2>
       {showTaskModal && (
         <NewTaskModal toggleModal={handleToggleNewTask} addNewTask={handleAddingTask} />
       )}
