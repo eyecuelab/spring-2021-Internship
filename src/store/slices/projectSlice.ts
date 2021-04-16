@@ -6,6 +6,7 @@ export interface TaskItem {
   taskName: string;
   taskStatus: any;
   id: string;
+  activity: Array<string>;
 }
 
 export interface FinanceItem {
@@ -59,6 +60,7 @@ export const projectSlice = createSlice({
           taskName: action.payload.taskName,
           taskStatus: action.payload.taskStatus,
           id: idMaker(action.payload.taskName),
+          activity: [],
         },
       ];
     },
@@ -69,6 +71,7 @@ export const projectSlice = createSlice({
         id: string;
         formerStatus: string;
         taskStatus: string;
+        activity: Array<string>;
         fromIndex: number;
         toIndex: number;
       }>
@@ -81,6 +84,7 @@ export const projectSlice = createSlice({
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
         id: action.payload.id,
+        activity: action.payload.activity,
       });
       state.tasks[action.payload.taskStatus] = updatedDestinationArray;
     },

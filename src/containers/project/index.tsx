@@ -80,17 +80,22 @@ const Project = (): JSX.Element => {
       const fromIndex = result.source.index;
       const toIndex = result.destination.index;
       if (result.source.droppableId === 'todo') {
-        const { taskName } = toDoList[result.source.index];
-        const { id } = toDoList[result.source.index];
-        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
+        const { taskName, id, activity } = toDoList[result.source.index];
+        dispatch(
+          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+        );
       } else if (result.source.droppableId === 'doing') {
-        const { taskName } = doingList[result.source.index];
-        const { id } = doingList[result.source.index];
-        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
+        const { taskName, id, activity } = toDoList[result.source.index];
+        dispatch(
+          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+        );
       } else if (result.source.droppableId === 'done') {
-        const { taskName } = doneList[result.source.index];
-        const { id } = doneList[result.source.index];
-        dispatch(moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex }));
+        const { taskName, id, activity } = toDoList[result.source.index];
+        // const { taskName } = doneList[result.source.index];
+        // const { id } = doneList[result.source.index];
+        dispatch(
+          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+        );
       }
     }
   };
