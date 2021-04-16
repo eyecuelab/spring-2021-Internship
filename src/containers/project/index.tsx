@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
+import dayjs from 'dayjs';
 import {
   addTask,
   clearTasks,
@@ -56,6 +57,7 @@ const Project = (): JSX.Element => {
   };
 
   const handleAddingTask = (taskName: string, taskStatus: string) => {
+    // const activity = now
     dispatch(addTask({ taskName, taskStatus }));
     setTaskModalView(!showTaskModal);
   };
@@ -172,8 +174,7 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const currentDate = new Date(dueDate);
-  const stringDate = currentDate.toDateString();
+  const projDate = dayjs(dueDate).format('MM/DD/YYYY');
 
   function calculateMaterialTotal(arr: Array<FinanceItem>): number {
     let total = 0;
@@ -231,7 +232,7 @@ const Project = (): JSX.Element => {
   return (
     <>
       <h1>{projectName}</h1>
-      <h1>{stringDate}</h1>
+      <h2>Due Date: {projDate}</h2>
       {showTaskModal && (
         <NewTaskModal toggleModal={handleToggleNewTask} addNewTask={handleAddingTask} />
       )}
