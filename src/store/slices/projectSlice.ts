@@ -1,4 +1,4 @@
-import { bindActionCreators, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line
 import { RootState } from '../store';
 
@@ -146,7 +146,7 @@ export const {
   addLineItem,
   clearItems,
   setProjectDueDate,
-  updateTaskStatus,
+  // updateTaskStatus,
   moveTask,
 } = projectSlice.actions;
 

@@ -74,11 +74,11 @@ const Project = (): JSX.Element => {
   };
 
   const handleOnDragEnd = (result: any) => {
-    const taskStatus = result.destination.droppableId;
-    const formerStatus = result.source.droppableId;
-    const fromIndex = result.source.index;
-    const toIndex = result.destination.index;
     if (result.destination !== null) {
+      const taskStatus = result.destination.droppableId;
+      const formerStatus = result.source.droppableId;
+      const fromIndex = result.source.index;
+      const toIndex = result.destination.index;
       if (result.source.droppableId === 'todo') {
         const { taskName } = toDoList[result.source.index];
         const { id } = toDoList[result.source.index];
