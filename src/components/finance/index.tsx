@@ -63,7 +63,9 @@ const Finance = ({
           {columnOne}
         </HeadingName>
         <HeadingTotal open={isOpen}>
-          {columnOne === 'Activity' ? `Total: ${totals} hrs` : `Total: $${totals}.00`}
+          {columnOne === 'Activity'
+            ? `Total: ${totals.toFixed(2)} hrs`
+            : `Total: $${totals.toFixed(2)}`}
         </HeadingTotal>
       </HeadingContainer>
       <Wrapper open={isOpen}>
@@ -81,7 +83,11 @@ const Finance = ({
         {children}
         <Grid columns={3}>
           <Cell left={3}>
-            {columnOne === 'Activity' ? <h2>Total Hours {totals}</h2> : <h2>Total ${totals}.00</h2>}
+            {columnOne === 'Activity' ? (
+              <h2>Total Hours {totals.toFixed(2)}</h2>
+            ) : (
+              <h2>Total ${totals.toFixed(2)}</h2>
+            )}
           </Cell>
         </Grid>
       </Wrapper>
