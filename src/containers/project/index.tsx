@@ -92,12 +92,12 @@ const Project = (): JSX.Element => {
           moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
         );
       } else if (result.source.droppableId === 'doing') {
-        const { taskName, id, activity } = toDoList[result.source.index];
+        const { taskName, id, activity } = doingList[result.source.index];
         dispatch(
           moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
         );
       } else if (result.source.droppableId === 'done') {
-        const { taskName, id, activity } = toDoList[result.source.index];
+        const { taskName, id, activity } = doneList[result.source.index];
         // const { taskName } = doneList[result.source.index];
         // const { id } = doneList[result.source.index];
         dispatch(

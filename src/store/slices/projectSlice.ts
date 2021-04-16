@@ -61,9 +61,7 @@ export const projectSlice = createSlice({
     setId: (state) => {
       state.id = idMaker(state.projectName);
     },
-    // setTaskDate: (state, action: PayloadAction<Date>) => {
 
-    // }
     addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
       state.tasks[action.payload.taskStatus] = [
         ...(state.tasks[action.payload.taskStatus] || []),
@@ -100,7 +98,13 @@ export const projectSlice = createSlice({
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
         id: action.payload.id,
-        activity: action.payload.activity,
+        activity: [
+          ...action.payload.activity,
+          {
+            dateTime: now,
+            description: `${action.payload.taskName} was moved to ${action.payload.taskStatus}`,
+          },
+        ],
       });
       state.tasks[action.payload.taskStatus] = updatedDestinationArray;
     },
