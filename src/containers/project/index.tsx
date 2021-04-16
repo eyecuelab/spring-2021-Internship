@@ -34,7 +34,12 @@ const Project = (): JSX.Element => {
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
+  const [selectedTask, setSelectedTask] = useState<TaskItem>({
+    taskName: '',
+    taskStatus: '',
+    id: '',
+    activity: [],
+  });
 
   const handleToggleNewTask = () => {
     setTaskModalView(!showTaskModal);
