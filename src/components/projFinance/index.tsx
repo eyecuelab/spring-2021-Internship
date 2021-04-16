@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { FaPlus } from 'react-icons/fa';
@@ -36,7 +36,6 @@ const ProjFinance = ({
   otherItems,
   handleToggleFinance,
 }: ProjFinanceProps): JSX.Element => {
-  console.log('rendered');
   const [costIsOpen, setcostIsOpen] = useState(true);
   const [analysisIsOpen, setanalysisIsOpen] = useState(true);
   const [costPerUnit, setCostPerUnit] = useState(0);
@@ -47,6 +46,12 @@ const ProjFinance = ({
   const [updatedHourly, setUpdatedHourly] = useState(15);
   const [markup, setMarkup] = useState(1.35);
   const [pricePerUnit, setPricePerUnit] = useState(0);
+  const hourly = updatedLabor * updatedHourly;
+
+  useEffect(() => {
+    setCostPerUnit((updatedMaterials + hourly + updatedOther) / units);
+    setPricePerUnit(costPerUnit * markup);
+  }, [updatedMaterials, hourly, updatedOther, units, costPerUnit, markup]);
 
   const handleCostClick = () => {
     setcostIsOpen(!costIsOpen);
@@ -54,13 +59,6 @@ const ProjFinance = ({
 
   const handleAnalysisClick = () => {
     setanalysisIsOpen(!analysisIsOpen);
-  };
-
-  const calcTotal = () => {
-    const hourly = updatedLabor * updatedHourly;
-    setCostPerUnit((updatedMaterials + hourly + updatedOther) / units);
-    setPricePerUnit(costPerUnit * markup);
-    console.log(costPerUnit);
   };
 
   return (
@@ -101,7 +99,7 @@ const ProjFinance = ({
       </Heading>
       <Wrapper open={analysisIsOpen}>
         <h1>This will be where some analysis magic happens</h1>
-        <form onChange={calcTotal}>
+        <form>
           <label htmlFor="materials">
             Material Totals:
             <input
@@ -156,12 +154,6 @@ const ProjFinance = ({
               onChange={(e) => setMarkup(parseInt(e.target.value, 10) / 100 + 1)}
             />
           </label>
-          {/* <h1>Material Costs: {updatedMaterials}</h1>
-          <h1>Hours: {updatedLabor}</h1>
-          <h1>Other Costs: {updatedOther}</h1> */}
-          <button type="button" onClick={calcTotal}>
-            Calc
-          </button>
           <h1>Cost per Unit: {costPerUnit}</h1>
           <h1>Suggested Price per Unit: {pricePerUnit}</h1>
         </form>
