@@ -16,6 +16,10 @@ const TaskDetail = ({ toggleModal, task }: TaskDetailProps): JSX.Element => {
           <h2>Task Detail</h2>
           <h3>{task?.taskName}</h3>
           <h4>Status: {task?.taskStatus}</h4>
+          <div>
+            <h4>Activity:</h4>
+            <div>{task?.activity}</div>
+          </div>
         </>
       </Modal>
     </>
