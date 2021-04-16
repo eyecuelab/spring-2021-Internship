@@ -1,7 +1,18 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import styled from 'styled-components';
 import { Modal } from '../modal';
 import { TaskItem } from '../../store/slices/projectSlice';
+
+const LogWrapper = styled.div`
+  margin: auto;
+  width: 325px;
+  max-height: 200px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-x: hidden;
+`;
 
 type TaskDetailProps = {
   toggleModal: () => void;
@@ -27,10 +38,8 @@ const TaskDetail = ({ toggleModal, task }: TaskDetailProps): JSX.Element => {
           <h2>Task Detail</h2>
           <h3>{task?.taskName}</h3>
           <h4>Status: {task?.taskStatus}</h4>
-          <div>
-            <h4>Activity:</h4>
-            {ActivityItems}
-          </div>
+          <h4>Activity:</h4>
+          <LogWrapper>{ActivityItems}</LogWrapper>
         </>
       </Modal>
     </>

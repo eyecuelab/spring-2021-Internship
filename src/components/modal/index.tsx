@@ -18,7 +18,7 @@ const Card = styled.div`
   border-radius: 8px;
   margin: auto;
   margin-top: 100px;
-  height: auto;
+  max-height: 500px;
   z-index: 100000;
   padding: 20px 0 20px 0;
   background-color: DarkSeaGreen;
