@@ -103,9 +103,9 @@ const Project = (): JSX.Element => {
       const fromIndex = result.source.index;
       const toIndex = result.destination.index;
       if (LISTS[formerStatus]) {
-        if (formerStatus !== LISTS) {
-          console.error(`Former Status Unrecognized:"${formerStatus}"`);
-        }
+        // if (formerStatus !== LISTS) {
+        //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
+        // }
         const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
         dispatch(
           moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })

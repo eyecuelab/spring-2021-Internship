@@ -7,7 +7,7 @@ import { Modal } from '../modal';
 type ModalProps = {
   addNewFinance: (
     itemName: string,
-    itemPrice: string,
+    itemPrice: number,
     quantity: number,
     category: string,
     date: Date,
@@ -20,7 +20,7 @@ type ModalProps = {
 type Inputs = {
   category: string;
   itemName: string;
-  itemPrice: string;
+  itemPrice: number;
   quantity: number;
   hours: number;
   minutes: number;
@@ -56,8 +56,10 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       <>
         <input placeholder="Material Name" {...register('itemName', { required: true })} />
         {errors.itemName && <p>This field is required</p>}
-        <input type="number" placeholder="Price (per unit)" {...register('itemPrice')} />
-        <input type="number" placeholder="Quantity" {...register('quantity')} />
+        <input type="float" placeholder="Price (per unit)" {...register('itemPrice', { min: 0 })} />
+        {errors.itemPrice && <p>This must be greater than or equal to 0</p>}
+        <input type="number" placeholder="Quantity" {...register('quantity', { min: 1 })} />
+        {errors.quantity && <p>This must be higher than 0</p>}
       </>
     );
   };
@@ -84,7 +86,8 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       <>
         <input defaultValue="test" {...register('itemName', { required: true })} />
         {errors.itemName && <p>This field is required</p>}
-        <input type="number" placeholder="itemPrice" {...register('itemPrice')} />
+        <input type="float" placeholder="itemPrice" {...register('itemPrice', { min: 0 })} />
+        {errors.itemPrice && <p>This must be greater than or equal to 0</p>}
       </>
     );
   };

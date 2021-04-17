@@ -8,7 +8,7 @@ const LineItem = styled.h3`
 
 type ItemProps = {
   itemName: string;
-  itemPrice?: string;
+  itemPrice?: number;
   quantity?: number;
   minutes?: any;
   category?: string;
@@ -37,7 +37,7 @@ const Item = ({
           <LineItem>{category === 'labor' ? laborTime : quantity}</LineItem>
         </Cell>
         <Cell>
-          <LineItem>{category === 'labor' ? stringDate : `$${itemPrice}.00`}</LineItem>
+          <LineItem>{category === 'labor' ? stringDate : `$${itemPrice}`}</LineItem>
         </Cell>
       </Grid>
     </>
