@@ -11,6 +11,7 @@ import {
   // updateTaskStatus,
   TaskItem,
   moveTask,
+  deleteTask,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -72,9 +73,15 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
+  const handleDeleteTask = (taskStatus: string, id: string) => {
+    // const activity = now
+    dispatch(deleteTask({ taskStatus, id }));
+    setTaskDetailView(!showTaskDetail);
+  };
+
   const handleAddingFinance = (
     itemName: string,
-    itemPrice: string,
+    itemPrice: number,
     quantity: number,
     category: string,
     date: Date,
@@ -186,7 +193,7 @@ const Project = (): JSX.Element => {
   function calculateMaterialTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
-      total += parseInt(e.itemPrice, 10) * e.quantity;
+      total += e.itemPrice * e.quantity;
     });
     return total;
   }
@@ -202,7 +209,7 @@ const Project = (): JSX.Element => {
   function calculateOtherTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
-      total += parseInt(e.itemPrice, 10);
+      total += e.itemPrice;
     });
     return total;
   }
@@ -246,7 +253,13 @@ const Project = (): JSX.Element => {
       {showFinanceModal && (
         <NewFinance toggleModal={handleToggleFinance} addNewFinance={handleAddingFinance} />
       )}
-      {showTaskDetail && <TaskDetail toggleModal={handleToggleTaskDetail} task={selectedTask} />}
+      {showTaskDetail && (
+        <TaskDetail
+          toggleModal={handleToggleTaskDetail}
+          task={selectedTask}
+          deleteTask={handleDeleteTask}
+        />
+      )}
       <ProjTask
         toDoItems={toDoItems}
         doingItems={doingItems}

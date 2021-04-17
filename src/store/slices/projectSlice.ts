@@ -17,7 +17,7 @@ export interface TaskItem {
 
 export interface FinanceItem {
   itemName: string;
-  itemPrice: string;
+  itemPrice: number;
   quantity: number;
   category: string;
   date: Date;
@@ -115,7 +115,7 @@ export const projectSlice = createSlice({
       state,
       action: PayloadAction<{
         itemName: string;
-        itemPrice: string;
+        itemPrice: number;
         quantity: number;
         category: string;
         date: Date;
@@ -137,6 +137,17 @@ export const projectSlice = createSlice({
     },
     clearItems: (state) => {
       state.items = initialState.items;
+    },
+    deleteTask: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        taskStatus: string;
+      }>
+    ) => {
+      state.tasks[action.payload.taskStatus] = state.tasks[action.payload.taskStatus].filter(
+        (e) => e.id !== action.payload.id
+      );
     },
     // updateTaskStatus: (
     //   state,
@@ -172,6 +183,7 @@ export const {
   setProjectDueDate,
   // updateTaskStatus,
   moveTask,
+  deleteTask,
 } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
