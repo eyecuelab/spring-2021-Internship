@@ -10,7 +10,7 @@ type ItemProps = {
   itemName: string;
   itemPrice?: string;
   quantity?: number;
-  minutes?: any;
+  minutes?: number;
   category?: string;
   date?: Date;
 };
@@ -19,7 +19,7 @@ const Item = ({
   itemName,
   itemPrice,
   quantity,
-  minutes,
+  minutes = 0,
   category,
   date,
 }: ItemProps): JSX.Element => {
@@ -49,7 +49,7 @@ export default Item;
 Item.defaultProps = {
   itemPrice: null,
   quantity: null,
-  minutes: null,
+  minutes: 0,
   date: Date.now,
   category: null,
 };

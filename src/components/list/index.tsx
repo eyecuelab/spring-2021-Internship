@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { FaPlus } from 'react-icons/fa';
 
 type ListProps = {

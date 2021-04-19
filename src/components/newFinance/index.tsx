@@ -47,7 +47,7 @@ const NewFinance = ({ toggleModal, addNewFinance }: ModalProps): JSX.Element => 
       data.hours
     );
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormType(event.target.value);
   };
 

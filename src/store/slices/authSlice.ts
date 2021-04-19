@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 // eslint-disable-next-line
 import { RootState } from '../store';
 
-interface AuthState {
+export interface AuthState {
   email: string;
   password: string;
   uuid: string;

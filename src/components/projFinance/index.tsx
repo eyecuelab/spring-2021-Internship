@@ -51,7 +51,7 @@ const ProjFinance = ({
   const { units, materials, labor, other, hourlyRate, markUp } = projectValues;
 
   useEffect(() => {
-    const hourly = labor * hourlyRate;
+    const hourly: number = labor * hourlyRate;
     const markUpPercent = markUp / 100 + 1;
     setCostPerUnit((materials + hourly + other) / units);
     setPricePerUnit(costPerUnit * markUpPercent);

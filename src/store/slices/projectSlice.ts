@@ -10,7 +10,7 @@ interface ActivityItem {
 
 export interface TaskItem {
   taskName: string;
-  taskStatus: any;
+  taskStatus: string;
   id: string;
   activity: Array<ActivityItem>;
 }

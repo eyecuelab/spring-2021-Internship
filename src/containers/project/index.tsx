@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, DropResult } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 import {
   addTask,
@@ -80,12 +80,12 @@ const Project = (): JSX.Element => {
     setFinanceModalView(!showFinanceModal);
   };
 
-  const handleOnDragEnd = (result: any) => {
-    if (result.destination !== null) {
+  const handleOnDragEnd = (result: DropResult) => {
+    if (result.destination && result.destination !== null) {
       const taskStatus = result.destination.droppableId;
       const formerStatus = result.source.droppableId;
       const fromIndex = result.source.index;
-      const toIndex = result.destination.index;
+      const toIndex = result?.destination?.index;
       if (result.source.droppableId === 'todo') {
         const { taskName, id, activity } = toDoList[result.source.index];
         dispatch(
@@ -189,12 +189,12 @@ const Project = (): JSX.Element => {
     return total;
   }
 
-  function calculateLaborTotal(arr: Array<FinanceItem>): string {
+  function calculateLaborTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
       total += e.minutes;
     });
-    return (total / 60).toFixed(2);
+    return total / 60;
   }
 
   function calculateOtherTotal(arr: Array<FinanceItem>): number {

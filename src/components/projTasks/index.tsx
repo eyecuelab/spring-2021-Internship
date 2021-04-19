@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
 import List from '../list';
@@ -33,7 +33,7 @@ type ProjTasksProps = {
   doingItems: JSX.Element[];
   doneItems: JSX.Element[];
   handleToggleNewTask: () => void;
-  handleOnDragEnd: (result: any) => void;
+  handleOnDragEnd: (result: DropResult) => void;
 };
 
 const ProjTasks = ({

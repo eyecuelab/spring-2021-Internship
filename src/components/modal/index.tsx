@@ -28,7 +28,7 @@ const Card = styled.div`
 
 type ModalProps = {
   children: JSX.Element;
-  width: any;
+  width: string | number;
   toggleModal: () => void;
 };
 
