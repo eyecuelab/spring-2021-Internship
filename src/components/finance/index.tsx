@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { Grid, Cell } from 'styled-css-grid';
+import { FaPlus } from 'react-icons/fa';
+import { Table } from 'semantic-ui-react';
 
 const Wrapper = styled.div<{ open: boolean }>`
   margin: 10px;
@@ -31,16 +32,13 @@ const HeadingTotal = styled.h4<{ open: boolean }>`
   margin: 0px 10px;
 `;
 
-const Name = styled.h3`
-  margin: 0 10px 0 10px;
-`;
-
 type FinanceProps = {
   columnOne: string;
   columnTwo: string;
   columnThree: string;
   totals: number;
   children?: JSX.Element;
+  handleToggleFinance: () => void;
 };
 
 const Finance = ({
@@ -49,6 +47,7 @@ const Finance = ({
   columnThree,
   children,
   totals,
+  handleToggleFinance,
 }: FinanceProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
@@ -69,27 +68,31 @@ const Finance = ({
         </HeadingTotal>
       </HeadingContainer>
       <Wrapper open={isOpen}>
-        <Grid columns={3}>
-          <Cell>
-            <Name>{columnOne}</Name>
-          </Cell>
-          <Cell>
-            <Name>{columnTwo}</Name>
-          </Cell>
-          <Cell>
-            <Name>{columnThree}</Name>
-          </Cell>
-        </Grid>
-        {children}
-        <Grid columns={3}>
-          <Cell left={3}>
-            {columnOne === 'Activity' ? (
-              <h2>Total Hours {totals.toFixed(2)}</h2>
-            ) : (
-              <h2>Total ${totals.toFixed(2)}</h2>
-            )}
-          </Cell>
-        </Grid>
+        <Table basic="very" celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>{columnOne}</Table.HeaderCell>
+              <Table.HeaderCell>{columnTwo}</Table.HeaderCell>
+              <Table.HeaderCell>{columnThree}</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          {children}
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell>
+                <FaPlus onClick={handleToggleFinance} />
+              </Table.HeaderCell>
+              <Table.HeaderCell />
+              <Table.HeaderCell>
+                {columnOne === 'Activity' ? (
+                  <h2>Total Hours {totals.toFixed(2)}</h2>
+                ) : (
+                  <h2>Total ${totals.toFixed(2)}</h2>
+                )}
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
+        </Table>
       </Wrapper>
     </>
   );
@@ -100,19 +103,3 @@ export default Finance;
 Finance.defaultProps = {
   children: null,
 };
-
-// const Wrapper = styled.div`
-//   margin: 10px;
-//   max-height: ${isOpen ? '100%' : '0'};
-//   overflow: hidden;
-//   padding: ${isOpen ? '25px 0' : '0'};
-//   transition: all 0.3s ease-out;
-// `;
-
-// const HeadingName = styled.h2`
-//   margin: 0 10px 0 10px;
-// `;
-
-// const Name = styled.h3`
-//   margin: 0 10px 0 10px;
-// `;

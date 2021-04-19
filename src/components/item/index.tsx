@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Grid, Cell } from 'styled-css-grid';
+import { Table } from 'semantic-ui-react';
 
 const LineItem = styled.h3`
   margin: 0 10px 0 10px;
@@ -29,17 +29,13 @@ const Item = ({
   const laborTime = (minutes / 60).toFixed(2);
   return (
     <>
-      <Grid columns={3}>
-        <Cell>
-          <LineItem>{itemName}</LineItem>
-        </Cell>
-        <Cell>
-          <LineItem>{category === 'labor' ? laborTime : quantity}</LineItem>
-        </Cell>
-        <Cell>
-          <LineItem>{category === 'labor' ? stringDate : `$${itemPrice}`}</LineItem>
-        </Cell>
-      </Grid>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>{itemName}</Table.Cell>
+          <Table.Cell>{category === 'labor' ? laborTime : quantity}</Table.Cell>
+          <Table.Cell>{category === 'labor' ? stringDate : `$${itemPrice}`}</Table.Cell>
+        </Table.Row>
+      </Table.Body>
     </>
   );
 };

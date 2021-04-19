@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { FaPlus } from 'react-icons/fa';
 import Finance from '../finance';
 
 const Wrapper = styled.div<{ open: boolean }>`
@@ -77,24 +76,28 @@ const ProjFinance = ({
           columnTwo="Quantity"
           columnThree="Cost (Per Unit)"
           totals={materialTotals}
+          handleToggleFinance={handleToggleFinance}
         >
-          <>
-            {materialItems}
-            <FaPlus onClick={handleToggleFinance} />
-          </>
+          <>{materialItems}</>
         </Finance>
 
-        <Finance columnOne="Activity" columnTwo="Hours" columnThree="Date" totals={laborTotals}>
-          <>
-            {laborItems}
-            <FaPlus onClick={handleToggleFinance} />
-          </>
+        <Finance
+          columnOne="Activity"
+          columnTwo="Hours"
+          columnThree="Date"
+          totals={laborTotals}
+          handleToggleFinance={handleToggleFinance}
+        >
+          <>{laborItems}</>
         </Finance>
-        <Finance columnOne="Other Cost" columnTwo="" columnThree="Cost" totals={otherTotals}>
-          <>
-            {otherItems}
-            <FaPlus onClick={handleToggleFinance} />
-          </>
+        <Finance
+          columnOne="Other Cost"
+          columnTwo=""
+          columnThree="Cost"
+          totals={otherTotals}
+          handleToggleFinance={handleToggleFinance}
+        >
+          <>{otherItems}</>
         </Finance>
       </Wrapper>
       <Heading onClick={handleAnalysisClick}>
