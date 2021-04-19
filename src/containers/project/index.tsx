@@ -11,6 +11,7 @@ import {
   // updateTaskStatus,
   TaskItem,
   moveTask,
+  deleteTask,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -20,6 +21,11 @@ import Task from '../../components/task';
 import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
+
+type ProjectTypes = {
+  formerStatus: string;
+  todo: string;
+};
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -67,9 +73,15 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
+  const handleDeleteTask = (taskStatus: string, id: string) => {
+    // const activity = now
+    dispatch(deleteTask({ taskStatus, id }));
+    setTaskDetailView(!showTaskDetail);
+  };
+
   const handleAddingFinance = (
     itemName: string,
-    itemPrice: string,
+    itemPrice: number,
     quantity: number,
     category: string,
     date: Date,
@@ -80,29 +92,27 @@ const Project = (): JSX.Element => {
     setFinanceModalView(!showFinanceModal);
   };
 
-  const handleOnDragEnd = (result: DropResult) => {
-    if (result.destination && result.destination !== null) {
+  const handleOnDragEnd = (result: any) => {
+    if (result.destination !== null) {
+      const LISTS: any = {
+        todo: toDoList,
+        doing: doingList,
+        done: doneList,
+      };
       const taskStatus = result.destination.droppableId;
       const formerStatus = result.source.droppableId;
       const fromIndex = result.source.index;
-      const toIndex = result?.destination?.index;
-      if (result.source.droppableId === 'todo') {
-        const { taskName, id, activity } = toDoList[result.source.index];
+      const toIndex = result.destination.index;
+      if (LISTS[formerStatus]) {
+        // if (formerStatus !== LISTS) {
+        //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
+        // }
+        const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
         dispatch(
           moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
         );
-      } else if (result.source.droppableId === 'doing') {
-        const { taskName, id, activity } = doingList[result.source.index];
-        dispatch(
-          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
-        );
-      } else if (result.source.droppableId === 'done') {
-        const { taskName, id, activity } = doneList[result.source.index];
-        // const { taskName } = doneList[result.source.index];
-        // const { id } = doneList[result.source.index];
-        dispatch(
-          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
-        );
+      } else {
+        console.error(`Unrecognized result.source.droppableId: "${result.source.droppableId}".`);
       }
     }
   };
@@ -184,7 +194,7 @@ const Project = (): JSX.Element => {
   function calculateMaterialTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
-      total += parseInt(e.itemPrice, 10) * e.quantity;
+      total += e.itemPrice * e.quantity;
     });
     return total;
   }
@@ -200,7 +210,7 @@ const Project = (): JSX.Element => {
   function calculateOtherTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
-      total += parseInt(e.itemPrice, 10);
+      total += e.itemPrice;
     });
     return total;
   }
@@ -244,7 +254,13 @@ const Project = (): JSX.Element => {
       {showFinanceModal && (
         <NewFinance toggleModal={handleToggleFinance} addNewFinance={handleAddingFinance} />
       )}
-      {showTaskDetail && <TaskDetail toggleModal={handleToggleTaskDetail} task={selectedTask} />}
+      {showTaskDetail && (
+        <TaskDetail
+          toggleModal={handleToggleTaskDetail}
+          task={selectedTask}
+          deleteTask={handleDeleteTask}
+        />
+      )}
       <ProjTask
         toDoItems={toDoItems}
         doingItems={doingItems}
