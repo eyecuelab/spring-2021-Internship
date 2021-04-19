@@ -103,94 +103,122 @@ const ProjFinance = ({
       </Heading>
       <Wrapper open={analysisIsOpen}>
         <h1>This will be where some analysis magic happens</h1>
-        <form>
-          <label htmlFor="materials">
-            Material Totals:
-            <input
-              type="number"
-              name="materials"
-              defaultValue={materialTotals}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-          <label htmlFor="labor">
-            Labor Totals:
-            <input
-              type="number"
-              name="labor"
-              defaultValue={laborTotals}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-          <label htmlFor="hourlyRate">
-            Hourly Rate
-            <input
-              type="number"
-              name="hourlyRate"
-              defaultValue={hourlyRate}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-          <label htmlFor="other">
-            Other Costs:
-            <input
-              type="number"
-              name="other"
-              defaultValue={otherTotals}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-          <label htmlFor="units">
-            Total Units Produced:
-            <input
-              type="number"
-              name="units"
-              defaultValue={units}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-          <label htmlFor="markUp">
-            Desired Markup (%):
-            <input
-              type="number"
-              name="markUp"
-              defaultValue={markUp}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-          <h1>Cost per Unit: {costPerUnit}</h1>
-          <h1>Suggested Price per Unit: {pricePerUnit}</h1>
-        </form>
+        <div className="ui form">
+          <div className="two fields">
+            <div className="field">
+              <label htmlFor="materials">
+                Material Totals:
+                <input
+                  type="number"
+                  name="materials"
+                  defaultValue={materialTotals}
+                  onChange={(e) =>
+                    setProjectValues({
+                      ...projectValues,
+                      [e.target.name]: parseInt(e.target.value, 10),
+                    })
+                  }
+                />
+              </label>
+            </div>
+            <div className="field">
+              <label htmlFor="labor">
+                Labor Totals:
+                <input
+                  type="number"
+                  name="labor"
+                  defaultValue={laborTotals}
+                  onChange={(e) =>
+                    setProjectValues({
+                      ...projectValues,
+                      [e.target.name]: parseInt(e.target.value, 10),
+                    })
+                  }
+                />
+              </label>
+            </div>
+          </div>
+          <div className="two fields">
+            <div className="field">
+              <label htmlFor="hourlyRate">
+                Hourly Rate
+                <input
+                  type="number"
+                  name="hourlyRate"
+                  defaultValue={hourlyRate}
+                  onChange={(e) =>
+                    setProjectValues({
+                      ...projectValues,
+                      [e.target.name]: parseInt(e.target.value, 10),
+                    })
+                  }
+                />
+              </label>
+            </div>
+            <div className="field">
+              <label htmlFor="other">
+                Other Costs:
+                <input
+                  type="number"
+                  name="other"
+                  defaultValue={otherTotals}
+                  onChange={(e) =>
+                    setProjectValues({
+                      ...projectValues,
+                      [e.target.name]: parseInt(e.target.value, 10),
+                    })
+                  }
+                />
+              </label>
+            </div>
+          </div>
+          <div className="two fields">
+            <div className="field">
+              <label htmlFor="units">
+                Total Units Produced:
+                <input
+                  type="number"
+                  name="units"
+                  defaultValue={units}
+                  onChange={(e) =>
+                    setProjectValues({
+                      ...projectValues,
+                      [e.target.name]: parseInt(e.target.value, 10),
+                    })
+                  }
+                />
+              </label>
+            </div>
+            <div className="field">
+              <label htmlFor="markUp">
+                Desired Markup (%):
+                <input
+                  type="number"
+                  name="markUp"
+                  defaultValue={markUp}
+                  onChange={(e) =>
+                    setProjectValues({
+                      ...projectValues,
+                      [e.target.name]: parseInt(e.target.value, 10),
+                    })
+                  }
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="ui two statistics">
+          <div className="statistic">
+            <div className="value">${costPerUnit.toFixed(2)}</div>
+            <div className="label">Cost per Unit</div>
+          </div>
+          <div className="statistic">
+            <div className="ui statistic">
+              <div className="value">${pricePerUnit.toFixed(2)}</div>
+              <div className="label">Price per Unit</div>
+            </div>
+          </div>
+        </div>
       </Wrapper>
     </>
   );
