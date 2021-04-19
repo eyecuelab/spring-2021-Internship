@@ -22,11 +22,6 @@ import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
 
-type ProjectTypes = {
-  formerStatus: string;
-  todo: string;
-};
-
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const projectName = useSelector(selectors.selectProjectName);
@@ -92,9 +87,9 @@ const Project = (): JSX.Element => {
     setFinanceModalView(!showFinanceModal);
   };
 
-  const handleOnDragEnd = (result: any) => {
-    if (result.destination !== null) {
-      const LISTS: any = {
+  const handleOnDragEnd = (result: DropResult) => {
+    if (result.destination && result.destination !== null) {
+      const LISTS: Record<string, Array<TaskItem>> = {
         todo: toDoList,
         doing: doingList,
         done: doneList,
