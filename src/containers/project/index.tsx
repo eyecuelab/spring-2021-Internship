@@ -35,6 +35,8 @@ const Project = (): JSX.Element => {
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
+  const [defaultTaskForm, setTaskForm] = useState('');
+  const [defaultItemForm, setItemForm] = useState('');
   const [selectedTask, setSelectedTask] = useState<TaskItem>({
     taskName: '',
     taskStatus: '',
@@ -42,7 +44,15 @@ const Project = (): JSX.Element => {
     activity: [],
   });
 
-  const handleToggleNewTask = () => {
+  const setDefaultTaskForm = (taskStatus: string) => {
+    setTaskForm(taskStatus);
+  };
+
+  const setDefaultItemForm = (taskStatus: string) => {
+    setItemForm(taskStatus);
+  };
+
+  const handleToggleTaskModal = () => {
     setTaskModalView(!showTaskModal);
   };
 
@@ -244,10 +254,18 @@ const Project = (): JSX.Element => {
       <h1>{projectName}</h1>
       <h2>Due Date: {projDate}</h2>
       {showTaskModal && (
-        <NewTaskModal toggleModal={handleToggleNewTask} addNewTask={handleAddingTask} />
+        <NewTaskModal
+          toggleModal={handleToggleTaskModal}
+          addNewTask={handleAddingTask}
+          defaultForm={defaultTaskForm}
+        />
       )}
       {showFinanceModal && (
-        <NewFinance toggleModal={handleToggleFinance} addNewFinance={handleAddingFinance} />
+        <NewFinance
+          toggleModal={handleToggleFinance}
+          addNewFinance={handleAddingFinance}
+          defaultForm={defaultItemForm}
+        />
       )}
       {showTaskDetail && (
         <TaskDetail
@@ -260,8 +278,9 @@ const Project = (): JSX.Element => {
         toDoItems={toDoItems}
         doingItems={doingItems}
         doneItems={doneItems}
-        handleToggleNewTask={handleToggleNewTask}
+        handleToggleNewTask={handleToggleTaskModal}
         handleOnDragEnd={handleOnDragEnd}
+        setDefaultForm={setDefaultTaskForm}
       />
       <button type="submit" onClick={handleClearingTasks}>
         Clear Tasks
@@ -274,6 +293,7 @@ const Project = (): JSX.Element => {
         laborItems={laborItems}
         otherItems={otherItems}
         handleToggleFinance={handleToggleFinance}
+        setDefaultForm={setDefaultItemForm}
       />
       <button type="button" onClick={handleToggleFinance}>
         Add Line Item
