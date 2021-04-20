@@ -1,10 +1,5 @@
 import React from 'react';
-// import styled from 'styled-components';
 import { Table } from 'semantic-ui-react';
-
-// const LineItem = styled.h3`
-//   margin: 0 10px 0 10px;
-// `;
 
 type ItemProps = {
   itemName: string;

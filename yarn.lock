@@ -2440,11 +2440,6 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zach.codes/react-calendar@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@zach.codes/react-calendar/-/react-calendar-0.0.3.tgz#105c933292625e9d97168a5e45e851375d7712aa"
-  integrity sha512-oj1FCdFDK7Csx7rciJKKZzrj9BVzt6LZ06bImFne8cuG9fm4jasHn9CxCK4OphO9+Jz5oERvMS6iBPPxh0inMg==
-
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
