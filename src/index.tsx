@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-big-calendar/lib/sass/styles.scss';
 import App from './App';
 import { store, persistor } from './store/store';
 import * as serviceWorker from './serviceWorker';

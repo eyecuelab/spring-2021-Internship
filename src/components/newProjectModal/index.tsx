@@ -22,7 +22,10 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
     formState: { errors },
   } = useForm<Inputs>();
   // eslint-disable-next-line
-  const onSubmit = (data: any) => createNewProject(data.projectName, data.dueDate);
+  const onSubmit = (data: any) => {
+    createNewProject(data.projectName, data.dueDate);
+    toggleModal();
+  };
   return (
     <>
       <Modal width="250px" toggleModal={toggleModal}>

@@ -33,7 +33,14 @@ export const selectMaterialItems = createSelector(
 export const selectLaborItems = createSelector([projectSelector], (project) => project.items.labor);
 export const selectOtherItems = createSelector([projectSelector], (project) => project.items.other);
 
+export const selectProjectStartDate = createSelector(
+  [projectSelector],
+  (project) => project.startDate
+);
+
 export const selectProjectDueDate = createSelector([projectSelector], (project) => project.dueDate);
+
+export const selectProjectId = createSelector([projectSelector], (project) => project.id);
 
 export const authSelector = createSelector(selectAuth, (user) => user);
 
