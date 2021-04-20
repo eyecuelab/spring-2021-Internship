@@ -34,6 +34,7 @@ type ProjTasksProps = {
   doneItems: JSX.Element[];
   handleToggleNewTask: () => void;
   handleOnDragEnd: (result: DropResult) => void;
+  setDefaultForm: (taskStatus: string) => void;
 };
 
 const ProjTasks = ({
@@ -42,6 +43,7 @@ const ProjTasks = ({
   doneItems,
   handleToggleNewTask,
   handleOnDragEnd,
+  setDefaultForm,
 }: ProjTasksProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(true);
   const handleClick = () => {
@@ -56,7 +58,7 @@ const ProjTasks = ({
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="todo">
             {(provided) => (
-              <List title="todo" toggleModal={handleToggleNewTask}>
+              <List title="todo" toggleModal={handleToggleNewTask} setDefaultForm={setDefaultForm}>
                 <TaskContainer>
                   <TaskUl
                     className="todo"
@@ -73,7 +75,7 @@ const ProjTasks = ({
           </Droppable>
           <Droppable droppableId="doing">
             {(provided) => (
-              <List title="doing" toggleModal={handleToggleNewTask}>
+              <List title="doing" toggleModal={handleToggleNewTask} setDefaultForm={setDefaultForm}>
                 <TaskContainer>
                   <TaskUl
                     className="doing"
@@ -90,7 +92,7 @@ const ProjTasks = ({
           </Droppable>
           <Droppable droppableId="done">
             {(provided) => (
-              <List title="done" toggleModal={handleToggleNewTask}>
+              <List title="done" toggleModal={handleToggleNewTask} setDefaultForm={setDefaultForm}>
                 <TaskContainer>
                   <TaskUl
                     className="done"

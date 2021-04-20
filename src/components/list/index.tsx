@@ -6,6 +6,7 @@ type ListProps = {
   title: string;
   toggleModal: () => void;
   children?: JSX.Element;
+  setDefaultForm: (taskStatus: string) => void;
 };
 
 const Box = styled.div`
@@ -21,11 +22,15 @@ const Box = styled.div`
   }
 `;
 
-const List = ({ title, toggleModal, children }: ListProps): JSX.Element => {
+const List = ({ title, toggleModal, children, setDefaultForm }: ListProps): JSX.Element => {
+  const addTask = (): void => {
+    toggleModal();
+    setDefaultForm(title);
+  };
   return (
     <>
       <Box>
-        <FaPlus onClick={toggleModal} />
+        <FaPlus onClick={addTask} />
         <h1>{title}</h1>
         {children}
       </Box>
