@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { useForm, Controller } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Form, Button } from 'semantic-ui-react';
 import { Modal } from '../modal';
 
 type ModalProps = {
@@ -29,20 +30,25 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
   return (
     <>
       <Modal width="250px" toggleModal={toggleModal}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           {/* eslint-disable react/jsx-props-no-spreading */}
-          <input defaultValue="test" {...register('projectName', { required: true })} />
+          <Form.Input placeholder="Project Name" {...register('projectName', { required: true })} />
           {errors.projectName && <p>This field is required</p>}
           {/* <input type="datetime" placeholder="Due Date" {...register('dueDate')} /> */}
           <Controller
             control={control}
             name="dueDate"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ReactDatePicker onChange={onChange} onBlur={onBlur} selected={value} />
+              <ReactDatePicker
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+                placeholderText="Set Due Date"
+              />
             )}
           />
-          <input type="submit" />
-        </form>
+          <Button type="submit">Submit</Button>
+        </Form>
       </Modal>
     </>
   );

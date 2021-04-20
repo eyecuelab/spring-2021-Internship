@@ -39,6 +39,7 @@ type FinanceProps = {
   totals: number;
   children?: JSX.Element;
   handleToggleFinance: () => void;
+  setDefaultForm: (category: string) => void;
 };
 
 const Finance = ({
@@ -48,10 +49,15 @@ const Finance = ({
   children,
   totals,
   handleToggleFinance,
+  setDefaultForm,
 }: FinanceProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
+  };
+  const addItem = (category: string): void => {
+    handleToggleFinance();
+    setDefaultForm(category);
   };
 
   return (
@@ -80,7 +86,9 @@ const Finance = ({
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell>
-                <FaPlus onClick={handleToggleFinance} />
+                {columnOne === 'Material' ? <FaPlus onClick={() => addItem('materials')} /> : null}
+                {columnOne === 'Activity' ? <FaPlus onClick={() => addItem('labor')} /> : null}
+                {columnOne === 'Other Cost' ? <FaPlus onClick={() => addItem('other')} /> : null}
               </Table.HeaderCell>
               <Table.HeaderCell />
               <Table.HeaderCell>

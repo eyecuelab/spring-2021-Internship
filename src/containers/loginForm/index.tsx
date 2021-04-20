@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { Form } from 'semantic-ui-react';
 import { setEmail, setPassword, setUUID } from '../../store/slices/authSlice';
 
 type Inputs = {
@@ -27,14 +28,16 @@ const LoginForm = (): JSX.Element => {
   return (
     <>
       <p>Sign In:</p>
-      <form id="signInForm" onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="Email Address" {...register('email', { required: true })} />
-        {errors.email && <p>This field is required</p>}
+      <Form id="signInForm" onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group>
+          <Form.Input placeholder="Email Address" {...register('email', { required: true })} />
+          {errors.email && <p>This field is required</p>}
 
-        <input placeholder="Password" {...register('password', { required: true })} />
-        {errors.password && <p>This field is required</p>}
-        <input type="submit" />
-      </form>
+          <Form.Input placeholder="Password" {...register('password', { required: true })} />
+          {errors.password && <p>This field is required</p>}
+        </Form.Group>
+        <Form.Button type="submit">Log In</Form.Button>
+      </Form>
     </>
   );
 };
