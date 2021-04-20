@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { Form, Statistic } from 'semantic-ui-react';
+// import styled from 'styled-components';
+// import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { Form, Statistic, Tab } from 'semantic-ui-react';
 import Finance from '../finance';
 
-const Wrapper = styled.div<{ open: boolean }>`
-  margin: 10px;
-  max-height: ${(props) => (props.open ? '100%' : '0')};
-  overflow: hidden;
-  padding: ${(props) => (props.open ? '25px 0' : '0')};
-  transition: all 0.3s ease-out;
-`;
+// const Wrapper = styled.div<{ open: boolean }>`
+//   margin: 10px;
+//   max-height: ${(props) => (props.open ? '100%' : '0')};
+//   overflow: hidden;
+//   padding: ${(props) => (props.open ? '25px 0' : '0')};
+//   transition: all 0.3s ease-out;
+// `;
 
-const Heading = styled.h2`
-  padding: 3px;
-  background: #d1cfcf;
-`;
+// const Heading = styled.h2`
+//   padding: 3px;
+//   background: #d1cfcf;
+// `;
 
 type ProjFinanceProps = {
   materialTotals: number;
@@ -25,6 +25,7 @@ type ProjFinanceProps = {
   laborItems: JSX.Element[];
   otherItems: JSX.Element[];
   handleToggleFinance: () => void;
+  setDefaultForm: (taskStatus: string) => void;
 };
 
 const ProjFinance = ({
@@ -35,9 +36,10 @@ const ProjFinance = ({
   laborItems,
   otherItems,
   handleToggleFinance,
+  setDefaultForm,
 }: ProjFinanceProps): JSX.Element => {
-  const [costIsOpen, setcostIsOpen] = useState(true);
-  const [analysisIsOpen, setanalysisIsOpen] = useState(true);
+  // const [costIsOpen, setcostIsOpen] = useState(true);
+  // const [analysisIsOpen, setanalysisIsOpen] = useState(true);
   const [costPerUnit, setCostPerUnit] = useState(0);
   const [pricePerUnit, setPricePerUnit] = useState(0);
   const [projectValues, setProjectValues] = useState({
@@ -57,147 +59,156 @@ const ProjFinance = ({
     setPricePerUnit(costPerUnit * markUpPercent);
   }, [projectValues, materials, other, units, costPerUnit, hourlyRate, labor, markUp]);
 
-  const handleCostClick = () => {
-    setcostIsOpen(!costIsOpen);
-  };
+  // const handleCostClick = () => {
+  //   setcostIsOpen(!costIsOpen);
+  // };
 
-  const handleAnalysisClick = () => {
-    setanalysisIsOpen(!analysisIsOpen);
-  };
+  // const handleAnalysisClick = () => {
+  //   setanalysisIsOpen(!analysisIsOpen);
+  // };
+
+  const panes = [
+    {
+      menuItem: 'Project Costs',
+      render: () => (
+        <Tab.Pane>
+          <Finance
+            columnOne="Material"
+            columnTwo="Quantity"
+            columnThree="Cost (Per Unit)"
+            totals={materialTotals}
+            handleToggleFinance={handleToggleFinance}
+            setDefaultForm={setDefaultForm}
+          >
+            <>{materialItems}</>
+          </Finance>
+
+          <Finance
+            columnOne="Activity"
+            columnTwo="Hours"
+            columnThree="Date"
+            totals={laborTotals}
+            handleToggleFinance={handleToggleFinance}
+            setDefaultForm={setDefaultForm}
+          >
+            <>{laborItems}</>
+          </Finance>
+          <Finance
+            columnOne="Other Cost"
+            columnTwo=""
+            columnThree="Cost"
+            totals={otherTotals}
+            handleToggleFinance={handleToggleFinance}
+            setDefaultForm={setDefaultForm}
+          >
+            <>{otherItems}</>
+          </Finance>
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'Project Analysis',
+      render: () => (
+        <Tab.Pane>
+          <h1>This will be where some analysis magic happens</h1>
+          <Form>
+            <Form.Group widths={2}>
+              <Form.Input
+                label="Material Totals:"
+                type="number"
+                name="materials"
+                defaultValue={materialTotals}
+                onChange={(e) =>
+                  setProjectValues({
+                    ...projectValues,
+                    [e.target.name]: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+              <Form.Input
+                label="Labor Totals:"
+                type="number"
+                name="labor"
+                defaultValue={laborTotals.toFixed(2)}
+                onChange={(e) =>
+                  setProjectValues({
+                    ...projectValues,
+                    [e.target.name]: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group widths={2}>
+              <Form.Input
+                label="Hourly Rate:"
+                type="number"
+                name="hourlyRate"
+                defaultValue={hourlyRate}
+                onChange={(e) =>
+                  setProjectValues({
+                    ...projectValues,
+                    [e.target.name]: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+              <Form.Input
+                label="Other Costs:"
+                type="number"
+                name="other"
+                defaultValue={otherTotals}
+                onChange={(e) =>
+                  setProjectValues({
+                    ...projectValues,
+                    [e.target.name]: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group widths={2}>
+              <Form.Input
+                label="Total Units:"
+                type="number"
+                name="units"
+                defaultValue={units}
+                onChange={(e) =>
+                  setProjectValues({
+                    ...projectValues,
+                    [e.target.name]: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+              <Form.Input
+                label="Markup (%):"
+                type="number"
+                name="markUp"
+                defaultValue={markUp}
+                onChange={(e) =>
+                  setProjectValues({
+                    ...projectValues,
+                    [e.target.name]: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+            </Form.Group>
+          </Form>
+          <Statistic.Group widths="two">
+            <Statistic>
+              <Statistic.Value>${costPerUnit.toFixed(2)}</Statistic.Value>
+              <Statistic.Label>Cost per Unit</Statistic.Label>
+            </Statistic>
+            <Statistic>
+              <Statistic.Value>${pricePerUnit.toFixed(2)}</Statistic.Value>
+              <Statistic.Label>Price per Unit</Statistic.Label>
+            </Statistic>
+          </Statistic.Group>
+        </Tab.Pane>
+      ),
+    },
+  ];
 
   return (
     <>
-      <Heading onClick={handleCostClick}>
-        {costIsOpen ? <RiArrowDownSLine /> : <RiArrowRightSLine />}
-        Project Time and Cost
-      </Heading>
-      <Wrapper open={costIsOpen}>
-        <Finance
-          columnOne="Material"
-          columnTwo="Quantity"
-          columnThree="Cost (Per Unit)"
-          totals={materialTotals}
-          handleToggleFinance={handleToggleFinance}
-        >
-          <>{materialItems}</>
-        </Finance>
-
-        <Finance
-          columnOne="Activity"
-          columnTwo="Hours"
-          columnThree="Date"
-          totals={laborTotals}
-          handleToggleFinance={handleToggleFinance}
-        >
-          <>{laborItems}</>
-        </Finance>
-        <Finance
-          columnOne="Other Cost"
-          columnTwo=""
-          columnThree="Cost"
-          totals={otherTotals}
-          handleToggleFinance={handleToggleFinance}
-        >
-          <>{otherItems}</>
-        </Finance>
-      </Wrapper>
-      <Heading onClick={handleAnalysisClick}>
-        {analysisIsOpen ? <RiArrowDownSLine /> : <RiArrowRightSLine />}
-        Project Analysis
-      </Heading>
-      <Wrapper open={analysisIsOpen}>
-        <h1>This will be where some analysis magic happens</h1>
-        <Form>
-          <Form.Group widths={2}>
-            <Form.Input
-              label="Material Totals:"
-              type="number"
-              name="materials"
-              defaultValue={materialTotals}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-            <Form.Input
-              label="Labor Totals:"
-              type="number"
-              name="labor"
-              defaultValue={laborTotals.toFixed(2)}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </Form.Group>
-          <Form.Group widths={2}>
-            <Form.Input
-              label="Hourly Rate:"
-              type="number"
-              name="hourlyRate"
-              defaultValue={hourlyRate}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-            <Form.Input
-              label="Other Costs:"
-              type="number"
-              name="other"
-              defaultValue={otherTotals}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </Form.Group>
-          <Form.Group widths={2}>
-            <Form.Input
-              label="Total Units:"
-              type="number"
-              name="units"
-              defaultValue={units}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-            <Form.Input
-              label="Markup (%):"
-              type="number"
-              name="markUp"
-              defaultValue={markUp}
-              onChange={(e) =>
-                setProjectValues({
-                  ...projectValues,
-                  [e.target.name]: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </Form.Group>
-        </Form>
-        <Statistic.Group widths="two">
-          <Statistic>
-            <Statistic.Value>${costPerUnit.toFixed(2)}</Statistic.Value>
-            <Statistic.Label>Cost per Unit</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value>${pricePerUnit.toFixed(2)}</Statistic.Value>
-            <Statistic.Label>Price per Unit</Statistic.Label>
-          </Statistic>
-        </Statistic.Group>
-      </Wrapper>
+      <Tab panes={panes} />
     </>
   );
 };
