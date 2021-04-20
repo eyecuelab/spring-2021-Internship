@@ -62,10 +62,14 @@ const NewFinance = ({ toggleModal, addNewFinance, defaultForm }: ModalProps): JS
           <Form.Input
             type="number"
             placeholder="Price (per unit)"
-            {...register('itemPrice', { min: 0 })}
+            {...register('itemPrice', { required: true, min: 0 })}
           />
           {errors.itemPrice && <p>This must be greater than or equal to 0</p>}
-          <Form.Input type="number" placeholder="Quantity" {...register('quantity', { min: 1 })} />
+          <Form.Input
+            type="number"
+            placeholder="Quantity"
+            {...register('quantity', { required: true, min: 1 })}
+          />
           {errors.quantity && <p>This must be higher than 0</p>}
         </Form>
       </>
@@ -78,8 +82,16 @@ const NewFinance = ({ toggleModal, addNewFinance, defaultForm }: ModalProps): JS
         <Form>
           <Form.Input placeholder="Activity Name" {...register('itemName', { required: true })} />
           {errors.itemName && <p>This field is required</p>}
-          <Form.Input type="number" placeholder="Hour(s)" {...register('hours')} />
-          <Form.Input type="number" placeholder="Minutes" {...register('minutes')} />
+          <Form.Input
+            type="number"
+            placeholder="Hour(s)"
+            {...register('hours', { required: true })}
+          />
+          <Form.Input
+            type="number"
+            placeholder="Minutes"
+            {...register('minutes', { required: true })}
+          />
           <Controller
             control={control}
             name="date"
@@ -105,7 +117,7 @@ const NewFinance = ({ toggleModal, addNewFinance, defaultForm }: ModalProps): JS
           <Form.Input
             type="number"
             placeholder="Item Price"
-            {...register('itemPrice', { min: 0 })}
+            {...register('itemPrice', { required: true, min: 0 })}
           />
           {errors.itemPrice && <p>This must be greater than or equal to 0</p>}
         </Form>

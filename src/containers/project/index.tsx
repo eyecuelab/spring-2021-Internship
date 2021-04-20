@@ -215,7 +215,7 @@ const Project = (): JSX.Element => {
   function calculateOtherTotal(arr: Array<FinanceItem>): number {
     let total = 0;
     arr.forEach((e: FinanceItem) => {
-      total += e.itemPrice;
+      total += e.itemPrice * 1;
     });
     return total;
   }
@@ -295,9 +295,6 @@ const Project = (): JSX.Element => {
         handleToggleFinance={handleToggleFinance}
         setDefaultForm={setDefaultItemForm}
       />
-      <button type="button" onClick={handleToggleFinance}>
-        Add Line Item
-      </button>
       <button type="submit" onClick={handleClearingItems}>
         Clear Items
       </button>
