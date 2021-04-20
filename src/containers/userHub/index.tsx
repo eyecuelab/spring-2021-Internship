@@ -61,7 +61,7 @@ const UserHub = (): JSX.Element => {
 
   return (
     <>
-      <p>This is the user hub, you made it.</p>
+      <h1>Projects:</h1>
       <Card onClick={handleClick} header={projectName} />
       <Button type="button" onClick={handleToggle}>
         Add New Project
@@ -77,7 +77,7 @@ const UserHub = (): JSX.Element => {
           startAccessor="startDate"
           endAccessor="endDate"
           style={{ height: '600px', maxWidth: '1000px' }}
-          views={{ month: true, week: false }}
+          views={{ month: true }}
           // components={{toolbar: CustomToolbar}}
         />
       </div>
