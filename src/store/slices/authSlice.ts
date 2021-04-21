@@ -9,7 +9,7 @@ export interface AuthState {
   uuid: string;
 }
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   email: '',
   password: '',
   uuid: '',
