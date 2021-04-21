@@ -5,7 +5,7 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Card } from 'semantic-ui-react';
+import { Button, Card, Tab } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 import NewProjectModal from '../../components/newProjectModal';
 import * as selectors from '../../store/selectors';
@@ -59,28 +59,43 @@ const UserHub = (): JSX.Element => {
     },
   ];
 
+  const panes = [
+    {
+      menuItem: 'Projects',
+      render: () => (
+        <Tab.Pane>
+          <h1>Projects:</h1>
+          <Card onClick={handleClick} header={projectName} />
+          <Button type="button" onClick={handleToggle}>
+            Add New Project
+          </Button>
+          {showModal && (
+            <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
+          )}
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'Monthly Calendar',
+      render: () => (
+        <Tab.Pane>
+          <Calendar
+            localizer={localizer}
+            events={myEventsList}
+            startAccessor="startDate"
+            endAccessor="endDate"
+            style={{ height: '600px', maxWidth: '1000px' }}
+            views={{ month: true }}
+            // components={{toolbar: CustomToolbar}}
+          />
+        </Tab.Pane>
+      ),
+    },
+  ];
+
   return (
     <>
-      <h1>Projects:</h1>
-      <Card onClick={handleClick} header={projectName} />
-      <Button type="button" onClick={handleToggle}>
-        Add New Project
-      </Button>
-      {showModal && (
-        <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
-      )}
-      {/* Calendar */}
-      <div>
-        <Calendar
-          localizer={localizer}
-          events={myEventsList}
-          startAccessor="startDate"
-          endAccessor="endDate"
-          style={{ height: '600px', maxWidth: '1000px' }}
-          views={{ month: true }}
-          // components={{toolbar: CustomToolbar}}
-        />
-      </div>
+      <Tab panes={panes} />
     </>
   );
 };

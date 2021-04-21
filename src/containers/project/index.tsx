@@ -73,13 +73,11 @@ const Project = (): JSX.Element => {
   };
 
   const handleAddingTask = (taskName: string, taskStatus: string) => {
-    // const activity = now
     dispatch(addTask({ taskName, taskStatus }));
     setTaskModalView(!showTaskModal);
   };
 
   const handleDeleteTask = (taskStatus: string, id: string) => {
-    // const activity = now
     dispatch(deleteTask({ taskStatus, id }));
     setTaskDetailView(!showTaskDetail);
   };

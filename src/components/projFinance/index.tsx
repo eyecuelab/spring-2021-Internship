@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
-// import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
+
 import { Form, Statistic, Tab } from 'semantic-ui-react';
 import Finance from '../finance';
-
-// const Wrapper = styled.div<{ open: boolean }>`
-//   margin: 10px;
-//   max-height: ${(props) => (props.open ? '100%' : '0')};
-//   overflow: hidden;
-//   padding: ${(props) => (props.open ? '25px 0' : '0')};
-//   transition: all 0.3s ease-out;
-// `;
-
-// const Heading = styled.h2`
-//   padding: 3px;
-//   background: #d1cfcf;
-// `;
 
 type ProjFinanceProps = {
   materialTotals: number;
@@ -38,8 +24,6 @@ const ProjFinance = ({
   handleToggleFinance,
   setDefaultForm,
 }: ProjFinanceProps): JSX.Element => {
-  // const [costIsOpen, setcostIsOpen] = useState(true);
-  // const [analysisIsOpen, setanalysisIsOpen] = useState(true);
   const [costPerUnit, setCostPerUnit] = useState(0);
   const [pricePerUnit, setPricePerUnit] = useState(0);
   const [projectValues, setProjectValues] = useState({
@@ -58,14 +42,6 @@ const ProjFinance = ({
     setCostPerUnit((materials + hourly + other) / units);
     setPricePerUnit(costPerUnit * markUpPercent);
   }, [projectValues, materials, other, units, costPerUnit, hourlyRate, labor, markUp]);
-
-  // const handleCostClick = () => {
-  //   setcostIsOpen(!costIsOpen);
-  // };
-
-  // const handleAnalysisClick = () => {
-  //   setanalysisIsOpen(!analysisIsOpen);
-  // };
 
   const panes = [
     {
