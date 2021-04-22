@@ -5,9 +5,13 @@ import dayjs from 'dayjs';
 import {
   addTask,
   clearTasks,
-  addLineItem,
+  addMaterialItem,
+  addLaborItem,
+  addOtherItem,
   clearItems,
-  FinanceItem,
+  MaterialItem,
+  LaborItem,
+  OtherItem,
   // updateTaskStatus,
   TaskItem,
   moveTask,
@@ -82,16 +86,18 @@ const Project = (): JSX.Element => {
     setTaskDetailView(!showTaskDetail);
   };
 
-  const handleAddingFinance = (
-    itemName: string,
-    itemPrice: number,
-    quantity: number,
-    category: string,
-    date: Date,
-    minutes: number,
-    hours: number
-  ) => {
-    dispatch(addLineItem({ itemName, itemPrice, quantity, category, date, minutes, hours }));
+  const handleAddingMaterial = (item: MaterialItem) => {
+    dispatch(addMaterialItem({ item }));
+    setFinanceModalView(!showFinanceModal);
+  };
+
+  const handleAddingLabor = (item: LaborItem) => {
+    dispatch(addLaborItem({ item }));
+    setFinanceModalView(!showFinanceModal);
+  };
+
+  const handleAddingOther = (item: OtherItem) => {
+    dispatch(addOtherItem({ item }));
     setFinanceModalView(!showFinanceModal);
   };
 
@@ -194,25 +200,27 @@ const Project = (): JSX.Element => {
 
   const projDate = dayjs(dueDate).format('MM/DD/YYYY');
 
-  function calculateMaterialTotal(arr: Array<FinanceItem>): number {
+  function calculateMaterialTotal(arr: Array<MaterialItem>): number {
     let total = 0;
-    arr.forEach((e: FinanceItem) => {
+    arr.forEach((e: MaterialItem) => {
       total += e.itemPrice * e.quantity;
     });
     return total;
   }
 
-  function calculateLaborTotal(arr: Array<FinanceItem>): number {
+  function calculateLaborTotal(arr: Array<LaborItem>): number {
     let total = 0;
-    arr.forEach((e: FinanceItem) => {
-      total += e.minutes;
+    arr.forEach((e: LaborItem) => {
+      const hours = e.hours * 60;
+      total += hours * 1;
+      total += e.minutes * 1;
     });
     return total / 60;
   }
 
-  function calculateOtherTotal(arr: Array<FinanceItem>): number {
+  function calculateOtherTotal(arr: Array<OtherItem>): number {
     let total = 0;
-    arr.forEach((e: FinanceItem) => {
+    arr.forEach((e: OtherItem) => {
       total += e.itemPrice * 1;
     });
     return total;
@@ -224,23 +232,26 @@ const Project = (): JSX.Element => {
         itemName={e.itemName}
         itemPrice={e.itemPrice}
         quantity={e.quantity}
-        category={e.category}
+        category="material"
       />
     );
   });
 
   const laborItems: JSX.Element[] = laborItemList.map((e) => {
-    return <Item itemName={e.itemName} minutes={e.minutes} date={e.date} category={e.category} />;
+    return (
+      <Item
+        itemName={e.itemName}
+        minutes={e.minutes}
+        date={e.date}
+        hours={e.hours}
+        category="labor"
+      />
+    );
   });
 
   const otherItems: JSX.Element[] = otherItemList.map((e) => {
     return (
-      <Item
-        itemName={e.itemName}
-        itemPrice={e.itemPrice}
-        quantity={e.quantity}
-        category={e.category}
-      />
+      <Item itemName={e.itemName} itemPrice={e.itemPrice} quantity={e.quantity} category="other" />
     );
   });
 
@@ -261,7 +272,9 @@ const Project = (): JSX.Element => {
       {showFinanceModal && (
         <NewFinance
           toggleModal={handleToggleFinance}
-          addNewFinance={handleAddingFinance}
+          addMaterialItem={handleAddingMaterial}
+          addLaborItem={handleAddingLabor}
+          addOtherItem={handleAddingOther}
           defaultForm={defaultItemForm}
         />
       )}

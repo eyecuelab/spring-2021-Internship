@@ -15,21 +15,50 @@ export interface TaskItem {
   activity: Array<ActivityItem>;
 }
 
-export interface FinanceItem {
+export enum ItemCategory {
+  Labor = 'labor',
+  Material = 'material',
+  Other = 'other',
+}
+export interface LaborItem {
+  itemName: string;
+  itemPrice?: never;
+  quantity?: never;
+  category: ItemCategory.Labor;
+  date: Date;
+  minutes: number;
+  hours: number;
+}
+export interface MaterialItem {
   itemName: string;
   itemPrice: number;
   quantity: number;
-  category: string;
-  date: Date;
-  minutes: number;
+  category: ItemCategory.Material;
+  date?: never;
+  minutes?: never;
+  hours?: never;
 }
+export interface OtherItem {
+  itemName: string;
+  itemPrice: number;
+  quantity?: never;
+  category: ItemCategory.Other;
+  date?: never;
+  minutes?: never;
+  hours?: never;
+}
+export type FinanceItem = LaborItem | MaterialItem | OtherItem;
 
 export interface ProjectState {
   projectName: string;
   startDate: Date;
   dueDate: Date;
   id: string;
-  items: Record<string, Array<FinanceItem>>;
+  items: {
+    [ItemCategory.Material]: MaterialItem[];
+    [ItemCategory.Labor]: LaborItem[];
+    [ItemCategory.Other]: OtherItem[];
+  };
   tasks: Record<string, Array<TaskItem>>;
 }
 
@@ -38,7 +67,7 @@ const initialState: ProjectState = {
   startDate: new Date(),
   dueDate: new Date('01/01/2021'),
   id: '',
-  items: { materials: [], labor: [], other: [] },
+  items: { material: [], labor: [], other: [] },
   tasks: { todo: [], doing: [], done: [] },
 };
 
@@ -116,29 +145,47 @@ export const projectSlice = createSlice({
     clearTasks: (state) => {
       state.tasks = initialState.tasks;
     },
-    addLineItem: (
+    // addLineItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     Item: FinanceItem;
+    //   }>
+    // ) => {
+    //   state.items[action.payload.category] = [
+    //     ...(state.items[action.payload.category] || []),
+    //     {
+    //       itemName: action.payload.itemName,
+    //       itemPrice: action.payload.itemPrice,
+    //       quantity: action.payload.quantity,
+    //       category: action.payload.category,
+    //       date: action.payload.date,
+    //       minutes: Math.floor(action.payload.minutes) + Math.floor(action.payload.hours * 60),
+    //     },
+    //   ];
+    // },
+    addMaterialItem: (
       state,
       action: PayloadAction<{
-        itemName: string;
-        itemPrice: number;
-        quantity: number;
-        category: string;
-        date: Date;
-        minutes: number;
-        hours: number;
+        item: MaterialItem;
       }>
     ) => {
-      state.items[action.payload.category] = [
-        ...(state.items[action.payload.category] || []),
-        {
-          itemName: action.payload.itemName,
-          itemPrice: action.payload.itemPrice,
-          quantity: action.payload.quantity,
-          category: action.payload.category,
-          date: action.payload.date,
-          minutes: Math.floor(action.payload.minutes) + Math.floor(action.payload.hours * 60),
-        },
-      ];
+      state.items.material = [...(state.items.material || []), action.payload.item];
+    },
+    addLaborItem: (
+      state,
+      action: PayloadAction<{
+        item: LaborItem;
+      }>
+    ) => {
+      state.items.labor = [...(state.items.labor || []), action.payload.item];
+    },
+    addOtherItem: (
+      state,
+      action: PayloadAction<{
+        item: OtherItem;
+      }>
+    ) => {
+      state.items.other = [...(state.items.other || []), action.payload.item];
     },
     clearItems: (state) => {
       state.items = initialState.items;
@@ -183,7 +230,10 @@ export const {
   setId,
   addTask,
   clearTasks,
-  addLineItem,
+  // addLineItem,
+  addMaterialItem,
+  addLaborItem,
+  addOtherItem,
   clearItems,
   setProjectStartDate,
   setProjectDueDate,

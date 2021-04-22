@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { selectAuth } from './slices/authSlice';
-import { selectProject } from './slices/projectSlice';
+import { selectProject, ItemCategory } from './slices/projectSlice';
 
 export const projectSelector = createSelector(selectProject, (project) => project);
 
@@ -28,10 +28,18 @@ export const selectProjectItems = createSelector([projectSelector], (project) =>
 
 export const selectMaterialItems = createSelector(
   [projectSelector],
-  (project) => project.items.materials
+  (project) => project.items[ItemCategory.Material]
 );
-export const selectLaborItems = createSelector([projectSelector], (project) => project.items.labor);
-export const selectOtherItems = createSelector([projectSelector], (project) => project.items.other);
+
+export const selectLaborItems = createSelector(
+  [projectSelector],
+  (project) => project.items[ItemCategory.Labor]
+);
+
+export const selectOtherItems = createSelector(
+  [projectSelector],
+  (project) => project.items[ItemCategory.Other]
+);
 
 export const selectProjectStartDate = createSelector(
   [projectSelector],
