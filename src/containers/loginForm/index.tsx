@@ -33,7 +33,11 @@ const LoginForm = (): JSX.Element => {
           <Form.Input placeholder="Email Address" {...register('email', { required: true })} />
           {errors.email && <p>This field is required</p>}
 
-          <Form.Input placeholder="Password" {...register('password', { required: true })} />
+          <Form.Input
+            type="password"
+            placeholder="Password"
+            {...register('password', { required: true })}
+          />
           {errors.password && <p>This field is required</p>}
         </Form.Group>
         <Form.Button type="submit">Log In</Form.Button>
