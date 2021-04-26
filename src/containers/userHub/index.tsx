@@ -16,6 +16,7 @@ import {
   setId,
   postProject,
   getProjects,
+  getProjectById,
 } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
@@ -50,6 +51,10 @@ const UserHub = (): JSX.Element => {
   const handleMakeGet = async () => {
     console.log('clicked');
     dispatch(getProjects());
+  };
+
+  const handleMakeGetById = async () => {
+    dispatch(getProjectById(22));
   };
 
   const handleMakePost = () => {
@@ -96,6 +101,9 @@ const UserHub = (): JSX.Element => {
           </Button>
           <Button type="button" onClick={handleMakeGet}>
             API GET CALL
+          </Button>
+          <Button type="button" onClick={handleMakeGetById}>
+            API GET BY ID CALL
           </Button>
           <Button type="button" onClick={handleMakePost}>
             API POST CALL
