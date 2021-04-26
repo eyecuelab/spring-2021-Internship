@@ -14,7 +14,10 @@ import {
   setProjectStartDate,
   setProjectDueDate,
   setId,
+  postProject,
+  getProjects,
 } from '../../store/slices/projectSlice';
+// import { postProject, getProjects } from '../../store/slices/projectSlice/projectThunk';
 
 const UserHub = (): JSX.Element => {
   const history = useHistory();
@@ -25,6 +28,15 @@ const UserHub = (): JSX.Element => {
   const [showModal, setModalView] = useState(false);
   const handleToggle = () => {
     setModalView(!showModal);
+  };
+
+  const handleMakeGet = async () => {
+    console.log('clicked');
+    dispatch(getProjects());
+  };
+
+  const handleMakePost = () => {
+    dispatch(postProject());
   };
 
   const handleNewProject = (name: string, dueDate: Date) => {
@@ -68,6 +80,12 @@ const UserHub = (): JSX.Element => {
           <Card onClick={handleClick} header={projectName} />
           <Button type="button" onClick={handleToggle}>
             Add New Project
+          </Button>
+          <Button type="button" onClick={handleMakeGet}>
+            API GET CALL
+          </Button>
+          <Button type="button" onClick={handleMakePost}>
+            API POST CALL
           </Button>
           {showModal && (
             <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />

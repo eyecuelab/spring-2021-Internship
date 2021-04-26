@@ -1,7 +1,33 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
+import axios from 'axios';
 // eslint-disable-next-line
 import { RootState } from '../store';
+
+const testProject = {
+  project: {
+    projectName: 'From Front End',
+    startDate: '2019-04-28',
+    endDate: '2019-04-28',
+  },
+};
+
+export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
+  try {
+    const response = await axios.get(`http://localhost:3000/api/projects/`);
+    console.log('api try');
+    return response.data.projects[0];
+  } catch (error) {
+    console.log(error.message);
+    return thunkAPI.rejectWithValue({ error: error.message });
+  }
+});
+
+export const postProject = createAsyncThunk('project/postProject', async () => {
+  return axios.post(`http://localhost:3000/api/projects/`, testProject).then((res) => {
+    console.log(res.data);
+  });
+});
 
 interface ActivityItem {
   dateTime: dayjs.Dayjs;
@@ -222,6 +248,38 @@ export const projectSlice = createSlice({
     //     },
     //   ];
     // },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getProjects.pending, (state) => {
+      state.projectName = '';
+      // state.loading = 'loading';
+    });
+    builder.addCase(getProjects.fulfilled, (state, { payload }) => {
+      state.projectName = payload.projectName;
+      // state.loading="loaded";
+    });
+    // [getProjects.fulfilled.type]: (state, { payload }) => {
+    //   state.projectName = 'success';
+    // },
+    //   [getProjects.rejected.type]: (state) => {
+    //     state.projectName = 'failed';
+    //   },
+    //   [postProject.pending.type]: (state) => {
+    //     state.projectName = 'Pending';
+    //   },
+    //   [postProject.fulfilled.type]: (
+    //     state,
+    //     action: PayloadAction<{
+    //       projectName: string;
+    //       startDate: string;
+    //       endDate: string;
+    //     }>
+    //   ) => {
+    //     state.projectName = action.payload.projectName;
+    //   },
+    //   [postProject.rejected.type]: (state) => {
+    //     state.projectName = 'failed';
+    //   },
   },
 });
 
