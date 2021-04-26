@@ -6,13 +6,13 @@ import { Form, Button } from 'semantic-ui-react';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  createNewProject: (projectName: string, dueDate: string) => void;
+  createNewProject: (projectName: string, endDate: string) => void;
   toggleModal: () => void;
 };
 
 type Inputs = {
   projectName: string;
-  dueDate: Date;
+  endDate: Date;
 };
 
 const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Element => {
@@ -24,7 +24,7 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
   } = useForm<Inputs>();
   // eslint-disable-next-line
   const onSubmit = (data: any) => {
-    createNewProject(data.projectName, data.dueDate);
+    createNewProject(data.projectName, data.endDate);
     toggleModal();
   };
   return (
@@ -34,10 +34,10 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
           {/* eslint-disable react/jsx-props-no-spreading */}
           <Form.Input placeholder="Project Name" {...register('projectName', { required: true })} />
           {errors.projectName && <p>This field is required</p>}
-          {/* <input type="datetime" placeholder="Due Date" {...register('dueDate')} /> */}
+          {/* <input type="datetime" placeholder="Due Date" {...register('endDate')} /> */}
           <Controller
             control={control}
-            name="dueDate"
+            name="endDate"
             render={({ field: { onChange, onBlur, value } }) => (
               <ReactDatePicker
                 onChange={onChange}

@@ -35,7 +35,7 @@ const Project = (): JSX.Element => {
   const toDoList = useSelector(selectors.selectProjToDoTasks);
   const doingList = useSelector(selectors.selectProjDoingTasks);
   const doneList = useSelector(selectors.selectProjDoneTasks);
-  const dueDate = useSelector(selectors.selectProjectDueDate);
+  const endDate = useSelector(selectors.selectProjectEndDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
@@ -198,7 +198,7 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const projDate = dayjs(dueDate).format('MM/DD/YYYY');
+  const projDate = dayjs(endDate).format('MM/DD/YYYY');
 
   function calculateMaterialTotal(arr: Array<MaterialItem>): number {
     let total = 0;

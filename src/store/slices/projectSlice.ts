@@ -78,7 +78,7 @@ export type FinanceItem = LaborItem | MaterialItem | OtherItem;
 export interface CurrentProject {
   projectName: string;
   startDate: string;
-  dueDate: string;
+  endDate: string;
   id: string;
   items: {
     [ItemCategory.Material]: MaterialItem[];
@@ -91,7 +91,7 @@ export interface CurrentProject {
 export interface ListProject {
   projectName: string;
   startDate: string;
-  dueDate: string;
+  endDate: string;
   id: string;
 }
 
@@ -104,7 +104,7 @@ const initialState: ProjectState = {
   currentProject: {
     projectName: '',
     startDate: '',
-    dueDate: '',
+    endDate: '',
     id: '',
     items: { material: [], labor: [], other: [] },
     tasks: { todo: [], doing: [], done: [] },
@@ -119,7 +119,7 @@ function idMaker(projectName: string) {
 }
 
 const now = dayjs();
-// const { projectName, startDate, dueDate, id} = state.currentProject;
+// const { projectName, startDate, endDate, id} = state.currentProject;
 export const projectSlice = createSlice({
   name: 'project',
   initialState,
@@ -130,8 +130,8 @@ export const projectSlice = createSlice({
     setProjectStartDate: (state) => {
       state.currentProject.startDate = new Date().toString();
     },
-    setProjectDueDate: (state, action: PayloadAction<string>) => {
-      state.currentProject.dueDate = action.payload;
+    setProjectEndDate: (state, action: PayloadAction<string>) => {
+      state.currentProject.endDate = action.payload;
     },
     setId: (state) => {
       state.currentProject.id = idMaker(state.currentProject.projectName);
@@ -279,7 +279,7 @@ export const {
   addOtherItem,
   clearItems,
   setProjectStartDate,
-  setProjectDueDate,
+  setProjectEndDate,
   // updateTaskStatus,
   moveTask,
   deleteTask,

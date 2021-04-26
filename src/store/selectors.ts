@@ -49,9 +49,9 @@ export const selectProjectStartDate = createSelector(
   (project) => project.currentProject.startDate
 );
 
-export const selectProjectDueDate = createSelector(
+export const selectProjectEndDate = createSelector(
   [projectSelector],
-  (project) => project.currentProject.dueDate
+  (project) => project.currentProject.endDate
 );
 
 export const selectProjectId = createSelector(
