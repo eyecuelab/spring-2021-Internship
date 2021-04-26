@@ -39,7 +39,7 @@ const UserHub = (): JSX.Element => {
     dispatch(postProject());
   };
 
-  const handleNewProject = (name: string, dueDate: Date) => {
+  const handleNewProject = (name: string, dueDate: string) => {
     dispatch(setProjectName(name));
     dispatch(setProjectStartDate());
     dispatch(setProjectDueDate(dueDate));

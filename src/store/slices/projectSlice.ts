@@ -16,7 +16,7 @@ export const getProjects = createAsyncThunk('project/getProjects', async (_, thu
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
     console.log('api try');
-    return response.data.projects[0];
+    return response.data.projects;
   } catch (error) {
     console.log(error.message);
     return thunkAPI.rejectWithValue({ error: error.message });
@@ -75,10 +75,10 @@ export interface OtherItem {
 }
 export type FinanceItem = LaborItem | MaterialItem | OtherItem;
 
-export interface ProjectState {
+export interface CurrentProject {
   projectName: string;
-  startDate: Date;
-  dueDate: Date;
+  startDate: string;
+  dueDate: string;
   id: string;
   items: {
     [ItemCategory.Material]: MaterialItem[];
@@ -88,13 +88,28 @@ export interface ProjectState {
   tasks: Record<string, Array<TaskItem>>;
 }
 
+export interface ListProject {
+  projectName: string;
+  startDate: string;
+  dueDate: string;
+  id: string;
+}
+
+export interface ProjectState {
+  currentProject: CurrentProject;
+  projectsList: Array<ListProject>;
+}
+
 const initialState: ProjectState = {
-  projectName: '',
-  startDate: new Date(),
-  dueDate: new Date('01/01/2021'),
-  id: '',
-  items: { material: [], labor: [], other: [] },
-  tasks: { todo: [], doing: [], done: [] },
+  currentProject: {
+    projectName: '',
+    startDate: '',
+    dueDate: '',
+    id: '',
+    items: { material: [], labor: [], other: [] },
+    tasks: { todo: [], doing: [], done: [] },
+  },
+  projectsList: [],
 };
 
 function idMaker(projectName: string) {
@@ -104,27 +119,27 @@ function idMaker(projectName: string) {
 }
 
 const now = dayjs();
-
+// const { projectName, startDate, dueDate, id} = state.currentProject;
 export const projectSlice = createSlice({
   name: 'project',
   initialState,
   reducers: {
     setProjectName: (state, action: PayloadAction<string>) => {
-      state.projectName = action.payload;
+      state.currentProject.projectName = action.payload;
     },
     setProjectStartDate: (state) => {
-      state.startDate = new Date();
+      state.currentProject.startDate = new Date().toString();
     },
-    setProjectDueDate: (state, action: PayloadAction<Date>) => {
-      state.dueDate = action.payload;
+    setProjectDueDate: (state, action: PayloadAction<string>) => {
+      state.currentProject.dueDate = action.payload;
     },
     setId: (state) => {
-      state.id = idMaker(state.projectName);
+      state.currentProject.id = idMaker(state.currentProject.projectName);
     },
 
     addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
-      state.tasks[action.payload.taskStatus] = [
-        ...(state.tasks[action.payload.taskStatus] || []),
+      state.currentProject.tasks[action.payload.taskStatus] = [
+        ...(state.currentProject.tasks[action.payload.taskStatus] || []),
         {
           taskName: action.payload.taskName,
           taskStatus: action.payload.taskStatus,
@@ -150,10 +165,10 @@ export const projectSlice = createSlice({
         toIndex: number;
       }>
     ) => {
-      state.tasks[action.payload.formerStatus] = state.tasks[action.payload.formerStatus].filter(
-        (e) => e.id !== action.payload.id
-      );
-      const updatedDestinationArray = [...state.tasks[action.payload.taskStatus]];
+      state.currentProject.tasks[action.payload.formerStatus] = state.currentProject.tasks[
+        action.payload.formerStatus
+      ].filter((e) => e.id !== action.payload.id);
+      const updatedDestinationArray = [...state.currentProject.tasks[action.payload.taskStatus]];
       updatedDestinationArray.splice(action.payload.toIndex, 0, {
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
@@ -166,36 +181,21 @@ export const projectSlice = createSlice({
           },
         ],
       });
-      state.tasks[action.payload.taskStatus] = updatedDestinationArray;
+      state.currentProject.tasks[action.payload.taskStatus] = updatedDestinationArray;
     },
     clearTasks: (state) => {
-      state.tasks = initialState.tasks;
+      state.currentProject.tasks = initialState.currentProject.tasks;
     },
-    // addLineItem: (
-    //   state,
-    //   action: PayloadAction<{
-    //     Item: FinanceItem;
-    //   }>
-    // ) => {
-    //   state.items[action.payload.category] = [
-    //     ...(state.items[action.payload.category] || []),
-    //     {
-    //       itemName: action.payload.itemName,
-    //       itemPrice: action.payload.itemPrice,
-    //       quantity: action.payload.quantity,
-    //       category: action.payload.category,
-    //       date: action.payload.date,
-    //       minutes: Math.floor(action.payload.minutes) + Math.floor(action.payload.hours * 60),
-    //     },
-    //   ];
-    // },
     addMaterialItem: (
       state,
       action: PayloadAction<{
         item: MaterialItem;
       }>
     ) => {
-      state.items.material = [...(state.items.material || []), action.payload.item];
+      state.currentProject.items.material = [
+        ...(state.currentProject.items.material || []),
+        action.payload.item,
+      ];
     },
     addLaborItem: (
       state,
@@ -203,7 +203,10 @@ export const projectSlice = createSlice({
         item: LaborItem;
       }>
     ) => {
-      state.items.labor = [...(state.items.labor || []), action.payload.item];
+      state.currentProject.items.labor = [
+        ...(state.currentProject.items.labor || []),
+        action.payload.item,
+      ];
     },
     addOtherItem: (
       state,
@@ -211,10 +214,13 @@ export const projectSlice = createSlice({
         item: OtherItem;
       }>
     ) => {
-      state.items.other = [...(state.items.other || []), action.payload.item];
+      state.currentProject.items.other = [
+        ...(state.currentProject.items.other || []),
+        action.payload.item,
+      ];
     },
     clearItems: (state) => {
-      state.items = initialState.items;
+      state.currentProject.items = initialState.currentProject.items;
     },
     deleteTask: (
       state,
@@ -223,39 +229,18 @@ export const projectSlice = createSlice({
         taskStatus: string;
       }>
     ) => {
-      state.tasks[action.payload.taskStatus] = state.tasks[action.payload.taskStatus].filter(
-        (e) => e.id !== action.payload.id
-      );
+      state.currentProject.tasks[action.payload.taskStatus] = state.currentProject.tasks[
+        action.payload.taskStatus
+      ].filter((e) => e.id !== action.payload.id);
     },
-    // updateTaskStatus: (
-    //   state,
-    //   action: PayloadAction<{
-    //     taskName: string;
-    //     taskStatus: string;
-    //     id: string;
-    //     formerStatus: string;
-    //   }>
-    // ) => {
-    //   state.tasks[action.payload.formerStatus] = state.tasks[action.payload.formerStatus].filter(
-    //     (e) => e.id !== action.payload.id
-    //   );
-    //   state.tasks[action.payload.taskStatus] = [
-    //     ...(state.tasks[action.payload.taskStatus] || []),
-    //     {
-    //       taskName: action.payload.taskName,
-    //       taskStatus: action.payload.taskStatus,
-    //       id: action.payload.id,
-    //     },
-    //   ];
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(getProjects.pending, (state) => {
-      state.projectName = '';
+      state.projectsList = [];
       // state.loading = 'loading';
     });
     builder.addCase(getProjects.fulfilled, (state, { payload }) => {
-      state.projectName = payload.projectName;
+      state.projectsList = payload;
       // state.loading="loaded";
     });
     // [getProjects.fulfilled.type]: (state, { payload }) => {

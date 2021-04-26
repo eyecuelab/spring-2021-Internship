@@ -6,7 +6,7 @@ import { Form, Button } from 'semantic-ui-react';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  createNewProject: (projectName: string, dueDate: Date) => void;
+  createNewProject: (projectName: string, dueDate: string) => void;
   toggleModal: () => void;
 };
 
