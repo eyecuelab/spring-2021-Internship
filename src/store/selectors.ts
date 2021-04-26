@@ -59,6 +59,11 @@ export const selectProjectId = createSelector(
   (project) => project.currentProject.id
 );
 
+export const selectProjectList = createSelector(
+  [projectSelector],
+  (project) => project.projectsList
+);
+
 export const authSelector = createSelector(selectAuth, (user) => user);
 
 export const selectUUID = createSelector([authSelector], (user) => user.uuid);
