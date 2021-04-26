@@ -16,8 +16,8 @@ import {
   setId,
   postProject,
   getProjects,
+  getProjectById,
 } from '../../store/slices/projectSlice';
-// import { postProject, getProjects } from '../../store/slices/projectSlice/projectThunk';
 
 const UserHub = (): JSX.Element => {
   const history = useHistory();
@@ -33,6 +33,10 @@ const UserHub = (): JSX.Element => {
   const handleMakeGet = async () => {
     console.log('clicked');
     dispatch(getProjects());
+  };
+
+  const handleMakeGetById = async () => {
+    dispatch(getProjectById(22));
   };
 
   const handleMakePost = () => {
@@ -83,6 +87,9 @@ const UserHub = (): JSX.Element => {
           </Button>
           <Button type="button" onClick={handleMakeGet}>
             API GET CALL
+          </Button>
+          <Button type="button" onClick={handleMakeGetById}>
+            API GET BY ID CALL
           </Button>
           <Button type="button" onClick={handleMakePost}>
             API POST CALL

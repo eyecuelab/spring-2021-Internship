@@ -6,7 +6,7 @@ import { RootState } from '../store';
 
 const testProject = {
   project: {
-    projectName: 'From Front End',
+    projectName: 'NEW',
     startDate: '2019-04-28',
     endDate: '2019-04-28',
   },
@@ -23,11 +23,55 @@ export const getProjects = createAsyncThunk('project/getProjects', async (_, thu
   }
 });
 
-export const postProject = createAsyncThunk('project/postProject', async () => {
-  return axios.post(`http://localhost:3000/api/projects/`, testProject).then((res) => {
-    console.log(res.data);
-  });
+export const getProjectById = createAsyncThunk(
+  'project/getProjectById',
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/projects/${id}`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const postProject = createAsyncThunk('project/postProject', async (_, thunkAPI) => {
+  try {
+    const response = await axios.post(`http://localhost:3000/api/projects/`, testProject);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    return thunkAPI.rejectWithValue({ error: error.message });
+  }
 });
+
+// export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
+//   try {
+//     const response = await axios.put(`http://localhost:3000/api/projects/${id}`, testProject);
+//     console.log(response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.log(error.message);
+//     return thunkAPI.rejectWithValue({ error: error.message });
+//   }
+// });
+
+// export const deleteProject = createAsyncThunk(
+//   'project/deleteProject',
+//   async (id: number, thunkAPI) => {
+//     try {
+//       const response = await axios.delete(`http://localhost:3000/api/projects/${id}`);
+//       console.log(response.data);
+//       return response.data;
+//     } catch (error) {
+//       console.log(error.message);
+//       return thunkAPI.rejectWithValue({ error: error.message });
+//     }
+//   }
+// );
 
 interface ActivityItem {
   dateTime: dayjs.Dayjs;
@@ -235,6 +279,7 @@ export const projectSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // GET ALL PROJECTS
     builder.addCase(getProjects.pending, (state) => {
       state.projectsList = [];
       // state.loading = 'loading';
@@ -243,28 +288,69 @@ export const projectSlice = createSlice({
       state.projectsList = payload;
       // state.loading="loaded";
     });
-    // [getProjects.fulfilled.type]: (state, { payload }) => {
-    //   state.projectName = 'success';
-    // },
-    //   [getProjects.rejected.type]: (state) => {
-    //     state.projectName = 'failed';
-    //   },
-    //   [postProject.pending.type]: (state) => {
-    //     state.projectName = 'Pending';
-    //   },
-    //   [postProject.fulfilled.type]: (
-    //     state,
-    //     action: PayloadAction<{
-    //       projectName: string;
-    //       startDate: string;
-    //       endDate: string;
-    //     }>
-    //   ) => {
-    //     state.projectName = action.payload.projectName;
-    //   },
-    //   [postProject.rejected.type]: (state) => {
-    //     state.projectName = 'failed';
-    //   },
+    builder.addCase(getProjects.rejected, (state, action) => {
+      // state.loading ="error";
+      // state.error=action.error.message;
+      console.log(action.error.message);
+    });
+
+    // GET ONE PROJECT
+    builder.addCase(getProjectById.pending, (state) => {
+      state.currentProject = initialState.currentProject;
+      // state.loading = 'loading';
+    });
+    builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
+      state.currentProject = payload;
+      // state.loading="loaded";
+    });
+    builder.addCase(getProjectById.rejected, (state, action) => {
+      // state.loading ="error";
+      // state.error=action.error.message;
+      console.log(action.error.message);
+    });
+
+    // POST PROJECT
+    builder.addCase(postProject.pending, (state) => {
+      state.projectsList = [...state.projectsList];
+      // state.loading = 'loading';
+    });
+    builder.addCase(postProject.fulfilled, (state, { payload }) => {
+      state.projectsList.push(payload);
+      // state.loading="loaded";
+    });
+    builder.addCase(postProject.rejected, (state, action) => {
+      // state.loading ="error";
+      // state.error=action.error.message;
+      console.log(action.error.message);
+    });
+
+    // // PUT PROJECT
+    // builder.addCase(putProject.pending, (state) => {
+    //   state.projectsList = [...state.projectsList];
+    //   // state.loading = 'loading';
+    // });
+    // builder.addCase(postProject.fulfilled, (state, { payload }) => {
+    //   state.projectsList.push(payload);
+    //   // state.loading="loaded";
+    // });
+    // builder.addCase(postProject.rejected, (state, action) => {
+    //   // state.loading ="error";
+    //   // state.error=action.error.message;
+    //   console.log(action.error.message);
+    // });
+    // builder.addCase(postProject.pending, (state) => {
+    //   state.projectsList = [...state.projectsList];
+    //   // state.loading = 'loading';
+    // });
+    // builder.addCase(postProject.fulfilled, (state, { payload }) => {
+    //   state.projectsList.push(payload);
+    //   // state.loading="loaded";
+    // });
+    // builder.addCase(postProject.rejected, (state, action) => {
+    //   // state.loading ="error";
+    //   // state.error=action.error.message;
+    //   console.log(action.error.message);
+    // });
   },
 });
 
