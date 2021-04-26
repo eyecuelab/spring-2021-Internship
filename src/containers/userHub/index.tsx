@@ -12,20 +12,37 @@ import * as selectors from '../../store/selectors';
 import {
   setProjectName,
   setProjectStartDate,
-  setProjectDueDate,
+  setProjectEndDate,
   setId,
   postProject,
   getProjects,
 } from '../../store/slices/projectSlice';
-// import { postProject, getProjects } from '../../store/slices/projectSlice/projectThunk';
 
 const UserHub = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const projectName = useSelector(selectors.selectProjectName);
-  const projectDueDate = useSelector(selectors.selectProjectDueDate);
+  const projectEndDate = useSelector(selectors.selectProjectEndDate);
   const projectStartDate = useSelector(selectors.selectProjectStartDate);
+  const projectList = useSelector(selectors.selectProjectList);
   const [showModal, setModalView] = useState(false);
+
+  const handleClick = () => {
+    history.push('/project');
+  };
+
+  const projects: JSX.Element[] = projectList.map((e) => {
+    return (
+      <Card onClick={handleClick}>
+        <Card.Header>{e.projectName}</Card.Header>
+        <Card.Meta>{e.id}</Card.Meta>
+        <Card.Description>
+          {e.startDate} - {e.endDate}
+        </Card.Description>
+      </Card>
+    );
+  });
+
   const handleToggle = () => {
     setModalView(!showModal);
   };
@@ -39,16 +56,12 @@ const UserHub = (): JSX.Element => {
     dispatch(postProject());
   };
 
-  const handleNewProject = (name: string, dueDate: string) => {
+  const handleNewProject = (name: string, endDate: string) => {
     dispatch(setProjectName(name));
     dispatch(setProjectStartDate());
-    dispatch(setProjectDueDate(dueDate));
+    dispatch(setProjectEndDate(endDate));
     dispatch(setId());
     // history.push('/project');
-  };
-
-  const handleClick = () => {
-    history.push('/project');
   };
 
   const locales = {
@@ -66,7 +79,7 @@ const UserHub = (): JSX.Element => {
   const myEventsList = [
     {
       startDate: projectStartDate,
-      endDate: projectDueDate,
+      endDate: projectEndDate,
       title: projectName,
     },
   ];
@@ -77,7 +90,7 @@ const UserHub = (): JSX.Element => {
       render: () => (
         <Tab.Pane>
           <h1>Projects:</h1>
-          <Card onClick={handleClick} header={projectName} />
+          <Card.Group>{projects}</Card.Group>
           <Button type="button" onClick={handleToggle}>
             Add New Project
           </Button>
