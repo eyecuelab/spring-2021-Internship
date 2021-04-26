@@ -15,7 +15,6 @@ import {
   setProjectDueDate,
   setId,
 } from '../../store/slices/projectSlice';
-import { postProject, getProjects } from '../../store/slices/testApiSlice';
 
 const UserHub = (): JSX.Element => {
   const history = useHistory();
@@ -34,15 +33,6 @@ const UserHub = (): JSX.Element => {
     dispatch(setProjectDueDate(dueDate));
     dispatch(setId());
     // history.push('/project');
-  };
-
-  const handleMakeGet = () => {
-    console.log('clicked');
-    dispatch(getProjects());
-  };
-
-  const handleMakePost = () => {
-    dispatch(postProject());
   };
 
   const handleClick = () => {
@@ -78,12 +68,6 @@ const UserHub = (): JSX.Element => {
           <Card onClick={handleClick} header={projectName} />
           <Button type="button" onClick={handleToggle}>
             Add New Project
-          </Button>
-          <Button type="button" onClick={handleMakeGet}>
-            API GET CALL
-          </Button>
-          <Button type="button" onClick={handleMakePost}>
-            API POST CALL
           </Button>
           {showModal && (
             <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
