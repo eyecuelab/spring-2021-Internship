@@ -50,7 +50,6 @@ const UserHub = (): JSX.Element => {
   };
 
   const handleMakeGet = async () => {
-    console.log('clicked');
     dispatch(getProjects());
   };
 
@@ -60,9 +59,6 @@ const UserHub = (): JSX.Element => {
 
   const handleMakePostProj = () => {
     dispatch(postProject());
-  };
-  const handleMakePostTask = () => {
-    dispatch(postTask());
   };
 
   const handleNewProject = (name: string, endDate: string) => {
@@ -111,9 +107,6 @@ const UserHub = (): JSX.Element => {
           </Button>
           <Button type="button" onClick={handleMakePostProj}>
             API POST CALL PROJ
-          </Button>
-          <Button type="button" onClick={handleMakePostTask}>
-            API POST CALL TASK
           </Button>
           {showModal && (
             <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
