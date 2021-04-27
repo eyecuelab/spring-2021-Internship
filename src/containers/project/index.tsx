@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Draggable, DropResult } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 import {
-  addTask,
   clearTasks,
   addMaterialItem,
   addLaborItem,
@@ -16,6 +15,7 @@ import {
   TaskItem,
   moveTask,
   deleteTask,
+  postTask,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -76,8 +76,8 @@ const Project = (): JSX.Element => {
     dispatch(clearItems());
   };
 
-  const handleAddingTask = (taskName: string, taskStatus: string) => {
-    dispatch(addTask({ taskName, taskStatus }));
+  const handleAddingTask = (taskName: string, taskStatus: string, project: number) => {
+    dispatch(postTask({ taskName, taskStatus, project }));
     setTaskModalView(!showTaskModal);
   };
 
