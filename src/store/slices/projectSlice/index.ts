@@ -2,7 +2,9 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import axios from 'axios';
 // eslint-disable-next-line
-import { RootState } from '../store';
+import { RootState } from '../../store';
+/* eslint-disable import/no-cycle */
+import extraReducers from './extraReducers';
 
 const testProject = {
   project: {
@@ -15,10 +17,8 @@ const testProject = {
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
-    console.log('api try');
     return response.data.projects;
   } catch (error) {
-    console.log(error.message);
     return thunkAPI.rejectWithValue({ error: error.message });
   }
 });
@@ -28,10 +28,8 @@ export const getProjectById = createAsyncThunk(
   async (id: number, thunkAPI) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/projects/${id}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue({ error: error.message });
     }
   }
@@ -40,10 +38,8 @@ export const getProjectById = createAsyncThunk(
 export const postProject = createAsyncThunk('project/postProject', async (_, thunkAPI) => {
   try {
     const response = await axios.post(`http://localhost:3000/api/projects/`, testProject);
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error.message);
     return thunkAPI.rejectWithValue({ error: error.message });
   }
 });
@@ -142,9 +138,10 @@ export interface ListProject {
 export interface ProjectState {
   currentProject: CurrentProject;
   projectsList: Array<ListProject>;
+  error: string | undefined;
 }
 
-const initialState: ProjectState = {
+export const initialState: ProjectState = {
   currentProject: {
     projectName: '',
     startDate: '',
@@ -154,6 +151,7 @@ const initialState: ProjectState = {
     tasks: { todo: [], doing: [], done: [] },
   },
   projectsList: [],
+  error: '',
 };
 
 function idMaker(projectName: string) {
@@ -279,78 +277,7 @@ export const projectSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // GET ALL PROJECTS
-    builder.addCase(getProjects.pending, (state) => {
-      state.projectsList = [];
-      // state.loading = 'loading';
-    });
-    builder.addCase(getProjects.fulfilled, (state, { payload }) => {
-      state.projectsList = payload;
-      // state.loading="loaded";
-    });
-    builder.addCase(getProjects.rejected, (state, action) => {
-      // state.loading ="error";
-      // state.error=action.error.message;
-      console.log(action.error.message);
-    });
-
-    // GET ONE PROJECT
-    builder.addCase(getProjectById.pending, (state) => {
-      state.currentProject = initialState.currentProject;
-      // state.loading = 'loading';
-    });
-    builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
-      state.currentProject = payload;
-      // state.loading="loaded";
-    });
-    builder.addCase(getProjectById.rejected, (state, action) => {
-      // state.loading ="error";
-      // state.error=action.error.message;
-      console.log(action.error.message);
-    });
-
-    // POST PROJECT
-    builder.addCase(postProject.pending, (state) => {
-      state.projectsList = [...state.projectsList];
-      // state.loading = 'loading';
-    });
-    builder.addCase(postProject.fulfilled, (state, { payload }) => {
-      state.projectsList.push(payload);
-      // state.loading="loaded";
-    });
-    builder.addCase(postProject.rejected, (state, action) => {
-      // state.loading ="error";
-      // state.error=action.error.message;
-      console.log(action.error.message);
-    });
-
-    // // PUT PROJECT
-    // builder.addCase(putProject.pending, (state) => {
-    //   state.projectsList = [...state.projectsList];
-    //   // state.loading = 'loading';
-    // });
-    // builder.addCase(postProject.fulfilled, (state, { payload }) => {
-    //   state.projectsList.push(payload);
-    //   // state.loading="loaded";
-    // });
-    // builder.addCase(postProject.rejected, (state, action) => {
-    //   // state.loading ="error";
-    //   // state.error=action.error.message;
-    //   console.log(action.error.message);
-    // });
-    // builder.addCase(postProject.pending, (state) => {
-    //   state.projectsList = [...state.projectsList];
-    //   // state.loading = 'loading';
-    // });
-    // builder.addCase(postProject.fulfilled, (state, { payload }) => {
-    //   state.projectsList.push(payload);
-    //   // state.loading="loaded";
-    // });
-    // builder.addCase(postProject.rejected, (state, action) => {
-    //   // state.loading ="error";
-    //   // state.error=action.error.message;
-    //   console.log(action.error.message);
-    // });
+    extraReducers(builder);
   },
 });
 
