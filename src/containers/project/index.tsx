@@ -16,6 +16,7 @@ import {
   TaskItem,
   moveTask,
   deleteTask,
+  updateTask,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -117,9 +118,11 @@ const Project = (): JSX.Element => {
         //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
         // }
         const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
+        const intId = parseInt(id, 10);
         dispatch(
           moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
         );
+        dispatch(updateTask({ intId, taskStatus }));
       } else {
         console.error(`Unrecognized result.source.droppableId: "${result.source.droppableId}".`);
       }
