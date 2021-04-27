@@ -127,8 +127,9 @@ const Project = (): JSX.Element => {
   };
 
   const toDoItems: JSX.Element[] = toDoList.map((e, index) => {
+    const dragid = e.id.toString();
     return (
-      <Draggable key={e.id} draggableId={e.id} index={index}>
+      <Draggable key={e.id} draggableId={dragid} index={index}>
         {/* eslint-disable-next-line */}
         {(provided) => (
           <li
@@ -151,8 +152,9 @@ const Project = (): JSX.Element => {
   });
 
   const doingItems: JSX.Element[] = doingList.map((e, index) => {
+    const dragid = e.id.toString();
     return (
-      <Draggable key={e.id} draggableId={e.id} index={index}>
+      <Draggable key={e.id} draggableId={dragid} index={index}>
         {/* eslint-disable-next-line */}
         {(provided) => (
           <li
@@ -175,8 +177,9 @@ const Project = (): JSX.Element => {
   });
 
   const doneItems: JSX.Element[] = doneList.map((e, index) => {
+    const dragid = e.id.toString();
     return (
-      <Draggable key={e.id} draggableId={e.id} index={index}>
+      <Draggable key={e.id} draggableId={dragid} index={index}>
         {/* eslint-disable-next-line */}
         {(provided) => (
           <li

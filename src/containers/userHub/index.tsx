@@ -17,7 +17,6 @@ import {
   postProject,
   getProjects,
   getProjectById,
-  postTask,
 } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
@@ -29,13 +28,14 @@ const UserHub = (): JSX.Element => {
   const projectList = useSelector(selectors.selectProjectList);
   const [showModal, setModalView] = useState(false);
 
-  const handleClick = () => {
+  const handleProjectSelect = (id: string) => {
+    dispatch(getProjectById(id));
     history.push('/project');
   };
 
   const projects: JSX.Element[] = projectList.map((e) => {
     return (
-      <Card onClick={handleClick}>
+      <Card onClick={() => handleProjectSelect(e.id)}>
         <Card.Header>{e.projectName}</Card.Header>
         <Card.Meta>{e.id}</Card.Meta>
         <Card.Description>
@@ -54,7 +54,7 @@ const UserHub = (): JSX.Element => {
   };
 
   const handleMakeGetById = async () => {
-    dispatch(getProjectById(2));
+    dispatch(getProjectById('2'));
   };
 
   const handleMakePostProj = () => {
