@@ -1,7 +1,14 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 /* eslint-disable import/no-cycle */
-import { ProjectState, getProjects, getProjectById, postProject, initialState } from './index';
+import {
+  ProjectState,
+  getProjects,
+  getProjectById,
+  postProject,
+  postTask,
+  initialState,
+} from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   // GET ALL PROJECTS
@@ -27,7 +34,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading = 'loading';
   });
   builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
-    state.currentProject = payload.project;
+    state.currentProject = payload.currentProject;
     state.error = '';
     // state.loading="loaded";
   });
@@ -48,6 +55,23 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading="loaded";
   });
   builder.addCase(postProject.rejected, (state, action) => {
+    // state.loading ="error";
+    state.error = action.error.message;
+  });
+
+  // POST TASK
+  builder.addCase(postTask.pending, (state) => {
+    state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];
+    state.error = '';
+    // state.loading = 'loading';
+  });
+  builder.addCase(postTask.fulfilled, (state, { payload }) => {
+    console.log(payload);
+    state.currentProject.tasks.todo.push(payload.task);
+    state.error = '';
+    // state.loading="loaded";
+  });
+  builder.addCase(postTask.rejected, (state, action) => {
     // state.loading ="error";
     state.error = action.error.message;
   });

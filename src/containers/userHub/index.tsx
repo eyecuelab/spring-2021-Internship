@@ -17,6 +17,7 @@ import {
   postProject,
   getProjects,
   getProjectById,
+  postTask,
 } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
@@ -54,11 +55,14 @@ const UserHub = (): JSX.Element => {
   };
 
   const handleMakeGetById = async () => {
-    dispatch(getProjectById(22));
+    dispatch(getProjectById(2));
   };
 
-  const handleMakePost = () => {
+  const handleMakePostProj = () => {
     dispatch(postProject());
+  };
+  const handleMakePostTask = () => {
+    dispatch(postTask());
   };
 
   const handleNewProject = (name: string, endDate: string) => {
@@ -105,8 +109,11 @@ const UserHub = (): JSX.Element => {
           <Button type="button" onClick={handleMakeGetById}>
             API GET BY ID CALL
           </Button>
-          <Button type="button" onClick={handleMakePost}>
-            API POST CALL
+          <Button type="button" onClick={handleMakePostProj}>
+            API POST CALL PROJ
+          </Button>
+          <Button type="button" onClick={handleMakePostTask}>
+            API POST CALL TASK
           </Button>
           {showModal && (
             <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
