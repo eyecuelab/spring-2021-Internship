@@ -15,10 +15,8 @@ const testProject = {
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
-    console.log('api try');
     return response.data.projects;
   } catch (error) {
-    console.log(error.message);
     return thunkAPI.rejectWithValue({ error: error.message });
   }
 });
@@ -28,10 +26,8 @@ export const getProjectById = createAsyncThunk(
   async (id: number, thunkAPI) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/projects/${id}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue({ error: error.message });
     }
   }
@@ -40,10 +36,8 @@ export const getProjectById = createAsyncThunk(
 export const postProject = createAsyncThunk('project/postProject', async (_, thunkAPI) => {
   try {
     const response = await axios.post(`http://localhost:3000/api/projects/`, testProject);
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error.message);
     return thunkAPI.rejectWithValue({ error: error.message });
   }
 });
@@ -300,7 +294,20 @@ export const projectSlice = createSlice({
       // state.loading = 'loading';
     });
     builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
-      state.currentProject = payload;
+      state.currentProject.projectName = payload.project.projectName;
+      state.currentProject.startDate = payload.project.startDate;
+      state.currentProject.endDate = payload.project.endDate;
+      state.currentProject.id = payload.project.id;
+      state.currentProject.items = {
+        material: payload.materialItems,
+        labor: payload.laborItems,
+        other: payload.otherItems,
+      };
+      state.currentProject.tasks = {
+        todo: payload.toDoTasks,
+        doing: payload.doingTasks,
+        done: payload.doneTasks,
+      };
       // state.loading="loaded";
     });
     builder.addCase(getProjectById.rejected, (state, action) => {
@@ -315,7 +322,7 @@ export const projectSlice = createSlice({
       // state.loading = 'loading';
     });
     builder.addCase(postProject.fulfilled, (state, { payload }) => {
-      state.projectsList.push(payload);
+      state.projectsList.push(payload.project);
       // state.loading="loaded";
     });
     builder.addCase(postProject.rejected, (state, action) => {
