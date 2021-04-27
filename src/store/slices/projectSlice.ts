@@ -294,20 +294,7 @@ export const projectSlice = createSlice({
       // state.loading = 'loading';
     });
     builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
-      state.currentProject.projectName = payload.project.projectName;
-      state.currentProject.startDate = payload.project.startDate;
-      state.currentProject.endDate = payload.project.endDate;
-      state.currentProject.id = payload.project.id;
-      state.currentProject.items = {
-        material: payload.materialItems,
-        labor: payload.laborItems,
-        other: payload.otherItems,
-      };
-      state.currentProject.tasks = {
-        todo: payload.toDoTasks,
-        doing: payload.doingTasks,
-        done: payload.doneTasks,
-      };
+      state.currentProject = payload.currentProject;
       // state.loading="loaded";
     });
     builder.addCase(getProjectById.rejected, (state, action) => {
