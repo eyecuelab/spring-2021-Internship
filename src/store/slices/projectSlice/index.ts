@@ -25,7 +25,7 @@ export const getProjects = createAsyncThunk('project/getProjects', async (_, thu
 
 export const getProjectById = createAsyncThunk(
   'project/getProjectById',
-  async (id: number, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/projects/${id}`);
       return response.data;
