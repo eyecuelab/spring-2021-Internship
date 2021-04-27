@@ -1,7 +1,14 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 /* eslint-disable import/no-cycle */
-import { ProjectState, getProjects, getProjectById, postProject, initialState } from './index';
+import {
+  ProjectState,
+  getProjects,
+  getProjectById,
+  updateTask,
+  postProject,
+  initialState,
+} from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   // GET ALL PROJECTS
@@ -27,7 +34,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading = 'loading';
   });
   builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
-    state.currentProject = payload.project;
+    state.currentProject = payload.currentProject;
     state.error = '';
     // state.loading="loaded";
   });
@@ -48,6 +55,19 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading="loaded";
   });
   builder.addCase(postProject.rejected, (state, action) => {
+    // state.loading ="error";
+    state.error = action.error.message;
+  });
+
+  // UPDATE ONE TASK
+  builder.addCase(updateTask.pending, () => {
+    // state.loading = 'loading';
+  });
+  builder.addCase(updateTask.fulfilled, (state) => {
+    state.error = '';
+    // state.loading="loaded";
+  });
+  builder.addCase(updateTask.rejected, (state, action) => {
     // state.loading ="error";
     state.error = action.error.message;
   });
