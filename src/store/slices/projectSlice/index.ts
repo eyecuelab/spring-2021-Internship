@@ -44,6 +44,23 @@ export const postProject = createAsyncThunk('project/postProject', async (_, thu
   }
 });
 
+export const updateTask = createAsyncThunk(
+  'tasks/updateTask',
+  async ({ intId, taskStatus }: { intId: number; taskStatus: string }, thunkAPI) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/tasks/${intId}`, {
+        task: {
+          id: intId,
+          taskStatus,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 // export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
 //   try {
 //     const response = await axios.put(`http://localhost:3000/api/projects/${id}`, testProject);
