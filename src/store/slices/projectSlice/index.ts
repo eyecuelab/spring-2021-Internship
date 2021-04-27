@@ -77,14 +77,26 @@ export const postProject = createAsyncThunk('project/postProject', async (_, thu
 //   }
 // );
 
-export const postTask = createAsyncThunk('project/postTask', async (_, thunkAPI) => {
-  try {
-    const response = await axios.post(`http://localhost:3000/api/tasks/`, testTask);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ error: error.message });
+export const postTask = createAsyncThunk(
+  'project/postTask',
+  async (
+    { taskName, taskStatus, project }: { taskName: string; taskStatus: string; project: number },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/api/tasks/`, {
+        task: {
+          taskName,
+          taskStatus,
+          project,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
   }
-});
+);
 
 interface ActivityItem {
   dateTime: dayjs.Dayjs;

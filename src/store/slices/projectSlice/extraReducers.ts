@@ -11,7 +11,7 @@ import {
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
-  // GET ALL PROJECTS
+  // //////////GET ALL PROJECTS////////////////
   builder.addCase(getProjects.pending, (state) => {
     state.projectsList = [];
     state.error = '';
@@ -27,7 +27,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     state.error = action.error.message;
   });
 
-  // GET ONE PROJECT
+  // //////////////GET ONE PROJECT/////////////////
   builder.addCase(getProjectById.pending, (state) => {
     state.currentProject = initialState.currentProject;
     state.error = '';
@@ -43,7 +43,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     state.error = action.error.message;
   });
 
-  // POST PROJECT
+  // //////////////POST PROJECT////////////////
   builder.addCase(postProject.pending, (state) => {
     state.projectsList = [...state.projectsList];
     state.error = '';
@@ -59,15 +59,16 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     state.error = action.error.message;
   });
 
-  // POST TASK
-  builder.addCase(postTask.pending, (state) => {
+  // ///////////POST TASK ///////////////
+  builder.addCase(postTask.pending, (state, payload) => {
     state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];
+    state.currentProject.tasks.doing = [...state.currentProject.tasks.doing];
+    state.currentProject.tasks.done = [...state.currentProject.tasks.done];
     state.error = '';
     // state.loading = 'loading';
   });
   builder.addCase(postTask.fulfilled, (state, { payload }) => {
-    console.log(payload);
-    state.currentProject.tasks.todo.push(payload.task);
+    state.currentProject.tasks[payload.task.taskStatus].push(payload.task);
     state.error = '';
     // state.loading="loaded";
   });
