@@ -10,6 +10,7 @@ import {
   initialState,
   postTask,
   postItem,
+  deleteTask,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -70,6 +71,22 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading="loaded";
   });
   builder.addCase(updateTask.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
+  // DELETE ONE TASK
+  builder.addCase(deleteTask.pending, () => {
+    // state.loading = 'loading';
+  });
+  builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
+    // console.log(payload.task.taskStatus[payload.task.taskStatus]);
+    state.currentProject.tasks.todo = [
+      ...state.currentProject.tasks.todo.filter((e) => e.id !== payload.intId),
+    ];
+    // state.error = '';
+    // state.loading="loaded";
+  });
+  builder.addCase(deleteTask.rejected, (state, action) => {
     state.error = action.error.message;
   });
 
