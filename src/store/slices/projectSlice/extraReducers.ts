@@ -70,6 +70,9 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading="loaded";
   });
   builder.addCase(updateTask.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
   // ///////////POST TASK ///////////////
   builder.addCase(postTask.pending, (state) => {
     state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];

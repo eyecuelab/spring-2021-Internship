@@ -101,11 +101,18 @@ export const postTask = createAsyncThunk(
     thunkAPI
   ) => {
     try {
+      const now = dayjs();
       const response = await axios.post(`http://localhost:3000/api/tasks/`, {
         task: {
           taskName,
           taskStatus,
           project,
+          activity: [
+            {
+              dateTime: now,
+              description: `${taskName} created and added to ${taskStatus}`,
+            },
+          ],
         },
       });
       return response.data;
@@ -270,24 +277,6 @@ export const projectSlice = createSlice({
       state.currentProject.id = idMaker(state.currentProject.projectName);
     },
 
-    addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
-      state.currentProject.tasks[action.payload.taskStatus] = [
-        ...(state.currentProject.tasks[action.payload.taskStatus] || []),
-        {
-          taskName: action.payload.taskName,
-          taskStatus: action.payload.taskStatus,
-          id: idMaker(action.payload.taskName),
-          position: 999,
-          activity: [
-            {
-              dateTime: now,
-              description: `${action.payload.taskName} created and added to ${action.payload.taskStatus}`,
-            },
-          ],
-        },
-      ];
-    },
-
     moveTask: (
       state,
       action: PayloadAction<{
@@ -323,39 +312,7 @@ export const projectSlice = createSlice({
     clearTasks: (state) => {
       state.currentProject.tasks = initialState.currentProject.tasks;
     },
-    // addMaterialItem: (
-    //   state,
-    //   action: PayloadAction<{
-    //     item: MaterialItem;
-    //   }>
-    // ) => {
-    //   state.currentProject.items.material = [
-    //     ...(state.currentProject.items.material || []),
-    //     action.payload.item,
-    //   ];
-    // },
-    // addLaborItem: (
-    //   state,
-    //   action: PayloadAction<{
-    //     item: LaborItem;
-    //   }>
-    // ) => {
-    //   state.currentProject.items.labor = [
-    //     ...(state.currentProject.items.labor || []),
-    //     action.payload.item,
-    //   ];
-    // },
-    // addOtherItem: (
-    //   state,
-    //   action: PayloadAction<{
-    //     item: OtherItem;
-    //   }>
-    // ) => {
-    //   state.currentProject.items.other = [
-    //     ...(state.currentProject.items.other || []),
-    //     action.payload.item,
-    //   ];
-    // },
+
     clearItems: (state) => {
       state.currentProject.items = initialState.currentProject.items;
     },
@@ -379,16 +336,10 @@ export const projectSlice = createSlice({
 export const {
   setProjectName,
   setId,
-  // addTask,
   clearTasks,
-  // addLineItem,
-  // addMaterialItem,
-  // addLaborItem,
-  // addOtherItem,
   clearItems,
   setProjectStartDate,
   setProjectEndDate,
-  // updateTaskStatus,
   moveTask,
   deleteTask,
 } = projectSlice.actions;
