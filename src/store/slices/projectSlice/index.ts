@@ -94,6 +94,71 @@ export const updateTask = createAsyncThunk(
 //   }
 // );
 
+export const postTask = createAsyncThunk(
+  'project/postTask',
+  async (
+    { taskName, taskStatus, project }: { taskName: string; taskStatus: string; project: number },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/api/tasks/`, {
+        task: {
+          taskName,
+          taskStatus,
+          project,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const postItem = createAsyncThunk(
+  'project/postItem',
+  async (
+    {
+      itemName,
+      itemPrice,
+      quantity,
+      category,
+      date,
+      minutes,
+      hours,
+      project,
+    }: {
+      itemName: string;
+      itemPrice: number;
+      quantity: number;
+      category: string;
+      date: string;
+      minutes: number;
+      hours: number;
+      project: number;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/api/items/`, {
+        item: {
+          itemName,
+          itemPrice,
+          quantity,
+          category,
+          date,
+          minutes,
+          hours,
+          project,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 interface ActivityItem {
   dateTime: dayjs.Dayjs;
   description: string;
@@ -222,6 +287,7 @@ export const projectSlice = createSlice({
         },
       ];
     },
+
     moveTask: (
       state,
       action: PayloadAction<{
@@ -257,39 +323,39 @@ export const projectSlice = createSlice({
     clearTasks: (state) => {
       state.currentProject.tasks = initialState.currentProject.tasks;
     },
-    addMaterialItem: (
-      state,
-      action: PayloadAction<{
-        item: MaterialItem;
-      }>
-    ) => {
-      state.currentProject.items.material = [
-        ...(state.currentProject.items.material || []),
-        action.payload.item,
-      ];
-    },
-    addLaborItem: (
-      state,
-      action: PayloadAction<{
-        item: LaborItem;
-      }>
-    ) => {
-      state.currentProject.items.labor = [
-        ...(state.currentProject.items.labor || []),
-        action.payload.item,
-      ];
-    },
-    addOtherItem: (
-      state,
-      action: PayloadAction<{
-        item: OtherItem;
-      }>
-    ) => {
-      state.currentProject.items.other = [
-        ...(state.currentProject.items.other || []),
-        action.payload.item,
-      ];
-    },
+    // addMaterialItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     item: MaterialItem;
+    //   }>
+    // ) => {
+    //   state.currentProject.items.material = [
+    //     ...(state.currentProject.items.material || []),
+    //     action.payload.item,
+    //   ];
+    // },
+    // addLaborItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     item: LaborItem;
+    //   }>
+    // ) => {
+    //   state.currentProject.items.labor = [
+    //     ...(state.currentProject.items.labor || []),
+    //     action.payload.item,
+    //   ];
+    // },
+    // addOtherItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     item: OtherItem;
+    //   }>
+    // ) => {
+    //   state.currentProject.items.other = [
+    //     ...(state.currentProject.items.other || []),
+    //     action.payload.item,
+    //   ];
+    // },
     clearItems: (state) => {
       state.currentProject.items = initialState.currentProject.items;
     },
@@ -313,12 +379,12 @@ export const projectSlice = createSlice({
 export const {
   setProjectName,
   setId,
-  addTask,
+  // addTask,
   clearTasks,
   // addLineItem,
-  addMaterialItem,
-  addLaborItem,
-  addOtherItem,
+  // addMaterialItem,
+  // addLaborItem,
+  // addOtherItem,
   clearItems,
   setProjectStartDate,
   setProjectEndDate,

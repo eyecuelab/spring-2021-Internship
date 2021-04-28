@@ -17,6 +17,7 @@ import {
   postProject,
   getProjects,
   getProjectById,
+  postMaterialItem,
 } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
@@ -57,7 +58,7 @@ const UserHub = (): JSX.Element => {
     dispatch(getProjectById('2'));
   };
 
-  const handleMakePost = () => {
+  const handleMakePostProj = () => {
     dispatch(postProject());
   };
 
@@ -105,8 +106,8 @@ const UserHub = (): JSX.Element => {
           <Button type="button" onClick={handleMakeGetById}>
             API GET BY ID CALL
           </Button>
-          <Button type="button" onClick={handleMakePost}>
-            API POST CALL
+          <Button type="button" onClick={handleMakePostProj}>
+            API POST CALL PROJ
           </Button>
           {showModal && (
             <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
