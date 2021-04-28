@@ -79,6 +79,15 @@ export const updateTask = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk('tasks/deleteTask', async (id: string, thunkAPI) => {
+  try {
+    const response = await axios.delete(`http://localhost:3000/api/tasks/${id}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ error: error.message });
+  }
+});
+
 // export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
 //   try {
 //     const response = await axios.put(`http://localhost:3000/api/projects/${id}`, testProject);
@@ -326,17 +335,17 @@ export const projectSlice = createSlice({
     clearItems: (state) => {
       state.currentProject.items = initialState.currentProject.items;
     },
-    deleteTask: (
-      state,
-      action: PayloadAction<{
-        id: string;
-        taskStatus: string;
-      }>
-    ) => {
-      state.currentProject.tasks[action.payload.taskStatus] = state.currentProject.tasks[
-        action.payload.taskStatus
-      ].filter((e) => e.id !== action.payload.id);
-    },
+    // deleteTask: (
+    //   state,
+    //   action: PayloadAction<{
+    //     id: string;
+    //     taskStatus: string;
+    //   }>
+    // ) => {
+    //   state.currentProject.tasks[action.payload.taskStatus] = state.currentProject.tasks[
+    //     action.payload.taskStatus
+    //   ].filter((e) => e.id !== action.payload.id);
+    // },
   },
   extraReducers: (builder) => {
     extraReducers(builder);
@@ -351,7 +360,6 @@ export const {
   setProjectStartDate,
   setProjectEndDate,
   moveTask,
-  deleteTask,
 } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
