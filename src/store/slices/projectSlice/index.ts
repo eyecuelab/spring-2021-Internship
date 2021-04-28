@@ -48,21 +48,31 @@ export const updateTask = createAsyncThunk(
   'tasks/updateTask',
   async (
     {
+      taskName,
       intId,
       taskStatus,
       updatedPosition,
-    }: { intId: number; taskStatus: string; updatedPosition: number },
+    }: { taskName: string; intId: number; taskStatus: string; updatedPosition: number },
     thunkAPI
   ) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/tasks/${intId}`, {
+      const now = dayjs().toString();
+      const taskResponse = await axios.put(`http://localhost:3000/api/tasks/${intId}`, {
         task: {
           id: intId,
           taskStatus,
           position: updatedPosition,
         },
       });
-      return response.data;
+      await axios.post(`http://localhost:3000/api/task-activities`, {
+        taskActivity: {
+          dateTime: now,
+          description: `${taskName} was moved to ${taskStatus}`,
+          task: intId,
+        },
+      });
+
+      return taskResponse.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
