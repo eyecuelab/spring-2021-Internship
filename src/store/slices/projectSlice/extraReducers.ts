@@ -5,12 +5,11 @@ import {
   ProjectState,
   getProjects,
   getProjectById,
+  updateTask,
   postProject,
-  postTask,
   initialState,
+  postTask,
   postItem,
-  // postLaborItem,
-  // postOtherItem,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -62,6 +61,15 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     state.error = action.error.message;
   });
 
+  // UPDATE ONE TASK
+  builder.addCase(updateTask.pending, () => {
+    // state.loading = 'loading';
+  });
+  builder.addCase(updateTask.fulfilled, (state) => {
+    state.error = '';
+    // state.loading="loaded";
+  });
+  builder.addCase(updateTask.rejected, (state, action) => {
   // ///////////POST TASK ///////////////
   builder.addCase(postTask.pending, (state) => {
     state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];

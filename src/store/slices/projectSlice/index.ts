@@ -44,6 +44,31 @@ export const postProject = createAsyncThunk('project/postProject', async (_, thu
   }
 });
 
+export const updateTask = createAsyncThunk(
+  'tasks/updateTask',
+  async (
+    {
+      intId,
+      taskStatus,
+      updatedPosition,
+    }: { intId: number; taskStatus: string; updatedPosition: number },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/tasks/${intId}`, {
+        task: {
+          id: intId,
+          taskStatus,
+          position: updatedPosition,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 // export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
 //   try {
 //     const response = await axios.put(`http://localhost:3000/api/projects/${id}`, testProject);
@@ -143,6 +168,7 @@ export interface TaskItem {
   taskName: string;
   taskStatus: string;
   id: string;
+  position: number;
   activity: Array<ActivityItem>;
 }
 
@@ -244,22 +270,24 @@ export const projectSlice = createSlice({
       state.currentProject.id = idMaker(state.currentProject.projectName);
     },
 
-    // addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
-    //   state.currentProject.tasks[action.payload.taskStatus] = [
-    //     ...(state.currentProject.tasks[action.payload.taskStatus] || []),
-    //     {
-    //       taskName: action.payload.taskName,
-    //       taskStatus: action.payload.taskStatus,
-    //       id: idMaker(action.payload.taskName),
-    //       activity: [
-    //         {
-    //           dateTime: now,
-    //           description: `${action.payload.taskName} created and added to ${action.payload.taskStatus}`,
-    //         },
-    //       ],
-    //     },
-    //   ];
-    // },
+    addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
+      state.currentProject.tasks[action.payload.taskStatus] = [
+        ...(state.currentProject.tasks[action.payload.taskStatus] || []),
+        {
+          taskName: action.payload.taskName,
+          taskStatus: action.payload.taskStatus,
+          id: idMaker(action.payload.taskName),
+          position: 999,
+          activity: [
+            {
+              dateTime: now,
+              description: `${action.payload.taskName} created and added to ${action.payload.taskStatus}`,
+            },
+          ],
+        },
+      ];
+    },
+
     moveTask: (
       state,
       action: PayloadAction<{
@@ -267,6 +295,7 @@ export const projectSlice = createSlice({
         id: string;
         formerStatus: string;
         taskStatus: string;
+        updatedPosition: number;
         activity: Array<ActivityItem>;
         fromIndex: number;
         toIndex: number;
@@ -280,6 +309,7 @@ export const projectSlice = createSlice({
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
         id: action.payload.id,
+        position: action.payload.updatedPosition,
         activity: [
           ...action.payload.activity,
           {
