@@ -312,8 +312,6 @@ const Project = (): JSX.Element => {
         <NewFinance
           toggleModal={handleToggleFinance}
           addItem={handleAddingMaterial}
-          // addLaborItem={handleAddingLabor}
-          // addOtherItem={handleAddingOther}
           defaultForm={defaultItemForm}
         />
       )}

@@ -95,6 +95,8 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   // MATERIAL
   builder.addCase(postItem.pending, (state) => {
     state.currentProject.items.material = [...state.currentProject.items.material];
+    state.currentProject.items.labor = [...state.currentProject.items.labor];
+    state.currentProject.items.other = [...state.currentProject.items.other];
     state.error = '';
     // state.loading = 'loading';
   });
