@@ -4,9 +4,6 @@ import { Draggable, DropResult } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 import {
   clearTasks,
-  addMaterialItem,
-  addLaborItem,
-  addOtherItem,
   clearItems,
   MaterialItem,
   LaborItem,
@@ -16,6 +13,9 @@ import {
   moveTask,
   deleteTask,
   postTask,
+  postItem,
+  // postLaborItem,
+  // postOtherItem,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -86,20 +86,41 @@ const Project = (): JSX.Element => {
     setTaskDetailView(!showTaskDetail);
   };
 
-  const handleAddingMaterial = (item: MaterialItem) => {
-    dispatch(addMaterialItem({ item }));
+  const handleAddingMaterial = (
+    itemName: string,
+    itemPrice: number,
+    quantity: number,
+    category: string,
+    date: string,
+    minutes: number,
+    hours: number,
+    project: number
+  ) => {
+    dispatch(postItem({ itemName, itemPrice, quantity, category, date, minutes, hours, project }));
     setFinanceModalView(!showFinanceModal);
   };
 
-  const handleAddingLabor = (item: LaborItem) => {
-    dispatch(addLaborItem({ item }));
-    setFinanceModalView(!showFinanceModal);
-  };
+  // const handleAddingLabor = (
+  //   itemName: string,
+  //   category: string,
+  //   date: string,
+  //   minutes: number,
+  //   hours: number,
+  //   project: number
+  // ) => {
+  //   dispatch(postLaborItem({ itemName, category, date, minutes, hours, project }));
+  //   setFinanceModalView(!showFinanceModal);
+  // };
 
-  const handleAddingOther = (item: OtherItem) => {
-    dispatch(addOtherItem({ item }));
-    setFinanceModalView(!showFinanceModal);
-  };
+  // const handleAddingOther = (
+  //   itemName: string,
+  //   itemPrice: number,
+  //   category: string,
+  //   project: number
+  // ) => {
+  //   dispatch(postOtherItem({ itemName, itemPrice, category, project }));
+  //   setFinanceModalView(!showFinanceModal);
+  // };
 
   const handleOnDragEnd = (result: DropResult) => {
     if (result.destination && result.destination !== null) {
@@ -275,9 +296,9 @@ const Project = (): JSX.Element => {
       {showFinanceModal && (
         <NewFinance
           toggleModal={handleToggleFinance}
-          addMaterialItem={handleAddingMaterial}
-          addLaborItem={handleAddingLabor}
-          addOtherItem={handleAddingOther}
+          addItem={handleAddingMaterial}
+          // addLaborItem={handleAddingLabor}
+          // addOtherItem={handleAddingOther}
           defaultForm={defaultItemForm}
         />
       )}

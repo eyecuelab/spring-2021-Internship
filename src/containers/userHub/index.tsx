@@ -17,6 +17,7 @@ import {
   postProject,
   getProjects,
   getProjectById,
+  postMaterialItem,
 } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
