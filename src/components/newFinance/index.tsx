@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Form } from 'semantic-ui-react';
-import { MaterialItem, LaborItem, OtherItem } from '../../store/slices/projectSlice';
+import * as selectors from '../../store/selectors';
+// import { MaterialItem, LaborItem, OtherItem } from '../../store/slices/projectSlice';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  addMaterialItem: (item: MaterialItem) => void;
-  addLaborItem: (item: LaborItem) => void;
-  addOtherItem: (item: OtherItem) => void;
+  addItem: (
+    itemName: string,
+    itemPrice: number,
+    quantity: number,
+    category: string,
+    date: string,
+    minutes: number,
+    hours: number,
+    project: number
+  ) => void;
+  // addLaborItem: (
+  //   itemName: string,
+  //   category: string,
+  //   date: string,
+  //   minutes: number,
+  //   hours: number,
+  //   project: number
+  // ) => void;
+  // addOtherItem: (itemName: string, itemPrice: number, category: string, project: number) => void;
   toggleModal: () => void;
   defaultForm: string;
 };
@@ -26,24 +44,40 @@ type Inputs = {
 
 const NewFinance = ({
   toggleModal,
-  addMaterialItem,
-  addLaborItem,
-  addOtherItem,
+  addItem,
+  // addLaborItem,
+  // addOtherItem,
   defaultForm,
 }: ModalProps): JSX.Element => {
   const [formType, setFormType] = useState(defaultForm);
+  const projectId = useSelector(selectors.selectProjectId);
+  const project = parseInt(projectId, 10);
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<Inputs>();
-  // eslint-disable-next-line
-  const onMaterialSubmit = (data: MaterialItem) => addMaterialItem(data);
-  const onLaborSubmit = (data: LaborItem) => {
-    addLaborItem(data);
+
+  const onSubmit = (data: any) => {
+    addItem(
+      data.itemName,
+      data.itemPrice,
+      data.quantity,
+      data.category,
+      data.date,
+      data.minutes,
+      data.hours,
+      project
+    );
   };
-  const onOtherSubmit = (data: OtherItem) => addOtherItem(data);
+
+  // const onLaborSubmit = (data: any) => {
+  //   addLaborItem(data.itemName, 'labor', data.date.toString(), data.minutes, data.hours, project);
+  // };
+
+  // const onOtherSubmit = (data: any) =>
+  //   addOtherItem(data.itemName, data.itemPrice, 'other', project);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormType(event.target.value);
@@ -66,7 +100,10 @@ const NewFinance = ({
           {...register('quantity', { required: true, min: 1 })}
         />
         {errors.quantity && <p>This must be higher than 0</p>}
-        <Form.Button type="submit" onClick={handleSubmit(onMaterialSubmit)}>
+        <Form.Field>
+          <input type="hidden" value="material" {...register('category')} />
+        </Form.Field>
+        <Form.Button type="submit" onClick={handleSubmit(onSubmit)}>
           Submit
         </Form.Button>
       </>
@@ -88,6 +125,9 @@ const NewFinance = ({
           placeholder="Minutes"
           {...register('minutes', { required: true })}
         />
+        <Form.Field>
+          <input type="hidden" value="labor" {...register('category')} />
+        </Form.Field>
         <Controller
           control={control}
           name="date"
@@ -100,7 +140,7 @@ const NewFinance = ({
             />
           )}
         />
-        <Form.Button type="submit" onClick={handleSubmit(onLaborSubmit)}>
+        <Form.Button type="submit" onClick={handleSubmit(onSubmit)}>
           Submit
         </Form.Button>
       </>
@@ -117,7 +157,10 @@ const NewFinance = ({
           {...register('itemPrice', { required: true, min: 0 })}
         />
         {errors.itemPrice && <p>This must be greater than or equal to 0</p>}
-        <Form.Button type="submit" onClick={handleSubmit(onOtherSubmit)}>
+        <Form.Field>
+          <input type="hidden" value="other" {...register('category')} />
+        </Form.Field>
+        <Form.Button type="submit" onClick={handleSubmit(onSubmit)}>
           Submit
         </Form.Button>
       </>
