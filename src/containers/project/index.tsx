@@ -46,6 +46,7 @@ const Project = (): JSX.Element => {
     taskName: '',
     taskStatus: '',
     id: '',
+    position: 0,
     activity: [],
   });
 
@@ -113,6 +114,10 @@ const Project = (): JSX.Element => {
       const formerStatus = result.source.droppableId;
       const fromIndex = result.source.index;
       const toIndex = result.destination.index;
+      const updatedPosition =
+        toIndex === 0 || LISTS[taskStatus].length === 0
+          ? 100
+          : LISTS[taskStatus][toIndex - 1].position + 1;
       if (LISTS[formerStatus]) {
         // if (formerStatus !== LISTS) {
         //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
@@ -120,9 +125,18 @@ const Project = (): JSX.Element => {
         const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
         const intId = parseInt(id, 10);
         dispatch(
-          moveTask({ taskName, id, formerStatus, taskStatus, fromIndex, toIndex, activity })
+          moveTask({
+            taskName,
+            id,
+            formerStatus,
+            taskStatus,
+            fromIndex,
+            toIndex,
+            updatedPosition,
+            activity,
+          })
         );
-        dispatch(updateTask({ intId, taskStatus }));
+        dispatch(updateTask({ intId, taskStatus, updatedPosition }));
       } else {
         console.error(`Unrecognized result.source.droppableId: "${result.source.droppableId}".`);
       }
