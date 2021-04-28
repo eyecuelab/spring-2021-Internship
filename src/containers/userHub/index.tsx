@@ -7,22 +7,15 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Card, Tab } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import dayjs from 'dayjs';
 import NewProjectModal from '../../components/newProjectModal';
 import * as selectors from '../../store/selectors';
-import {
-  setProjectName,
-  setProjectStartDate,
-  setProjectEndDate,
-  setId,
-  postProject,
-  getProjects,
-  getProjectById,
-} from '../../store/slices/projectSlice';
+import { postProject, getProjects, getProjectById } from '../../store/slices/projectSlice';
 
 const UserHub = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const projectName = useSelector(selectors.selectProjectName);
+  const projName = useSelector(selectors.selectProjectName);
   const projectEndDate = useSelector(selectors.selectProjectEndDate);
   const projectStartDate = useSelector(selectors.selectProjectStartDate);
   const projectList = useSelector(selectors.selectProjectList);
@@ -34,12 +27,14 @@ const UserHub = (): JSX.Element => {
   };
 
   const projects: JSX.Element[] = projectList.map((e) => {
+    const startDate = dayjs(e.startDate).format('MM/DD/YYYY');
+    const endDate = dayjs(e.endDate).format('MM/DD/YYYY');
     return (
       <Card onClick={() => handleProjectSelect(e.id)}>
         <Card.Header>{e.projectName}</Card.Header>
         <Card.Meta>{e.id}</Card.Meta>
         <Card.Description>
-          {e.startDate} - {e.endDate}
+          {startDate} - {endDate}
         </Card.Description>
       </Card>
     );
@@ -57,16 +52,8 @@ const UserHub = (): JSX.Element => {
     dispatch(getProjectById('2'));
   };
 
-  const handleMakePostProj = () => {
-    dispatch(postProject());
-  };
-
-  const handleNewProject = (name: string, endDate: string) => {
-    dispatch(setProjectName(name));
-    dispatch(setProjectStartDate());
-    dispatch(setProjectEndDate(endDate));
-    dispatch(setId());
-    // history.push('/project');
+  const handleNewProject = (projectName: string, startDate: string, endDate: string) => {
+    dispatch(postProject({ projectName, startDate, endDate }));
   };
 
   const locales = {
@@ -85,7 +72,7 @@ const UserHub = (): JSX.Element => {
     {
       startDate: projectStartDate,
       endDate: projectEndDate,
-      title: projectName,
+      title: projName,
     },
   ];
 
@@ -105,11 +92,8 @@ const UserHub = (): JSX.Element => {
           <Button type="button" onClick={handleMakeGetById}>
             API GET BY ID CALL
           </Button>
-          <Button type="button" onClick={handleMakePostProj}>
-            API POST CALL PROJ
-          </Button>
           {showModal && (
-            <NewProjectModal toggleModal={handleToggle} createNewProject={handleNewProject} />
+            <NewProjectModal toggleModal={handleToggle} addProject={handleNewProject} />
           )}
         </Tab.Pane>
       ),

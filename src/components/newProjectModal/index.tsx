@@ -6,16 +6,17 @@ import { Form, Button } from 'semantic-ui-react';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  createNewProject: (projectName: string, endDate: string) => void;
+  addProject: (projectName: string, startDate: string, endDate: string) => void;
   toggleModal: () => void;
 };
 
 type Inputs = {
   projectName: string;
+  startDate: Date;
   endDate: Date;
 };
 
-const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Element => {
+const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -24,7 +25,7 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
   } = useForm<Inputs>();
   // eslint-disable-next-line
   const onSubmit = (data: any) => {
-    createNewProject(data.projectName, data.endDate);
+    addProject(data.projectName, data.startDate, data.endDate);
     toggleModal();
   };
   return (
@@ -37,13 +38,25 @@ const NewProjectModal = ({ createNewProject, toggleModal }: ModalProps): JSX.Ele
           {/* <input type="datetime" placeholder="Due Date" {...register('endDate')} /> */}
           <Controller
             control={control}
+            name="startDate"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ReactDatePicker
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+                placeholderText="Set Start Date"
+              />
+            )}
+          />
+          <Controller
+            control={control}
             name="endDate"
             render={({ field: { onChange, onBlur, value } }) => (
               <ReactDatePicker
                 onChange={onChange}
                 onBlur={onBlur}
                 selected={value}
-                placeholderText="Set Due Date"
+                placeholderText="Set End Date"
               />
             )}
           />
