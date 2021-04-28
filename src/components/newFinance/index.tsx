@@ -5,7 +5,6 @@ import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Form } from 'semantic-ui-react';
 import * as selectors from '../../store/selectors';
-// import { MaterialItem, LaborItem, OtherItem } from '../../store/slices/projectSlice';
 import { Modal } from '../modal';
 
 type ModalProps = {
@@ -19,15 +18,6 @@ type ModalProps = {
     hours: number,
     project: number
   ) => void;
-  // addLaborItem: (
-  //   itemName: string,
-  //   category: string,
-  //   date: string,
-  //   minutes: number,
-  //   hours: number,
-  //   project: number
-  // ) => void;
-  // addOtherItem: (itemName: string, itemPrice: number, category: string, project: number) => void;
   toggleModal: () => void;
   defaultForm: string;
 };
@@ -71,13 +61,6 @@ const NewFinance = ({
       project
     );
   };
-
-  // const onLaborSubmit = (data: any) => {
-  //   addLaborItem(data.itemName, 'labor', data.date.toString(), data.minutes, data.hours, project);
-  // };
-
-  // const onOtherSubmit = (data: any) =>
-  //   addOtherItem(data.itemName, data.itemPrice, 'other', project);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormType(event.target.value);
@@ -198,7 +181,6 @@ const NewFinance = ({
           {formType === 'materials' && <MaterialForm />}
           {formType === 'labor' && <LaborForm />}
           {formType === 'other' && <OtherForm />}
-          {/* <Form.Button type="submit"> Submit </Form.Button> */}
         </Form>
       </Modal>
     </>
