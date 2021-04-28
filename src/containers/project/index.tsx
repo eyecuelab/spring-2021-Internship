@@ -81,8 +81,8 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
-  const handleDeleteTask = (taskStatus: string, id: string) => {
-    dispatch(deleteTask({ taskStatus, id }));
+  const handleDeleteTask = (id: string) => {
+    dispatch(deleteTask(id));
     setTaskDetailView(!showTaskDetail);
   };
 
