@@ -8,6 +8,9 @@ import {
   postProject,
   postTask,
   initialState,
+  postItem,
+  // postLaborItem,
+  // postOtherItem,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -60,7 +63,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   });
 
   // ///////////POST TASK ///////////////
-  builder.addCase(postTask.pending, (state, payload) => {
+  builder.addCase(postTask.pending, (state) => {
     state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];
     state.currentProject.tasks.doing = [...state.currentProject.tasks.doing];
     state.currentProject.tasks.done = [...state.currentProject.tasks.done];
@@ -73,6 +76,31 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading="loaded";
   });
   builder.addCase(postTask.rejected, (state, action) => {
+    // state.loading ="error";
+    state.error = action.error.message;
+  });
+
+  // ///////////POST ITEMS ///////////////
+  // MATERIAL
+  builder.addCase(postItem.pending, (state) => {
+    state.currentProject.items.material = [...state.currentProject.items.material];
+    state.error = '';
+    // state.loading = 'loading';
+  });
+  builder.addCase(postItem.fulfilled, (state, { payload }) => {
+    if (payload.item.category === 'material') {
+      state.currentProject.items.material.push(payload.item);
+      state.error = '';
+    } else if (payload.item.category === 'labor') {
+      state.currentProject.items.labor.push(payload.item);
+      state.error = '';
+    } else if (payload.item.category === 'other') {
+      state.currentProject.items.other.push(payload.item);
+      state.error = '';
+    }
+    // state.loading="loaded";
+  });
+  builder.addCase(postItem.rejected, (state, action) => {
     // state.loading ="error";
     state.error = action.error.message;
   });

@@ -14,14 +14,6 @@ const testProject = {
   },
 };
 
-const testTask = {
-  task: {
-    taskName: 'WORK??',
-    taskStatus: 'todo',
-    project: 2,
-  },
-};
-
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
@@ -88,6 +80,50 @@ export const postTask = createAsyncThunk(
         task: {
           taskName,
           taskStatus,
+          project,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const postItem = createAsyncThunk(
+  'project/postItem',
+  async (
+    {
+      itemName,
+      itemPrice,
+      quantity,
+      category,
+      date,
+      minutes,
+      hours,
+      project,
+    }: {
+      itemName: string;
+      itemPrice: number;
+      quantity: number;
+      category: string;
+      date: string;
+      minutes: number;
+      hours: number;
+      project: number;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/api/items/`, {
+        item: {
+          itemName,
+          itemPrice,
+          quantity,
+          category,
+          date,
+          minutes,
+          hours,
           project,
         },
       });
@@ -208,22 +244,22 @@ export const projectSlice = createSlice({
       state.currentProject.id = idMaker(state.currentProject.projectName);
     },
 
-    addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
-      state.currentProject.tasks[action.payload.taskStatus] = [
-        ...(state.currentProject.tasks[action.payload.taskStatus] || []),
-        {
-          taskName: action.payload.taskName,
-          taskStatus: action.payload.taskStatus,
-          id: idMaker(action.payload.taskName),
-          activity: [
-            {
-              dateTime: now,
-              description: `${action.payload.taskName} created and added to ${action.payload.taskStatus}`,
-            },
-          ],
-        },
-      ];
-    },
+    // addTask: (state, action: PayloadAction<{ taskName: string; taskStatus: string }>) => {
+    //   state.currentProject.tasks[action.payload.taskStatus] = [
+    //     ...(state.currentProject.tasks[action.payload.taskStatus] || []),
+    //     {
+    //       taskName: action.payload.taskName,
+    //       taskStatus: action.payload.taskStatus,
+    //       id: idMaker(action.payload.taskName),
+    //       activity: [
+    //         {
+    //           dateTime: now,
+    //           description: `${action.payload.taskName} created and added to ${action.payload.taskStatus}`,
+    //         },
+    //       ],
+    //     },
+    //   ];
+    // },
     moveTask: (
       state,
       action: PayloadAction<{
@@ -257,39 +293,39 @@ export const projectSlice = createSlice({
     clearTasks: (state) => {
       state.currentProject.tasks = initialState.currentProject.tasks;
     },
-    addMaterialItem: (
-      state,
-      action: PayloadAction<{
-        item: MaterialItem;
-      }>
-    ) => {
-      state.currentProject.items.material = [
-        ...(state.currentProject.items.material || []),
-        action.payload.item,
-      ];
-    },
-    addLaborItem: (
-      state,
-      action: PayloadAction<{
-        item: LaborItem;
-      }>
-    ) => {
-      state.currentProject.items.labor = [
-        ...(state.currentProject.items.labor || []),
-        action.payload.item,
-      ];
-    },
-    addOtherItem: (
-      state,
-      action: PayloadAction<{
-        item: OtherItem;
-      }>
-    ) => {
-      state.currentProject.items.other = [
-        ...(state.currentProject.items.other || []),
-        action.payload.item,
-      ];
-    },
+    // addMaterialItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     item: MaterialItem;
+    //   }>
+    // ) => {
+    //   state.currentProject.items.material = [
+    //     ...(state.currentProject.items.material || []),
+    //     action.payload.item,
+    //   ];
+    // },
+    // addLaborItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     item: LaborItem;
+    //   }>
+    // ) => {
+    //   state.currentProject.items.labor = [
+    //     ...(state.currentProject.items.labor || []),
+    //     action.payload.item,
+    //   ];
+    // },
+    // addOtherItem: (
+    //   state,
+    //   action: PayloadAction<{
+    //     item: OtherItem;
+    //   }>
+    // ) => {
+    //   state.currentProject.items.other = [
+    //     ...(state.currentProject.items.other || []),
+    //     action.payload.item,
+    //   ];
+    // },
     clearItems: (state) => {
       state.currentProject.items = initialState.currentProject.items;
     },
@@ -313,12 +349,12 @@ export const projectSlice = createSlice({
 export const {
   setProjectName,
   setId,
-  addTask,
+  // addTask,
   clearTasks,
   // addLineItem,
-  addMaterialItem,
-  addLaborItem,
-  addOtherItem,
+  // addMaterialItem,
+  // addLaborItem,
+  // addOtherItem,
   clearItems,
   setProjectStartDate,
   setProjectEndDate,
