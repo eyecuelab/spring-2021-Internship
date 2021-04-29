@@ -12,6 +12,7 @@ import {
   postItem,
   deleteTask,
   deleteItem,
+  ItemCategory,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -141,11 +142,22 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading = 'loading';
   });
   builder.addCase(deleteItem.fulfilled, (state, { payload }) => {
-    state.currentProject.items[payload.category] = [
-      ...state.currentProject.items[payload.category].filter((e) => e.id !== payload.id),
-    ];
-    // state.error = '';
-    // state.loading="loaded";
+    if (payload.category === 'material') {
+      state.currentProject.items.material = [
+        ...state.currentProject.items.material.filter((e) => e.id !== payload.id),
+      ];
+      state.error = '';
+    } else if (payload.category === 'labor') {
+      state.currentProject.items.labor = [
+        ...state.currentProject.items.labor.filter((e) => e.id !== payload.id),
+      ];
+      state.error = '';
+    } else if (payload.category === 'other') {
+      state.currentProject.items.other = [
+        ...state.currentProject.items.other.filter((e) => e.id !== payload.id),
+      ];
+      state.error = '';
+    }
   });
   builder.addCase(deleteItem.rejected, (state, action) => {
     state.error = action.error.message;
