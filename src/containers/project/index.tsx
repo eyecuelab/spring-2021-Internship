@@ -84,8 +84,8 @@ const Project = (): JSX.Element => {
     setTaskModalView(!showTaskModal);
   };
 
-  const handleDeleteTask = (taskStatus: string, id: string) => {
-    dispatch(deleteTask({ taskStatus, id }));
+  const handleDeleteTask = (id: string) => {
+    dispatch(deleteTask(id));
     setTaskDetailView(!showTaskDetail);
   };
 
@@ -114,10 +114,12 @@ const Project = (): JSX.Element => {
       const formerStatus = result.source.droppableId;
       const fromIndex = result.source.index;
       const toIndex = result.destination.index;
-      const updatedPosition =
-        toIndex === 0 || LISTS[taskStatus].length === 0
-          ? 100
-          : LISTS[taskStatus][toIndex - 1].position + 1;
+      let updatedPosition = 100;
+      if (toIndex === 0 && LISTS[taskStatus].length !== 0) {
+        updatedPosition = LISTS[taskStatus][toIndex].position - 1;
+      } else if (toIndex !== 0) {
+        updatedPosition = LISTS[taskStatus][toIndex - 1].position + 1;
+      }
       if (LISTS[formerStatus]) {
         // if (formerStatus !== LISTS) {
         //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
@@ -136,7 +138,7 @@ const Project = (): JSX.Element => {
             activity,
           })
         );
-        dispatch(updateTask({ intId, taskStatus, updatedPosition }));
+        dispatch(updateTask({ taskName, intId, taskStatus, updatedPosition }));
       } else {
         console.error(`Unrecognized result.source.droppableId: "${result.source.droppableId}".`);
       }
