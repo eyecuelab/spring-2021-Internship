@@ -80,8 +80,8 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   });
   builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
     // console.log(payload.task.taskStatus[payload.task.taskStatus]);
-    state.currentProject.tasks.todo = [
-      ...state.currentProject.tasks.todo.filter((e) => e.id !== payload.intId),
+    state.currentProject.tasks[payload.taskStatus] = [
+      ...state.currentProject.tasks[payload.taskStatus].filter((e) => e.id !== payload.id),
     ];
     // state.error = '';
     // state.loading="loaded";
