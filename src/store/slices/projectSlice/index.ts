@@ -122,19 +122,17 @@ export const deleteItem = createAsyncThunk(
 //   }
 // });
 
-// export const deleteProject = createAsyncThunk(
-//   'project/deleteProject',
-//   async (id: number, thunkAPI) => {
-//     try {
-//       const response = await axios.delete(`http://localhost:3000/api/projects/${id}`);
-//       console.log(response.data);
-//       return response.data;
-//     } catch (error) {
-//       console.log(error.message);
-//       return thunkAPI.rejectWithValue({ error: error.message });
-//     }
-//   }
-// );
+export const deleteProject = createAsyncThunk(
+  'project/deleteProject',
+  async (id: string, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/projects/${id}`);
+      return { id };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 export const postTask = createAsyncThunk(
   'project/postTask',
