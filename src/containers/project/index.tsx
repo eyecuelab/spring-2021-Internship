@@ -15,6 +15,7 @@ import {
   updateTask,
   postTask,
   postItem,
+  deleteItem,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -74,6 +75,10 @@ const Project = (): JSX.Element => {
 
   const handleClearingItems = () => {
     dispatch(clearItems());
+  };
+
+  const handleDeleteItem = (id: string, category: string) => {
+    dispatch(deleteItem({ id, category }));
   };
 
   const handleAddingTask = (taskName: string, taskStatus: string, project: number) => {
@@ -270,9 +275,11 @@ const Project = (): JSX.Element => {
   const materialItems: JSX.Element[] = materialItemList.map((e) => {
     return (
       <Item
+        id={e.id}
         itemName={e.itemName}
         itemPrice={e.itemPrice}
         quantity={e.quantity}
+        handleDelete={handleDeleteItem}
         category="material"
       />
     );
@@ -281,10 +288,12 @@ const Project = (): JSX.Element => {
   const laborItems: JSX.Element[] = laborItemList.map((e) => {
     return (
       <Item
+        id={e.id}
         itemName={e.itemName}
         minutes={e.minutes}
         date={e.date}
         hours={e.hours}
+        handleDelete={handleDeleteItem}
         category="labor"
       />
     );
@@ -292,7 +301,14 @@ const Project = (): JSX.Element => {
 
   const otherItems: JSX.Element[] = otherItemList.map((e) => {
     return (
-      <Item itemName={e.itemName} itemPrice={e.itemPrice} quantity={e.quantity} category="other" />
+      <Item
+        id={e.id}
+        itemName={e.itemName}
+        itemPrice={e.itemPrice}
+        quantity={e.quantity}
+        handleDelete={handleDeleteItem}
+        category="other"
+      />
     );
   });
 
