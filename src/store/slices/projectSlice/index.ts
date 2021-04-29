@@ -6,14 +6,6 @@ import { RootState } from '../../store';
 /* eslint-disable import/no-cycle */
 import extraReducers from './extraReducers';
 
-const testProject = {
-  project: {
-    projectName: 'NEW',
-    startDate: '2019-04-28',
-    endDate: '2019-04-28',
-  },
-};
-
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
@@ -85,16 +77,32 @@ export const updateTask = createAsyncThunk(
   }
 );
 
-// export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
-//   try {
-//     const response = await axios.put(`http://localhost:3000/api/projects/${id}`, testProject);
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.log(error.message);
-//     return thunkAPI.rejectWithValue({ error: error.message });
-//   }
-// });
+export const putProject = createAsyncThunk(
+  'project/putProject',
+  async (
+    {
+      projId,
+      projectName,
+      startDate,
+      endDate,
+    }: { projId: number; projectName: string; startDate: string; endDate: string },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/projects/${projId}`, {
+        project: {
+          projId,
+          projectName,
+          startDate,
+          endDate,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 // export const deleteProject = createAsyncThunk(
 //   'project/deleteProject',
@@ -268,31 +276,11 @@ export const initialState: ProjectState = {
   error: '',
 };
 
-function idMaker(projectName: string) {
-  const a = Math.floor(Math.random() * 100);
-  const b = projectName[0];
-  return b + a;
-}
-
 const now = dayjs();
-// const { projectName, startDate, endDate, id} = state.currentProject;
 export const projectSlice = createSlice({
   name: 'project',
   initialState,
   reducers: {
-    setProjectName: (state, action: PayloadAction<string>) => {
-      state.currentProject.projectName = action.payload;
-    },
-    setProjectStartDate: (state) => {
-      state.currentProject.startDate = new Date().toString();
-    },
-    setProjectEndDate: (state, action: PayloadAction<string>) => {
-      state.currentProject.endDate = action.payload;
-    },
-    setId: (state) => {
-      state.currentProject.id = idMaker(state.currentProject.projectName);
-    },
-
     moveTask: (
       state,
       action: PayloadAction<{
@@ -349,16 +337,7 @@ export const projectSlice = createSlice({
   },
 });
 
-export const {
-  setProjectName,
-  setId,
-  clearTasks,
-  clearItems,
-  setProjectStartDate,
-  setProjectEndDate,
-  moveTask,
-  deleteTask,
-} = projectSlice.actions;
+export const { clearTasks, clearItems, moveTask, deleteTask } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
 

@@ -10,6 +10,7 @@ import {
   initialState,
   postTask,
   postItem,
+  putProject,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -58,6 +59,19 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   });
   builder.addCase(postProject.rejected, (state, action) => {
     // state.loading ="error";
+    state.error = action.error.message;
+  });
+
+  // // PUT PROJECT//////////////////
+  builder.addCase(putProject.pending, (state) => {
+    state.projectsList = [...state.projectsList];
+    // state.loading = 'loading';
+  });
+  builder.addCase(putProject.fulfilled, (state) => {
+    state.error = '';
+    // state.loading="loaded";
+  });
+  builder.addCase(putProject.rejected, (state, action) => {
     state.error = action.error.message;
   });
 
