@@ -17,7 +17,7 @@ const LogWrapper = styled.div`
 type TaskDetailProps = {
   toggleModal: () => void;
   task: TaskItem;
-  deleteTask: (taskStatus: string, id: string) => void;
+  deleteTask: (id: string) => void;
 };
 
 const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Element => {
@@ -40,7 +40,7 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
           <h3>{task?.taskName}</h3>
           <h4>Status: {task?.taskStatus}</h4>
           <h4>Activity:</h4>
-          <button type="button" onClick={() => deleteTask(task?.taskStatus, task?.id)}>
+          <button type="button" onClick={() => deleteTask(task?.id)}>
             Delete Task
           </button>
           <LogWrapper>{ActivityItems}</LogWrapper>

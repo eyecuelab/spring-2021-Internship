@@ -64,26 +64,45 @@ export const updateTask = createAsyncThunk(
   'tasks/updateTask',
   async (
     {
+      taskName,
       intId,
       taskStatus,
       updatedPosition,
-    }: { intId: number; taskStatus: string; updatedPosition: number },
+    }: { taskName: string; intId: number; taskStatus: string; updatedPosition: number },
     thunkAPI
   ) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/tasks/${intId}`, {
+      const now = dayjs().toString();
+      const taskResponse = await axios.put(`http://localhost:3000/api/tasks/${intId}`, {
         task: {
           id: intId,
           taskStatus,
           position: updatedPosition,
         },
       });
-      return response.data;
+      await axios.post(`http://localhost:3000/api/task-activities`, {
+        taskActivity: {
+          dateTime: now,
+          description: `${taskName} was moved to ${taskStatus}`,
+          task: intId,
+        },
+      });
+
+      return taskResponse.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
   }
 );
+
+export const deleteTask = createAsyncThunk('tasks/deleteTask', async (id: string, thunkAPI) => {
+  try {
+    const response = await axios.delete(`http://localhost:3000/api/tasks/${id}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ error: error.message });
+  }
+});
 
 // export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
 //   try {
@@ -332,17 +351,17 @@ export const projectSlice = createSlice({
     clearItems: (state) => {
       state.currentProject.items = initialState.currentProject.items;
     },
-    deleteTask: (
-      state,
-      action: PayloadAction<{
-        id: string;
-        taskStatus: string;
-      }>
-    ) => {
-      state.currentProject.tasks[action.payload.taskStatus] = state.currentProject.tasks[
-        action.payload.taskStatus
-      ].filter((e) => e.id !== action.payload.id);
-    },
+    // deleteTask: (
+    //   state,
+    //   action: PayloadAction<{
+    //     id: string;
+    //     taskStatus: string;
+    //   }>
+    // ) => {
+    //   state.currentProject.tasks[action.payload.taskStatus] = state.currentProject.tasks[
+    //     action.payload.taskStatus
+    //   ].filter((e) => e.id !== action.payload.id);
+    // },
   },
   extraReducers: (builder) => {
     extraReducers(builder);
@@ -357,7 +376,6 @@ export const {
   setProjectStartDate,
   setProjectEndDate,
   moveTask,
-  deleteTask,
 } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
