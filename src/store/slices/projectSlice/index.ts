@@ -95,14 +95,17 @@ export const updateTask = createAsyncThunk(
   }
 );
 
-export const deleteTask = createAsyncThunk('tasks/deleteTask', async (id: string, thunkAPI) => {
-  try {
-    const response = await axios.delete(`http://localhost:3000/api/tasks/${id}`);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ error: error.message });
+export const deleteTask = createAsyncThunk(
+  'tasks/deleteTask',
+  async ({ id, taskStatus }: { id: string; taskStatus: string }, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/tasks/${id}`);
+      return { id, taskStatus };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
   }
-});
+);
 
 // export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
 //   try {
