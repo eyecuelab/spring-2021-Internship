@@ -6,14 +6,6 @@ import { RootState } from '../../store';
 /* eslint-disable import/no-cycle */
 import extraReducers from './extraReducers';
 
-const testProject = {
-  project: {
-    projectName: 'NEW',
-    startDate: '2019-04-28',
-    endDate: '2019-04-28',
-  },
-};
-
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
@@ -101,6 +93,18 @@ export const deleteTask = createAsyncThunk(
     try {
       await axios.delete(`http://localhost:3000/api/tasks/${id}`);
       return { id, taskStatus };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const deleteItem = createAsyncThunk(
+  'items/deleteItem',
+  async ({ id, category }: { id: string; category: string }, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/items/${id}`);
+      return { id, category };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
@@ -230,6 +234,7 @@ export interface LaborItem {
   date: Date;
   minutes: number;
   hours: number;
+  id: string;
 }
 export interface MaterialItem {
   itemName: string;
@@ -239,6 +244,7 @@ export interface MaterialItem {
   date?: never;
   minutes?: never;
   hours?: never;
+  id: string;
 }
 export interface OtherItem {
   itemName: string;
@@ -248,6 +254,7 @@ export interface OtherItem {
   date?: never;
   minutes?: never;
   hours?: never;
+  id: string;
 }
 export type FinanceItem = LaborItem | MaterialItem | OtherItem;
 
