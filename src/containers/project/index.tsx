@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Draggable, DropResult } from 'react-beautiful-dnd';
+import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   clearTasks,
@@ -16,6 +17,7 @@ import {
   postTask,
   postItem,
   deleteItem,
+  deleteProject,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -28,7 +30,9 @@ import TaskDetail from '../../components/taskDetail';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const projectName = useSelector(selectors.selectProjectName);
+  const projectId = useSelector(selectors.selectProjectId);
   const materialItemList = useSelector(selectors.selectMaterialItems);
   const laborItemList = useSelector(selectors.selectLaborItems);
   const otherItemList = useSelector(selectors.selectOtherItems);
@@ -71,6 +75,11 @@ const Project = (): JSX.Element => {
 
   const handleClearingTasks = () => {
     dispatch(clearTasks());
+  };
+
+  const handleDeletingProject = (id: string) => {
+    dispatch(deleteProject(id));
+    history.push('/');
   };
 
   const handleClearingItems = () => {
@@ -363,6 +372,9 @@ const Project = (): JSX.Element => {
       />
       <button type="submit" onClick={handleClearingItems}>
         Clear Items
+      </button>
+      <button type="submit" onClick={() => handleDeletingProject(projectId)}>
+        Delete Project
       </button>
     </>
   );
