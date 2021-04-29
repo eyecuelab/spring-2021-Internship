@@ -12,7 +12,7 @@ import {
   postItem,
   deleteTask,
   deleteItem,
-  ItemCategory,
+  deleteProject,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -62,6 +62,22 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   builder.addCase(postProject.rejected, (state, action) => {
     // state.loading ="error";
     state.error = action.error.message;
+  });
+
+  // //////////////DELETE PROJECT////////////////
+  builder.addCase(deleteProject.pending, (state) => {
+    state.error = '';
+    // state.loading = 'loading';
+  });
+  builder.addCase(deleteProject.fulfilled, (state, { payload }) => {
+    state.currentProject = initialState.currentProject;
+    state.projectsList = [...state.projectsList].filter((e) => e.id !== payload.id);
+    // state.loading="loaded";
+    state.error = '';
+  });
+  builder.addCase(deleteProject.rejected, (state, action) => {
+    // state.loading ="error";
+    state.error = '';
   });
 
   // UPDATE ONE TASK
