@@ -15,7 +15,7 @@ import {
   deleteProject,
 } from './index';
 
-const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
+const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => {
   // //////////GET ALL PROJECTS////////////////
   builder.addCase(getProjects.pending, (state) => {
     state.projectsList = [];
@@ -75,7 +75,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     // state.loading="loaded";
     state.error = '';
   });
-  builder.addCase(deleteProject.rejected, (state, action) => {
+  builder.addCase(deleteProject.rejected, (state) => {
     // state.loading ="error";
     state.error = '';
   });
