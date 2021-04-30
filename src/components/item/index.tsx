@@ -9,6 +9,8 @@ type ItemProps = {
   category: string;
   date?: Date;
   hours?: number;
+  handleDelete: (id: string, category: string) => void;
+  id: string;
 };
 
 const Item = ({
@@ -19,6 +21,8 @@ const Item = ({
   category,
   date,
   hours = 0,
+  id,
+  handleDelete,
 }: ItemProps): JSX.Element => {
   const laborDate = date ? new Date(date) : null;
   const stringDate = laborDate ? laborDate.toDateString() : null;
@@ -28,7 +32,12 @@ const Item = ({
     <>
       <Table.Body>
         <Table.Row>
-          <Table.Cell>{itemName}</Table.Cell>
+          <Table.Cell>
+            {itemName}{' '}
+            <button type="button" onClick={() => handleDelete(id, category)}>
+              Delete
+            </button>
+          </Table.Cell>
           <Table.Cell>{category === 'labor' ? laborTime : quantity}</Table.Cell>
           <Table.Cell>{category === 'labor' ? stringDate : `$${itemPrice}`}</Table.Cell>
         </Table.Row>

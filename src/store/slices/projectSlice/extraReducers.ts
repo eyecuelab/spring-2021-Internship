@@ -11,6 +11,8 @@ import {
   postTask,
   postItem,
   deleteTask,
+  deleteItem,
+  deleteProject,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
@@ -62,6 +64,22 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
     state.error = action.error.message;
   });
 
+  // //////////////DELETE PROJECT////////////////
+  builder.addCase(deleteProject.pending, (state) => {
+    state.error = '';
+    // state.loading = 'loading';
+  });
+  builder.addCase(deleteProject.fulfilled, (state, { payload }) => {
+    state.currentProject = initialState.currentProject;
+    state.projectsList = [...state.projectsList].filter((e) => e.id !== payload.id);
+    // state.loading="loaded";
+    state.error = '';
+  });
+  builder.addCase(deleteProject.rejected, (state, action) => {
+    // state.loading ="error";
+    state.error = '';
+  });
+
   // UPDATE ONE TASK
   builder.addCase(updateTask.pending, () => {
     // state.loading = 'loading';
@@ -80,8 +98,8 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   });
   builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
     // console.log(payload.task.taskStatus[payload.task.taskStatus]);
-    state.currentProject.tasks.todo = [
-      ...state.currentProject.tasks.todo.filter((e) => e.id !== payload.intId),
+    state.currentProject.tasks[payload.taskStatus] = [
+      ...state.currentProject.tasks[payload.taskStatus].filter((e) => e.id !== payload.id),
     ];
     // state.error = '';
     // state.loading="loaded";
@@ -132,6 +150,32 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>) => {
   });
   builder.addCase(postItem.rejected, (state, action) => {
     // state.loading ="error";
+    state.error = action.error.message;
+  });
+
+  // DELETE ONE ITEM
+  builder.addCase(deleteItem.pending, () => {
+    // state.loading = 'loading';
+  });
+  builder.addCase(deleteItem.fulfilled, (state, { payload }) => {
+    if (payload.category === 'material') {
+      state.currentProject.items.material = [
+        ...state.currentProject.items.material.filter((e) => e.id !== payload.id),
+      ];
+      state.error = '';
+    } else if (payload.category === 'labor') {
+      state.currentProject.items.labor = [
+        ...state.currentProject.items.labor.filter((e) => e.id !== payload.id),
+      ];
+      state.error = '';
+    } else if (payload.category === 'other') {
+      state.currentProject.items.other = [
+        ...state.currentProject.items.other.filter((e) => e.id !== payload.id),
+      ];
+      state.error = '';
+    }
+  });
+  builder.addCase(deleteItem.rejected, (state, action) => {
     state.error = action.error.message;
   });
 };

@@ -6,14 +6,6 @@ import { RootState } from '../../store';
 /* eslint-disable import/no-cycle */
 import extraReducers from './extraReducers';
 
-const testProject = {
-  project: {
-    projectName: 'NEW',
-    startDate: '2019-04-28',
-    endDate: '2019-04-28',
-  },
-};
-
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/projects/`);
@@ -95,14 +87,29 @@ export const updateTask = createAsyncThunk(
   }
 );
 
-export const deleteTask = createAsyncThunk('tasks/deleteTask', async (id: string, thunkAPI) => {
-  try {
-    const response = await axios.delete(`http://localhost:3000/api/tasks/${id}`);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ error: error.message });
+export const deleteTask = createAsyncThunk(
+  'tasks/deleteTask',
+  async ({ id, taskStatus }: { id: string; taskStatus: string }, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/tasks/${id}`);
+      return { id, taskStatus };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
   }
-});
+);
+
+export const deleteItem = createAsyncThunk(
+  'items/deleteItem',
+  async ({ id, category }: { id: string; category: string }, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/items/${id}`);
+      return { id, category };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 // export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
 //   try {
@@ -115,24 +122,27 @@ export const deleteTask = createAsyncThunk('tasks/deleteTask', async (id: string
 //   }
 // });
 
-// export const deleteProject = createAsyncThunk(
-//   'project/deleteProject',
-//   async (id: number, thunkAPI) => {
-//     try {
-//       const response = await axios.delete(`http://localhost:3000/api/projects/${id}`);
-//       console.log(response.data);
-//       return response.data;
-//     } catch (error) {
-//       console.log(error.message);
-//       return thunkAPI.rejectWithValue({ error: error.message });
-//     }
-//   }
-// );
+export const deleteProject = createAsyncThunk(
+  'project/deleteProject',
+  async (id: string, thunkAPI) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/projects/${id}`);
+      return { id };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 export const postTask = createAsyncThunk(
   'project/postTask',
   async (
-    { taskName, taskStatus, project }: { taskName: string; taskStatus: string; project: number },
+    {
+      taskName,
+      taskDesc,
+      taskStatus,
+      project,
+    }: { taskName: string; taskDesc: string; taskStatus: string; project: number },
     thunkAPI
   ) => {
     try {
@@ -140,6 +150,7 @@ export const postTask = createAsyncThunk(
       const response = await axios.post(`http://localhost:3000/api/tasks/`, {
         task: {
           taskName,
+          taskDesc,
           taskStatus,
           project,
           activity: [
@@ -209,6 +220,7 @@ interface ActivityItem {
 export interface TaskItem {
   taskName: string;
   taskStatus: string;
+  taskDesc: string;
   id: string;
   position: number;
   activity: Array<ActivityItem>;
@@ -227,6 +239,7 @@ export interface LaborItem {
   date: Date;
   minutes: number;
   hours: number;
+  id: string;
 }
 export interface MaterialItem {
   itemName: string;
@@ -236,6 +249,7 @@ export interface MaterialItem {
   date?: never;
   minutes?: never;
   hours?: never;
+  id: string;
 }
 export interface OtherItem {
   itemName: string;
@@ -245,6 +259,7 @@ export interface OtherItem {
   date?: never;
   minutes?: never;
   hours?: never;
+  id: string;
 }
 export type FinanceItem = LaborItem | MaterialItem | OtherItem;
 
@@ -319,6 +334,7 @@ export const projectSlice = createSlice({
         id: string;
         formerStatus: string;
         taskStatus: string;
+        taskDesc: string;
         updatedPosition: number;
         activity: Array<ActivityItem>;
         fromIndex: number;
@@ -332,6 +348,7 @@ export const projectSlice = createSlice({
       updatedDestinationArray.splice(action.payload.toIndex, 0, {
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
+        taskDesc: action.payload.taskDesc,
         id: action.payload.id,
         position: action.payload.updatedPosition,
         activity: [
