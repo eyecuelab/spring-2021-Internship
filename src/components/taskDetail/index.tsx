@@ -39,6 +39,7 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
           <h2>Task Detail</h2>
           <h3>{task?.taskName}</h3>
           <h4>Status: {task?.taskStatus}</h4>
+          <h4>{task.taskDesc}</h4>
           <h4>Activity:</h4>
           <button type="button" onClick={() => deleteTask(task?.id, task?.taskStatus)}>
             Delete Task
