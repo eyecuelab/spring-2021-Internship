@@ -49,13 +49,13 @@ const NewFinance = ({
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: Inputs) => {
     addItem(
       data.itemName,
       data.itemPrice,
       data.quantity,
       data.category,
-      data.date,
+      data.date.toISOString(),
       data.minutes,
       data.hours,
       project

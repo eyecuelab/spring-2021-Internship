@@ -116,7 +116,7 @@
     "test:watch": "jest --watch",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && TIMING=1 eslint src/**/*.ts{,x} --fix",
     "prepare": "husky install"
   },
   "eslintConfig": {
