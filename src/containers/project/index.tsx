@@ -48,6 +48,7 @@ const Project = (): JSX.Element => {
   const [selectedTask, setSelectedTask] = useState<TaskItem>({
     taskName: '',
     taskStatus: '',
+    taskDesc: '',
     id: '',
     position: 0,
     activity: [],
@@ -90,8 +91,13 @@ const Project = (): JSX.Element => {
     dispatch(deleteItem({ id, category }));
   };
 
-  const handleAddingTask = (taskName: string, taskStatus: string, project: number) => {
-    dispatch(postTask({ taskName, taskStatus, project }));
+  const handleAddingTask = (
+    taskName: string,
+    taskDesc: string,
+    taskStatus: string,
+    project: number
+  ) => {
+    dispatch(postTask({ taskName, taskDesc, taskStatus, project }));
     setTaskModalView(!showTaskModal);
   };
 
@@ -157,7 +163,7 @@ const Project = (): JSX.Element => {
         // if (formerStatus !== LISTS) {
         //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
         // }
-        const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
+        const { taskName, id, activity, taskDesc } = LISTS[formerStatus][fromIndex];
         const intId = parseInt(id, 10);
         dispatch(
           moveTask({
@@ -165,6 +171,7 @@ const Project = (): JSX.Element => {
             id,
             formerStatus,
             taskStatus,
+            taskDesc,
             fromIndex,
             toIndex,
             updatedPosition,
