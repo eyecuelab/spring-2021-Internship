@@ -137,7 +137,12 @@ export const deleteProject = createAsyncThunk(
 export const postTask = createAsyncThunk(
   'project/postTask',
   async (
-    { taskName, taskStatus, project }: { taskName: string; taskStatus: string; project: number },
+    {
+      taskName,
+      taskDesc,
+      taskStatus,
+      project,
+    }: { taskName: string; taskDesc: string; taskStatus: string; project: number },
     thunkAPI
   ) => {
     try {
@@ -145,6 +150,7 @@ export const postTask = createAsyncThunk(
       const response = await axios.post(`http://localhost:3000/api/tasks/`, {
         task: {
           taskName,
+          taskDesc,
           taskStatus,
           project,
           activity: [
@@ -214,6 +220,7 @@ interface ActivityItem {
 export interface TaskItem {
   taskName: string;
   taskStatus: string;
+  taskDesc: string;
   id: string;
   position: number;
   activity: Array<ActivityItem>;
@@ -327,6 +334,7 @@ export const projectSlice = createSlice({
         id: string;
         formerStatus: string;
         taskStatus: string;
+        taskDesc: string;
         updatedPosition: number;
         activity: Array<ActivityItem>;
         fromIndex: number;
@@ -340,6 +348,7 @@ export const projectSlice = createSlice({
       updatedDestinationArray.splice(action.payload.toIndex, 0, {
         taskName: action.payload.taskName,
         taskStatus: action.payload.taskStatus,
+        taskDesc: action.payload.taskDesc,
         id: action.payload.id,
         position: action.payload.updatedPosition,
         activity: [
