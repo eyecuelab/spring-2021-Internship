@@ -95,13 +95,18 @@ export const putProject = createAsyncThunk(
       projectName,
       startDate,
       endDate,
-    }: { projId: number; projectName: string; startDate: string; endDate: string },
+    }: {
+      projId: number;
+      projectName: string;
+      startDate: string;
+      endDate: string;
+    },
     thunkAPI
   ) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/projects/${projId}`, {
+      const response = await axios.put(`http://localhost:3000/api/projects/6`, {
         project: {
-          projId,
+          id: projId,
           projectName,
           startDate,
           endDate,
@@ -361,8 +366,8 @@ export const projectSlice = createSlice({
 export const {
   // setProjectName,
   // setId,
-  // clearTasks,
-  // clearItems,
+  clearTasks,
+  clearItems,
   // setProjectStartDate,
   // setProjectEndDate,
   moveTask,

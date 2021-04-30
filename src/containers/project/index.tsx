@@ -25,6 +25,7 @@ import Task from '../../components/task';
 import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
+import InlineEdit from '../../components/inlineEdit';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -35,9 +36,9 @@ const Project = (): JSX.Element => {
   const toDoList = useSelector(selectors.selectProjToDoTasks);
   const doingList = useSelector(selectors.selectProjDoingTasks);
   const doneList = useSelector(selectors.selectProjDoneTasks);
-  const startDate = useSelector(selectors.selectProjectStartDate);
+  const projStartDate = useSelector(selectors.selectProjectStartDate);
   const projectId = useSelector(selectors.selectProjectId);
-  const endDate = useSelector(selectors.selectProjectEndDate);
+  const projEndDate = useSelector(selectors.selectProjectEndDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
@@ -221,7 +222,7 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const projDate = dayjs(endDate).format('MM/DD/YYYY');
+  const projDate = dayjs(projEndDate).format('MM/DD/YYYY');
 
   function calculateMaterialTotal(arr: Array<MaterialItem>): number {
     let total = 0;
@@ -281,9 +282,26 @@ const Project = (): JSX.Element => {
   const materialTotals = calculateMaterialTotal(materialItemList);
   const laborTotals = calculateLaborTotal(laborItemList);
   const otherTotals = calculateOtherTotal(otherItemList);
+
+  const handleUpdateProject = (
+    projId: number,
+    projectName: string,
+    startDate: string,
+    endDate: string
+  ) => {
+    dispatch(putProject({ projId, projectName, startDate, endDate }));
+  };
+
+  // let newText;
+  const projId = parseInt(projectId, 10);
+  const handleNewText = (updatedText: string) => {
+    handleUpdateProject(projId, updatedText, projStartDate, projEndDate);
+  };
+
   return (
     <>
-      <h1>{projName}</h1>
+      <InlineEdit text={projName} updateText={handleNewText} />
+
       <h2>Due Date: {projDate}</h2>
       {showTaskModal && (
         <NewTaskModal
