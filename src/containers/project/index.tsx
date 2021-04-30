@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Draggable, DropResult } from 'react-beautiful-dnd';
+import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   clearTasks,
@@ -15,6 +16,8 @@ import {
   updateTask,
   postTask,
   postItem,
+  deleteItem,
+  deleteProject,
   putProject,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
@@ -29,6 +32,7 @@ import InlineEdit from '../../components/inlineEdit';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const projName = useSelector(selectors.selectProjectName);
   const materialItemList = useSelector(selectors.selectMaterialItems);
   const laborItemList = useSelector(selectors.selectLaborItems);
@@ -47,6 +51,7 @@ const Project = (): JSX.Element => {
   const [selectedTask, setSelectedTask] = useState<TaskItem>({
     taskName: '',
     taskStatus: '',
+    taskDesc: '',
     id: '',
     position: 0,
     activity: [],
@@ -76,17 +81,31 @@ const Project = (): JSX.Element => {
     dispatch(clearTasks());
   };
 
+  const handleDeletingProject = (id: string) => {
+    dispatch(deleteProject(id));
+    history.push('/');
+  };
+
   const handleClearingItems = () => {
     dispatch(clearItems());
   };
 
-  const handleAddingTask = (taskName: string, taskStatus: string, project: number) => {
-    dispatch(postTask({ taskName, taskStatus, project }));
+  const handleDeleteItem = (id: string, category: string) => {
+    dispatch(deleteItem({ id, category }));
+  };
+
+  const handleAddingTask = (
+    taskName: string,
+    taskDesc: string,
+    taskStatus: string,
+    project: number
+  ) => {
+    dispatch(postTask({ taskName, taskDesc, taskStatus, project }));
     setTaskModalView(!showTaskModal);
   };
 
-  const handleDeleteTask = (id: string) => {
-    dispatch(deleteTask(id));
+  const handleDeleteTask = (id: string, taskStatus: string) => {
+    dispatch(deleteTask({ id, taskStatus }));
     setTaskDetailView(!showTaskDetail);
   };
 
@@ -125,7 +144,7 @@ const Project = (): JSX.Element => {
         // if (formerStatus !== LISTS) {
         //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
         // }
-        const { taskName, id, activity } = LISTS[formerStatus][fromIndex];
+        const { taskName, id, activity, taskDesc } = LISTS[formerStatus][fromIndex];
         const intId = parseInt(id, 10);
         dispatch(
           moveTask({
@@ -133,6 +152,7 @@ const Project = (): JSX.Element => {
             id,
             formerStatus,
             taskStatus,
+            taskDesc,
             fromIndex,
             toIndex,
             updatedPosition,
@@ -253,9 +273,11 @@ const Project = (): JSX.Element => {
   const materialItems: JSX.Element[] = materialItemList.map((e) => {
     return (
       <Item
+        id={e.id}
         itemName={e.itemName}
         itemPrice={e.itemPrice}
         quantity={e.quantity}
+        handleDelete={handleDeleteItem}
         category="material"
       />
     );
@@ -264,10 +286,12 @@ const Project = (): JSX.Element => {
   const laborItems: JSX.Element[] = laborItemList.map((e) => {
     return (
       <Item
+        id={e.id}
         itemName={e.itemName}
         minutes={e.minutes}
         date={e.date}
         hours={e.hours}
+        handleDelete={handleDeleteItem}
         category="labor"
       />
     );
@@ -275,14 +299,20 @@ const Project = (): JSX.Element => {
 
   const otherItems: JSX.Element[] = otherItemList.map((e) => {
     return (
-      <Item itemName={e.itemName} itemPrice={e.itemPrice} quantity={e.quantity} category="other" />
+      <Item
+        id={e.id}
+        itemName={e.itemName}
+        itemPrice={e.itemPrice}
+        quantity={e.quantity}
+        handleDelete={handleDeleteItem}
+        category="other"
+      />
     );
   });
 
   const materialTotals = calculateMaterialTotal(materialItemList);
   const laborTotals = calculateLaborTotal(laborItemList);
   const otherTotals = calculateOtherTotal(otherItemList);
-
   const handleUpdateProject = (
     projId: number,
     projectName: string,
@@ -301,7 +331,6 @@ const Project = (): JSX.Element => {
   return (
     <>
       <InlineEdit text={projName} updateText={handleNewText} />
-
       <h2>Due Date: {projDate}</h2>
       {showTaskModal && (
         <NewTaskModal
@@ -347,6 +376,9 @@ const Project = (): JSX.Element => {
       />
       <button type="submit" onClick={handleClearingItems}>
         Clear Items
+      </button>
+      <button type="submit" onClick={() => handleDeletingProject(projectId)}>
+        Delete Project
       </button>
     </>
   );

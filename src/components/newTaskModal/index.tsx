@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, TextArea } from 'semantic-ui-react';
 import { useForm } from 'react-hook-form';
 import * as selectors from '../../store/selectors';
 import { Modal } from '../modal';
 
 type ModalProps = {
-  addNewTask: (taskName: string, taskStatus: string, project: number) => void;
+  addNewTask: (taskName: string, taskDesc: string, taskStatus: string, project: number) => void;
   toggleModal: () => void;
   defaultForm: string;
 };
@@ -14,6 +14,7 @@ type ModalProps = {
 type Inputs = {
   taskName: string;
   taskStatus: string;
+  taskDesc: string;
 };
 
 const NewTaskModal = ({ addNewTask, toggleModal, defaultForm }: ModalProps): JSX.Element => {
@@ -25,7 +26,9 @@ const NewTaskModal = ({ addNewTask, toggleModal, defaultForm }: ModalProps): JSX
     formState: { errors },
   } = useForm<Inputs>();
   // eslint-disable-next-line
-  const onSubmit = (data: any) => addNewTask(data.taskName, data.taskStatus, project);
+  const onSubmit = (data: any) => {
+    addNewTask(data.taskName, data.taskDesc, data.taskStatus, project);
+  };
   return (
     <>
       <Modal toggleModal={toggleModal} width="350px">
@@ -33,6 +36,7 @@ const NewTaskModal = ({ addNewTask, toggleModal, defaultForm }: ModalProps): JSX
           <Form.Field>
             <Form.Input placeholder="Task Name" {...register('taskName', { required: true })} />
             {errors.taskName && <p>This field is required</p>}
+            <TextArea placeholder="Task Description" {...register('taskDesc')} />
           </Form.Field>
           <select {...register('taskStatus', { required: true })}>
             {defaultForm === 'todo' ? (

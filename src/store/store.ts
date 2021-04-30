@@ -10,6 +10,9 @@ const persistConfig = {
   storage,
 };
 
+// see https://github.com/rt2zz/redux-persist/issues/1140
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
