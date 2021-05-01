@@ -1,33 +1,44 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { Form } from 'semantic-ui-react';
-import { setEmail, setPassword, setUUID } from '../../store/slices/authSlice';
+// import { useForm } from 'react-hook-form';
+// import { Form } from 'semantic-ui-react';
+import { GoogleLogin } from 'react-google-login';
+import { signIn } from '../../store/slices/userSlice/thunks';
 
-type Inputs = {
-  email: string;
-  password: string;
-};
-
+// type Inputs = {
+//   email: string;
+//   password: string;
+// };
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<Inputs>();
 
-  function submitUser(email: string, password: string) {
-    dispatch(setEmail(email));
-    dispatch(setPassword(password));
-    dispatch(setUUID());
-  }
+  // function submitUser(email: string, password: string) {
+  //   dispatch(setEmail(email));
+  //   dispatch(setPassword(password));
+  //   dispatch(setUUID());
+  // }
   // eslint-disable-next-line
-  const onSubmit = (data: any) => submitUser(data.email, data.password);
+  // const onSubmit = (data: any) => submitUser(data.email, data.password);
+
+  function handleLogin(googleData: any) {
+    dispatch(signIn(googleData));
+  }
 
   return (
     <>
-      <p>Sign In:</p>
+      <GoogleLogin
+        clientId={process.env.CLIENT_ID ?? ''} // this throws an error, look into
+        buttonText="Log in with Google"
+        onSuccess={handleLogin}
+        onFailure={handleLogin}
+        cookiePolicy="single_host_origin"
+      />
+      {/* <p>Sign In:</p>
       <Form id="signInForm" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group>
           <Form.Input placeholder="Email Address" {...register('email', { required: true })} />
@@ -41,7 +52,7 @@ const LoginForm = (): JSX.Element => {
           {errors.password && <p>This field is required</p>}
         </Form.Group>
         <Form.Button type="submit">Log In</Form.Button>
-      </Form>
+      </Form> */}
     </>
   );
 };
