@@ -104,7 +104,7 @@ export const putProject = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/projects/6`, {
+      const response = await axios.put(`http://localhost:3000/api/projects/${projId}`, {
         project: {
           id: projId,
           projectName,
@@ -180,6 +180,50 @@ export const postTask = createAsyncThunk(
               description: `${taskName} created and added to ${taskStatus}`,
             },
           ],
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const putItem = createAsyncThunk(
+  'project/putItem',
+  async (
+    {
+      id,
+      itemName,
+      itemPrice,
+      quantity,
+      category,
+      date,
+      minutes,
+      hours,
+    }: {
+      id: number;
+      itemName: string;
+      itemPrice: number | undefined;
+      quantity: number | undefined;
+      category: string;
+      date: string | undefined;
+      minutes: number | undefined;
+      hours: number | undefined;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/items/${id}`, {
+        item: {
+          id,
+          itemName,
+          itemPrice,
+          quantity,
+          category,
+          date,
+          minutes,
+          hours,
         },
       });
       return response.data;
