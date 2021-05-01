@@ -1,62 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 
-const Button = styled.button``;
+type RenderProps = {
+  valueState: Props['value'];
+  handleOnClick?: () => void;
+  handleOnBlur?: () => void;
+  handleOnKeyDown?: (e: React.KeyboardEvent) => void;
+  handleOnChange?: (e: any) => void;
+};
 
-// const Input = styled.input``;
+type Props = {
+  value: string | number;
+  updateValue: (value: string | number) => void;
+  renderDisplay: (props: RenderProps) => React.ReactNode;
+  renderEdit: (props: RenderProps) => React.ReactNode;
+};
 
-interface Props {
-  text: string;
-  updateText: (text: string) => void;
-}
-
-const InlineEdit = ({ text, updateText }: Props) => {
-  const [isEditingState, setIsEditing] = useState(false);
-  const [textState, setText] = useState(text);
+const InlineEdit = ({ value, updateValue, renderDisplay, renderEdit }: Props) => {
+  const [isEditingState, setIsEditingState] = useState(false);
+  const [valueState, setValueState] = useState(value);
 
   useEffect(() => {
-    setText(text);
-  }, [text]);
+    setValueState(value);
+  }, [value]);
 
-  const onChange = (e: any) => {
-    setText(e.currentTarget.value);
+  const handleOnChange = (e: any) => {
+    setValueState(e.currentTarget.value);
   };
 
   const handleOnClick = () => {
-    setIsEditing(!isEditingState);
+    setIsEditingState(!isEditingState);
   };
 
-  const handleKeyDown = (e: any) => {
-    setText(textState);
-    updateText(textState);
-    setIsEditing(!isEditingState);
-  };
+  const handleOnBlur = React.useCallback(() => {
+    setIsEditingState(!isEditingState);
+    setValueState(valueState);
+    updateValue(valueState);
+  }, [updateValue, valueState, isEditingState]);
+
+  const handleOnKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        setIsEditingState(!isEditingState);
+        setValueState(valueState);
+        updateValue(valueState);
+        console.log(valueState);
+      }
+    },
+    [updateValue, valueState, isEditingState]
+  );
 
   if (isEditingState === false) {
-    return (
-      <div>
-        <Button onClick={handleOnClick}>{textState}</Button>
-      </div>
-    );
+    return <div>{renderDisplay({ handleOnClick, valueState })}</div>;
   }
-  return (
-    <div>
-      <input
-        defaultValue={textState}
-        onBlur={() => {
-          setIsEditing(!isEditingState);
-          setText(textState);
-          updateText(textState);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleKeyDown(e);
-          }
-        }}
-        onChange={onChange}
-      />
-    </div>
-  );
+  return <div>{renderEdit({ valueState, handleOnBlur, handleOnKeyDown, handleOnChange })}</div>;
 };
-
 export default InlineEdit;
