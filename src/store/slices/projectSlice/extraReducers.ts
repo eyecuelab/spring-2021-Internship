@@ -10,9 +10,11 @@ import {
   initialState,
   postTask,
   postItem,
+  putProject,
   deleteTask,
   deleteItem,
   deleteProject,
+  putItem,
 } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => {
@@ -64,6 +66,19 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
     state.error = action.error.message;
   });
 
+  // // PUT PROJECT//////////////////
+  builder.addCase(putProject.pending, (state) => {
+    state.projectsList = [...state.projectsList];
+    // state.loading = 'loading';
+  });
+  builder.addCase(putProject.fulfilled, (state) => {
+    state.error = '';
+    // state.loading="loaded";
+  });
+  builder.addCase(putProject.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
   // //////////////DELETE PROJECT////////////////
   builder.addCase(deleteProject.pending, (state) => {
     state.error = '';
@@ -80,7 +95,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
     state.error = '';
   });
 
-  // UPDATE ONE TASK
+  // //////////////UPDATE ONE TASK//////////////////
   builder.addCase(updateTask.pending, () => {
     // state.loading = 'loading';
   });
@@ -92,7 +107,36 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
     state.error = action.error.message;
   });
 
-  // DELETE ONE TASK
+  // //////////UPDATE ONE ITEM /////////////////
+  builder.addCase(putItem.pending, () => {
+    // state.loading = 'loading';
+  });
+  builder.addCase(putItem.fulfilled, (state, { payload }) => {
+    if (payload.item.category === 'material') {
+      state.currentProject.items.material = [
+        ...state.currentProject.items.material.filter((e) => e.id === payload.id),
+      ];
+      state.currentProject.items.material.push(payload.item);
+      state.error = '';
+    } else if (payload.item.category === 'labor') {
+      state.currentProject.items.labor = [
+        ...state.currentProject.items.labor.filter((e) => e.id === payload.id),
+      ];
+      state.currentProject.items.labor.push(payload.item);
+      state.error = '';
+    } else if (payload.item.category === 'other') {
+      state.currentProject.items.other = [
+        ...state.currentProject.items.other.filter((e) => e.id === payload.id),
+      ];
+      state.currentProject.items.other.push(payload.item);
+      state.error = '';
+    }
+  });
+  builder.addCase(putItem.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
+  // ///////////DELETE ONE TASK/////////////////
   builder.addCase(deleteTask.pending, () => {
     // state.loading = 'loading';
   });
@@ -153,7 +197,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
     state.error = action.error.message;
   });
 
-  // DELETE ONE ITEM
+  // //////////////DELETE ONE ITEM////////////////
   builder.addCase(deleteItem.pending, () => {
     // state.loading = 'loading';
   });
@@ -181,32 +225,3 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
 };
 
 export default extraReducers;
-
-// // PUT PROJECT
-// builder.addCase(putProject.pending, (state) => {
-//   state.projectsList = [...state.projectsList];
-//   // state.loading = 'loading';
-// });
-// builder.addCase(postProject.fulfilled, (state, { payload }) => {
-//   state.projectsList.push(payload);
-//   // state.loading="loaded";
-// });
-// builder.addCase(postProject.rejected, (state, action) => {
-//   // state.loading ="error";
-//   // state.error=action.error.message;
-//   console.log(action.error.message);
-// });
-// builder.addCase(postProject.pending, (state) => {
-//   state.projectsList = [...state.projectsList];
-//   // state.loading = 'loading';
-// });
-// builder.addCase(postProject.fulfilled, (state, { payload }) => {
-//   state.projectsList.push(payload);
-//   // state.loading="loaded";
-// });
-// builder.addCase(postProject.rejected, (state, action) => {
-//   // state.loading ="error";
-//   // state.error=action.error.message;
-//   console.log(action.error.message);
-// });
-// },

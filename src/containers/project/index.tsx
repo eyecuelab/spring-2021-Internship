@@ -18,6 +18,8 @@ import {
   postItem,
   deleteItem,
   deleteProject,
+  putProject,
+  putItem,
 } from '../../store/slices/projectSlice';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
@@ -27,19 +29,22 @@ import Task from '../../components/task';
 import Item from '../../components/item';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
+import InlineEdit from '../../components/inlineEdit';
+import { Display, Edit } from './components';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const projectName = useSelector(selectors.selectProjectName);
-  const projectId = useSelector(selectors.selectProjectId);
+  const projName = useSelector(selectors.selectProjectName);
   const materialItemList = useSelector(selectors.selectMaterialItems);
   const laborItemList = useSelector(selectors.selectLaborItems);
   const otherItemList = useSelector(selectors.selectOtherItems);
   const toDoList = useSelector(selectors.selectProjToDoTasks);
   const doingList = useSelector(selectors.selectProjDoingTasks);
   const doneList = useSelector(selectors.selectProjDoneTasks);
-  const endDate = useSelector(selectors.selectProjectEndDate);
+  const projStartDate = useSelector(selectors.selectProjectStartDate);
+  const projectId = useSelector(selectors.selectProjectId);
+  const projEndDate = useSelector(selectors.selectProjectEndDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
@@ -120,28 +125,6 @@ const Project = (): JSX.Element => {
     setFinanceModalView(!showFinanceModal);
   };
 
-  // const handleAddingLabor = (
-  //   itemName: string,
-  //   category: string,
-  //   date: string,
-  //   minutes: number,
-  //   hours: number,
-  //   project: number
-  // ) => {
-  //   dispatch(postLaborItem({ itemName, category, date, minutes, hours, project }));
-  //   setFinanceModalView(!showFinanceModal);
-  // };
-
-  // const handleAddingOther = (
-  //   itemName: string,
-  //   itemPrice: number,
-  //   category: string,
-  //   project: number
-  // ) => {
-  //   dispatch(postOtherItem({ itemName, itemPrice, category, project }));
-  //   setFinanceModalView(!showFinanceModal);
-  // };
-
   const handleOnDragEnd = (result: DropResult) => {
     if (result.destination && result.destination !== null) {
       const LISTS: Record<string, Array<TaskItem>> = {
@@ -212,6 +195,7 @@ const Project = (): JSX.Element => {
 
   const doingItems: JSX.Element[] = doingList.map((e, index) => {
     const dragid = e.id.toString();
+
     return (
       <Draggable key={e.id} draggableId={dragid} index={index}>
         {/* eslint-disable-next-line */}
@@ -260,8 +244,6 @@ const Project = (): JSX.Element => {
     );
   });
 
-  const projDate = dayjs(endDate).format('MM/DD/YYYY');
-
   function calculateMaterialTotal(arr: Array<MaterialItem>): number {
     let total = 0;
     arr.forEach((e: MaterialItem) => {
@@ -288,6 +270,31 @@ const Project = (): JSX.Element => {
     return total;
   }
 
+  const handleUpdateItem = (
+    id: string,
+    itemName: string,
+    itemPrice: number | undefined,
+    quantity: number | undefined,
+    category: string,
+    date: string | undefined,
+    minutes: number | undefined,
+    hours: number | undefined
+  ) => {
+    const itemId = parseInt(id, 10);
+    dispatch(
+      putItem({
+        id: itemId,
+        itemName,
+        itemPrice,
+        quantity,
+        category,
+        date,
+        minutes,
+        hours,
+      })
+    );
+  };
+
   const materialItems: JSX.Element[] = materialItemList.map((e) => {
     return (
       <Item
@@ -296,6 +303,7 @@ const Project = (): JSX.Element => {
         itemPrice={e.itemPrice}
         quantity={e.quantity}
         handleDelete={handleDeleteItem}
+        handleUpdateItem={handleUpdateItem}
         category="material"
       />
     );
@@ -310,6 +318,7 @@ const Project = (): JSX.Element => {
         date={e.date}
         hours={e.hours}
         handleDelete={handleDeleteItem}
+        handleUpdateItem={handleUpdateItem}
         category="labor"
       />
     );
@@ -323,6 +332,7 @@ const Project = (): JSX.Element => {
         itemPrice={e.itemPrice}
         quantity={e.quantity}
         handleDelete={handleDeleteItem}
+        handleUpdateItem={handleUpdateItem}
         category="other"
       />
     );
@@ -331,10 +341,63 @@ const Project = (): JSX.Element => {
   const materialTotals = calculateMaterialTotal(materialItemList);
   const laborTotals = calculateLaborTotal(laborItemList);
   const otherTotals = calculateOtherTotal(otherItemList);
+
+  const handleUpdateProject = (
+    projId: number,
+    projectName: string,
+    startDate: string,
+    endDate: string
+  ) => {
+    dispatch(putProject({ projId, projectName, startDate, endDate }));
+  };
+
+  const endDate = dayjs(projEndDate).format('MM/DD/YYYY');
+  const startDate = dayjs(projStartDate).format('MM/DD/YYYY');
+
+  const projId = parseInt(projectId, 10);
+  const handleNewProjName = (updatedValue: string | number) => {
+    handleUpdateProject(projId, updatedValue.toString(), projStartDate, projEndDate);
+  };
+  const handleNewProjStart = (updatedValue: string | number) => {
+    const newDate = dayjs(updatedValue);
+    handleUpdateProject(projId, projName, newDate.toString(), projEndDate);
+  };
+  const handleNewProjEnd = (updatedValue: string | number) => {
+    const newDate = dayjs(updatedValue);
+    console.log(newDate);
+    handleUpdateProject(projId, projName, projStartDate, newDate.toString());
+  };
+
   return (
     <>
-      <h1>{projectName}</h1>
-      <h2>Due Date: {projDate}</h2>
+      <h1>
+        <InlineEdit
+          value={projName}
+          updateValue={handleNewProjName}
+          renderDisplay={Display}
+          renderEdit={Edit}
+        />
+      </h1>
+
+      <h2>
+        Start Date:
+        <InlineEdit
+          value={startDate}
+          updateValue={handleNewProjStart}
+          renderDisplay={Display}
+          renderEdit={Edit}
+        />
+      </h2>
+
+      <h2>
+        End Date:
+        <InlineEdit
+          value={endDate}
+          updateValue={handleNewProjEnd}
+          renderDisplay={Display}
+          renderEdit={Edit}
+        />
+      </h2>
       {showTaskModal && (
         <NewTaskModal
           toggleModal={handleToggleTaskModal}

@@ -87,6 +87,38 @@ export const updateTask = createAsyncThunk(
   }
 );
 
+export const putProject = createAsyncThunk(
+  'project/putProject',
+  async (
+    {
+      projId,
+      projectName,
+      startDate,
+      endDate,
+    }: {
+      projId: number;
+      projectName: string;
+      startDate: string;
+      endDate: string;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/projects/${projId}`, {
+        project: {
+          id: projId,
+          projectName,
+          startDate,
+          endDate,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async ({ id, taskStatus }: { id: string; taskStatus: string }, thunkAPI) => {
@@ -110,17 +142,6 @@ export const deleteItem = createAsyncThunk(
     }
   }
 );
-
-// export const putProject = createAsyncThunk('project/putProject', async (id: number, thunkAPI) => {
-//   try {
-//     const response = await axios.put(`http://localhost:3000/api/projects/${id}`, testProject);
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.log(error.message);
-//     return thunkAPI.rejectWithValue({ error: error.message });
-//   }
-// });
 
 export const deleteProject = createAsyncThunk(
   'project/deleteProject',
@@ -159,6 +180,50 @@ export const postTask = createAsyncThunk(
               description: `${taskName} created and added to ${taskStatus}`,
             },
           ],
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const putItem = createAsyncThunk(
+  'project/putItem',
+  async (
+    {
+      id,
+      itemName,
+      itemPrice,
+      quantity,
+      category,
+      date,
+      minutes,
+      hours,
+    }: {
+      id: number;
+      itemName: string;
+      itemPrice: number | undefined;
+      quantity: number | undefined;
+      category: string;
+      date: string | undefined;
+      minutes: number | undefined;
+      hours: number | undefined;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/items/${id}`, {
+        item: {
+          id,
+          itemName,
+          itemPrice,
+          quantity,
+          category,
+          date,
+          minutes,
+          hours,
         },
       });
       return response.data;
@@ -302,31 +367,11 @@ export const initialState: ProjectState = {
   error: '',
 };
 
-function idMaker(projectName: string) {
-  const a = Math.floor(Math.random() * 100);
-  const b = projectName[0];
-  return b + a;
-}
-
 const now = dayjs();
-// const { projectName, startDate, endDate, id} = state.currentProject;
 export const projectSlice = createSlice({
   name: 'project',
   initialState,
   reducers: {
-    setProjectName: (state, action: PayloadAction<string>) => {
-      state.currentProject.projectName = action.payload;
-    },
-    setProjectStartDate: (state) => {
-      state.currentProject.startDate = new Date().toString();
-    },
-    setProjectEndDate: (state, action: PayloadAction<string>) => {
-      state.currentProject.endDate = action.payload;
-    },
-    setId: (state) => {
-      state.currentProject.id = idMaker(state.currentProject.projectName);
-    },
-
     moveTask: (
       state,
       action: PayloadAction<{
@@ -385,13 +430,15 @@ export const projectSlice = createSlice({
   },
 });
 
+// export const { clearTasks, clearItems, moveTask, deleteTask } = projectSlice.actions;
+
 export const {
-  setProjectName,
-  setId,
+  // setProjectName,
+  // setId,
   clearTasks,
   clearItems,
-  setProjectStartDate,
-  setProjectEndDate,
+  // setProjectStartDate,
+  // setProjectEndDate,
   moveTask,
 } = projectSlice.actions;
 
