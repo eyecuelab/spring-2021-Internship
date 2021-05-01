@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Nav, NavMenu, NavItem, NavLink, NavContainer } from './styles';
-import { signout } from '../../store/slices/authSlice';
 
 const NavBar = (): JSX.Element => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const userSignout = () => {
-    dispatch(signout());
+    // dispatch(signout());
+    console.log('signed out');
   };
   return (
     <Nav>
