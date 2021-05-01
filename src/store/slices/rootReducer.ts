@@ -1,18 +1,18 @@
 import { Reducer } from 'react';
 import { AnyAction, CombinedState, combineReducers } from 'redux';
 /* eslint-disable import/no-cycle */
-import authReducer, { AuthState } from './authSlice';
+import userReducer, { UserState } from './userSlice';
 import projectReducer, { ProjectState } from './projectSlice';
 
 export default function createRootReducer(): Reducer<
   CombinedState<{
-    user: AuthState;
+    user: UserState;
     project: ProjectState;
   }>,
   AnyAction
 > {
   return combineReducers({
-    user: authReducer,
+    user: userReducer,
     project: projectReducer,
   });
 }
