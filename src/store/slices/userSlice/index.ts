@@ -5,21 +5,23 @@ import { RootState } from '../../store';
 import extraReducers from './extraReducers';
 
 export interface UserState {
-  firstName: string;
-  lastName: string;
-  uuid: string;
-  id: string;
-  email: string;
-  error: string;
+  userInfo: {
+    firstName: string;
+    lastName: string;
+    uuid: string;
+    id: string;
+    email: string;
+  };
 }
 
 export const initialState: UserState = {
-  firstName: '',
-  lastName: '',
-  uuid: '',
-  id: '',
-  error: '',
-  email: '',
+  userInfo: {
+    firstName: '',
+    lastName: '',
+    uuid: '',
+    id: '',
+    email: '',
+  },
 };
 
 export const userSlice = createSlice({
