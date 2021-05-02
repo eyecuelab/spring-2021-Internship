@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-// import { selectAuth } from './slices/authSlice';
+import { selectUser } from './slices/userSlice';
 import { selectProject, ItemCategory } from './slices/projectSlice';
 
 export const projectSelector = createSelector(selectProject, (project) => project);
@@ -64,6 +64,6 @@ export const selectProjectList = createSelector(
   (project) => project.projectsList
 );
 
-// export const authSelector = createSelector(selectAuth, (user) => user);
+export const authSelector = createSelector(selectUser, (user) => user);
 
-// export const selectUUID = createSelector([authSelector], (user) => user.uuid);
+export const selectUUID = createSelector([authSelector], (user) => user.userInfo.uuid);
