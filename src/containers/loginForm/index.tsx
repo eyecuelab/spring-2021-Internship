@@ -9,6 +9,9 @@ import { signIn } from '../../store/slices/userSlice/thunks';
 //   email: string;
 //   password: string;
 // };
+
+const clientId: string = process.env.REACT_APP_CLIENT_ID ?? '';
+
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
   // const {
@@ -32,7 +35,7 @@ const LoginForm = (): JSX.Element => {
   return (
     <>
       <GoogleLogin
-        clientId={process.env.CLIENT_ID ?? ''} // this throws an error, look into
+        clientId={clientId}
         buttonText="Log in with Google"
         onSuccess={handleLogin}
         onFailure={handleLogin}
