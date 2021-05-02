@@ -3,10 +3,12 @@ import ReactDatePicker from 'react-datepicker';
 import { useForm, Controller } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Form, Button } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 import { Modal } from '../modal';
+import * as selectors from '../../store/selectors';
 
 type ModalProps = {
-  addProject: (projectName: string, startDate: string, endDate: string) => void;
+  addProject: (projectName: string, startDate: string, endDate: string, uuid: string) => void;
   toggleModal: () => void;
 };
 
@@ -17,6 +19,7 @@ type Inputs = {
 };
 
 const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element => {
+  const uuid = useSelector(selectors.selectUUID);
   const {
     register,
     handleSubmit,
@@ -25,7 +28,7 @@ const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element =
   } = useForm<Inputs>();
   // eslint-disable-next-line
   const onSubmit = (data: any) => {
-    addProject(data.projectName, data.startDate, data.endDate);
+    addProject(data.projectName, data.startDate, data.endDate, uuid);
     toggleModal();
   };
   return (

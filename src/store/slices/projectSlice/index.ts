@@ -34,7 +34,8 @@ export const postProject = createAsyncThunk(
       projectName,
       startDate,
       endDate,
-    }: { projectName: string; startDate: string; endDate: string },
+      uuid,
+    }: { projectName: string; startDate: string; endDate: string; uuid: string },
     thunkAPI
   ) => {
     try {
@@ -43,6 +44,7 @@ export const postProject = createAsyncThunk(
           projectName,
           startDate,
           endDate,
+          uuid,
         },
       });
       return response.data;

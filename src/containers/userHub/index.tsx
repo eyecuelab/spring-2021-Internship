@@ -52,8 +52,13 @@ const UserHub = (): JSX.Element => {
     dispatch(getProjectById('2'));
   };
 
-  const handleNewProject = (projectName: string, startDate: string, endDate: string) => {
-    dispatch(postProject({ projectName, startDate, endDate }));
+  const handleNewProject = (
+    projectName: string,
+    startDate: string,
+    endDate: string,
+    uuid: string
+  ) => {
+    dispatch(postProject({ projectName, startDate, endDate, uuid }));
   };
 
   const locales = {
