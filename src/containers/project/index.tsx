@@ -364,7 +364,6 @@ const Project = (): JSX.Element => {
   };
   const handleNewProjEnd = (updatedValue: string | number) => {
     const newDate = dayjs(updatedValue);
-    console.log(newDate);
     handleUpdateProject(projId, projName, projStartDate, newDate.toString());
   };
 

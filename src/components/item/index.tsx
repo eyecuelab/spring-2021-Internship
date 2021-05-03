@@ -28,8 +28,8 @@ type ItemProps = {
 
 const Item = ({
   itemName,
-  itemPrice,
-  quantity,
+  itemPrice = 0,
+  quantity = 0,
   minutes = 0,
   category,
   date,
@@ -39,7 +39,7 @@ const Item = ({
   handleUpdateItem,
 }: ItemProps): JSX.Element => {
   // const dispatch = useDispatch();
-  const laborDate = date ? new Date(date) : null;
+  const laborDate = date ? new Date(date) : undefined;
   const stringDate = dayjs(laborDate).format('MM/DD/YYYY');
 
   const hoursToMin = hours * 60;
@@ -58,6 +58,8 @@ const Item = ({
     );
   };
   const handleNewItemTime = (updatedValue: string | number) => {
+    // const int: string = updatedValue ?? '';
+    // const intValue = parseInt(int, 10);
     handleUpdateItem(
       id,
       itemName,
@@ -66,7 +68,7 @@ const Item = ({
       category,
       date?.toString(),
       minutes,
-      parseInt(updatedValue, 10)
+      parseInt(`${updatedValue}`, 10)
     );
   };
 
@@ -75,7 +77,7 @@ const Item = ({
       id,
       itemName,
       itemPrice,
-      parseInt(updatedValue, 10),
+      parseInt(`${updatedValue}`, 10),
       category,
       date?.toString(),
       minutes,
@@ -100,7 +102,7 @@ const Item = ({
     handleUpdateItem(
       id,
       itemName,
-      parseInt(updatedValue, 10),
+      parseInt(`${updatedValue}`, 10),
       quantity,
       category,
       date?.toString(),

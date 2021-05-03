@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-type RenderProps = {
+export type RenderProps = {
   valueState: Props['value'];
   handleOnClick?: () => void;
   handleOnBlur?: () => void;
@@ -8,14 +8,14 @@ type RenderProps = {
   handleOnChange?: (e: any) => void;
 };
 
-type Props = {
+export type Props = {
   value: string | number;
   updateValue: (value: string | number) => void;
   renderDisplay: (props: RenderProps) => React.ReactNode;
   renderEdit: (props: RenderProps) => React.ReactNode;
 };
 
-const InlineEdit = ({ value, updateValue, renderDisplay, renderEdit }: Props) => {
+const InlineEdit = ({ value, updateValue, renderDisplay, renderEdit }: Props): JSX.Element => {
   const [isEditingState, setIsEditingState] = useState(false);
   const [valueState, setValueState] = useState(value);
 
@@ -43,7 +43,6 @@ const InlineEdit = ({ value, updateValue, renderDisplay, renderEdit }: Props) =>
         setIsEditingState(!isEditingState);
         setValueState(valueState);
         updateValue(valueState);
-        console.log(valueState);
       }
     },
     [updateValue, valueState, isEditingState]

@@ -1,24 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RenderProps, Props } from '../../components/inlineEdit';
 
 const Button = styled.button``;
 const Input = styled.input``;
 
-type Props = {
-  valueState: string | number;
-};
+// type RenderProps = {
+//   valueState: string | number;
+//   handleOnClick?: () => void;
+//   handleOnBlur?: () => void;
+//   handleOnKeyDown?: (e: React.KeyboardEvent) => void;
+//   handleOnChange?: (e: any) => void;
+// };
 
-type DisplayProps = {
-  handleOnClick: () => void;
-};
+// type Props = {
+//   valueState: string | number;
+// };
 
-type EditProps = {
-  handleOnBlur: () => void;
-  handleOnKeyDown: (e: React.KeyboardEvent) => void;
-  handleOnChange: (e: any) => void;
-};
+// type DisplayProps = {
+//   handleOnClick: () => void;
+// };
 
-export const Display = ({ valueState, handleOnClick }: Props & DisplayProps) => {
+// type EditProps = {
+//   handleOnBlur: () => void;
+//   handleOnKeyDown: (e: React.KeyboardEvent) => void;
+//   handleOnChange: (e: any) => void;
+// };
+
+export const Display = ({ handleOnClick, valueState }: RenderProps): React.ReactNode => {
   return (
     <div>
       <Button onClick={handleOnClick}>{valueState}</Button>
@@ -26,12 +35,19 @@ export const Display = ({ valueState, handleOnClick }: Props & DisplayProps) => 
   );
 };
 
+// Display.defaultProps = {
+//   handleOnClick: null,
+//   handleOnBlur: null,
+//   handleOnKeyDown: null,
+//   handleOnChange: null,
+// };
+
 export const Edit = ({
   valueState,
   handleOnBlur,
   handleOnKeyDown,
   handleOnChange,
-}: Props & EditProps) => {
+}: RenderProps): React.ReactNode => {
   return (
     <div>
       <Input
@@ -43,3 +59,10 @@ export const Edit = ({
     </div>
   );
 };
+
+// Edit.defaultProps = {
+//   handleOnClick: null,
+//   handleOnBlur: null,
+//   handleOnKeyDown: null,
+//   handleOnChange: null,
+// };
