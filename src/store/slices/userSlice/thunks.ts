@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const signIn = createAsyncThunk('user/signIn', async (googleData: any, thunkAPI) => {
   try {
-    const res = await fetch('http://localhost:3000/api/v1/auth/google', {
+    const res = await fetch('http://localhost:3000/api/auth/', {
       method: 'POST',
       body: JSON.stringify({
         token: googleData.tokenId,
@@ -21,7 +21,7 @@ export const signIn = createAsyncThunk('user/signIn', async (googleData: any, th
 
 export const signOut = createAsyncThunk('user/signOut', async (_, thunkAPI) => {
   try {
-    const response = await axios.delete('http://localhost:3000/api/v1/auth/google');
+    const response = await axios.delete('http://localhost:3000/api/auth/');
     return response;
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error.message });
