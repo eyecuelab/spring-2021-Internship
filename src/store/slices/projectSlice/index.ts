@@ -6,9 +6,9 @@ import { RootState } from '../../store';
 /* eslint-disable import/no-cycle */
 import extraReducers from './extraReducers';
 
-export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
+export const getProjects = createAsyncThunk('project/getProjects', async (id: string, thunkAPI) => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/projects/`);
+    const response = await axios.post(`http://localhost:3000/api/projects/myprojects`, { id });
     return response.data.projects;
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error.message });

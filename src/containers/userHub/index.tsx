@@ -19,6 +19,7 @@ const UserHub = (): JSX.Element => {
   const projectEndDate = useSelector(selectors.selectProjectEndDate);
   const projectStartDate = useSelector(selectors.selectProjectStartDate);
   const projectList = useSelector(selectors.selectProjectList);
+  const getmineuuid = useSelector(selectors.selectUUID);
   const [showModal, setModalView] = useState(false);
 
   const handleProjectSelect = (id: string) => {
@@ -45,7 +46,8 @@ const UserHub = (): JSX.Element => {
   };
 
   const handleMakeGet = async () => {
-    dispatch(getProjects());
+    console.log(getmineuuid);
+    dispatch(getProjects(getmineuuid));
   };
 
   const handleMakeGetById = async () => {
