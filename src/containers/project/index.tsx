@@ -26,6 +26,7 @@ import NewFinance from '../../components/newFinance';
 import ProjTask from '../../components/projTasks';
 import Task from '../../components/task';
 import Item from '../../components/item';
+import ProjHeader from '../../components/projHeader';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
 import InlineEdit from '../../components/inlineEdit';
@@ -360,6 +361,7 @@ const Project = (): JSX.Element => {
 
   return (
     <>
+      <ProjHeader />
       <h1>
         <InlineEdit
           value={projName}
