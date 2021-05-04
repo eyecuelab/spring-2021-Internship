@@ -29,7 +29,7 @@ module.exports = {
     'linebreak-style': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-param-reassign': ['error', { props: false }],
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     'prettier/prettier': [
       'error',
       {
