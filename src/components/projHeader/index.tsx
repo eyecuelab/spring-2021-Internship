@@ -16,106 +16,33 @@ const Wrapper = styled.div`
   background: #fcfbf8;
   display: inline-block;
 `;
-
-const NameContainer = styled.div`
+const Container = styled.div`
   position: absolute;
-  width: 418px;
   height: 54px;
-  left: 49px;
   top: 73px;
   radius: 3px;
   background: ${(props) => props.theme.colors.white};
 `;
 
-const StartDateContainer = styled.div`
+const HeaderText = styled.p`
   position: absolute;
-  width: 237px;
-  height: 54px;
-  left: 489px;
-  top: 73px;
-  radius: 3px;
-  background: ${(props) => props.theme.colors.white};
-`;
-
-const DueDateContainer = styled.div`
-  position: absolute;
-  width: 237px;
-  height: 54px;
-  left: 748px;
-  top: 73px;
-  radius: 3px;
-  background: ${(props) => props.theme.colors.white};
-`;
-
-const DeleteContainer = styled.div`
-  position: absolute;
-  width: 64px;
-  height: 54px;
-  left: 1009px;
-  top: 73px;
-  radius: 3px;
-  background: ${(props) => props.theme.colors.white};
-`;
-
-const NameText = styled.p`
-  position: absolute;
-  left: 48px;
   top: 37px;
   font-family: ${(props) => props.theme.font};
   font-style: normal;
-  font-weight: ${(props) => props.theme.fontWeights.bold};
-  font-size: ${(props) => props.theme.fontSizes.xlarge};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;
   line-height: 17px;
 `;
 
-const StartDateText = styled.p`
-  position: absolute;
-  left: 565px;
-  top: 37px;
-  font-family: ${(props) => props.theme.font};
-  font-style: normal;
-  font-weight: ${(props) => props.theme.fontWeights.normal};
-  font-size: ${(props) => props.theme.fontSizes.large};
-  color: ${(props) => props.theme.colors.black};
-  opacity: 0.2;
-  line-height: 17px;
-`;
-
-const DueDateText = styled.p`
-  position: absolute;
-  left: 824px;
-  top: 37px;
-  font-family: ${(props) => props.theme.font};
-  font-style: normal;
-  font-weight: ${(props) => props.theme.fontWeights.normal};
-  font-size: ${(props) => props.theme.fontSizes.large};
-  color: ${(props) => props.theme.colors.black};
-  opacity: 0.2;
-  line-height: 17px;
-`;
-
-const ProjectNameDetailText = styled.p`
+const DetailText = styled.p`
   color: ${(props) => props.theme.colors.navy};
   position: relative;
   font-family: Montserrat;
-  font-size: 20px;
   line-height: 17px;
   margin-top: 17px;
-  left: 24px;
   top: 17px;
 `;
-const ProjectDateDetailText = styled.p`
-  color: ${(props) => props.theme.colors.navy};
-  font-family: Montserrat;
-  position: relative;
-  font-size: 14px;
-  line-height: 17px;
-  margin-top: 17px;
-  text-align: center;
-  top: 17px;
-`;
+
 const TrashIcon = styled.img`
   position: relative;
   margin-top: 17px;
@@ -156,42 +83,42 @@ const ProjHeader = (): JSX.Element => {
   return (
     <>
       <Wrapper>
-        <NameText>Project</NameText>
-        <StartDateText>Start Date</StartDateText>
-        <DueDateText>Due Date</DueDateText>
-        <NameContainer>
-          <ProjectNameDetailText>
+        <HeaderText style={{ left: '48px', fontSize: '24px' }}>Project</HeaderText>
+        <HeaderText style={{ left: '565px', fontSize: '20px' }}>Start Date</HeaderText>
+        <HeaderText style={{ left: '824px', fontSize: '20px' }}>Due Date</HeaderText>
+        <Container style={{ left: '49px', width: '418px' }}>
+          <DetailText style={{ fontSize: '20px', left: '24px' }}>
             <InlineEdit
               value={projName}
               updateValue={handleNewProjName}
               renderDisplay={Display}
               renderEdit={Edit}
             />
-          </ProjectNameDetailText>
-        </NameContainer>
-        <StartDateContainer>
-          <ProjectDateDetailText>
+          </DetailText>
+        </Container>
+        <Container style={{ left: '489px', width: '237px' }}>
+          <DetailText style={{ fontSize: '14px', textAlign: 'center' }}>
             <InlineEdit
               value={startDate}
               updateValue={handleNewProjStart}
               renderDisplay={Display}
               renderEdit={Edit}
             />
-          </ProjectDateDetailText>
-        </StartDateContainer>
-        <DueDateContainer>
-          <ProjectDateDetailText>
+          </DetailText>
+        </Container>
+        <Container style={{ left: '748px', width: '237px' }}>
+          <DetailText style={{ fontSize: '14px', textAlign: 'center' }}>
             <InlineEdit
               value={endDate}
               updateValue={handleNewProjEnd}
               renderDisplay={Display}
               renderEdit={Edit}
             />
-          </ProjectDateDetailText>
-        </DueDateContainer>
-        <DeleteContainer>
+          </DetailText>
+        </Container>
+        <Container style={{ left: '1009px', width: '64px' }}>
           <TrashIcon src={Trashcan} alt="trashcan icon" />
-        </DeleteContainer>
+        </Container>
       </Wrapper>
     </>
   );
