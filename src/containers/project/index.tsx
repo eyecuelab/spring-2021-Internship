@@ -4,14 +4,13 @@ import { Draggable, DropResult } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
-  clearTasks,
-  clearItems,
   MaterialItem,
   LaborItem,
   OtherItem,
-  // updateTaskStatus,
   TaskItem,
   moveTask,
+} from '../../store/slices/projectSlice';
+import {
   deleteTask,
   updateTask,
   postTask,
@@ -20,7 +19,7 @@ import {
   deleteProject,
   putProject,
   putItem,
-} from '../../store/slices/projectSlice';
+} from '../../store/slices/projectSlice/thunks';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
 import NewFinance from '../../components/newFinance';
@@ -79,17 +78,9 @@ const Project = (): JSX.Element => {
     setTaskDetailView(!showTaskDetail);
   };
 
-  const handleClearingTasks = () => {
-    dispatch(clearTasks());
-  };
-
   const handleDeletingProject = (id: string) => {
     dispatch(deleteProject(id));
     history.push('/');
-  };
-
-  const handleClearingItems = () => {
-    dispatch(clearItems());
   };
 
   const handleDeleteItem = (id: string, category: string) => {
@@ -426,9 +417,6 @@ const Project = (): JSX.Element => {
         handleOnDragEnd={handleOnDragEnd}
         setDefaultForm={setDefaultTaskForm}
       />
-      <button type="submit" onClick={handleClearingTasks}>
-        Clear Tasks
-      </button>
       <ProjFinance
         materialTotals={materialTotals}
         laborTotals={laborTotals}
@@ -439,9 +427,6 @@ const Project = (): JSX.Element => {
         handleToggleFinance={handleToggleFinance}
         setDefaultForm={setDefaultItemForm}
       />
-      <button type="submit" onClick={handleClearingItems}>
-        Clear Items
-      </button>
       <button type="submit" onClick={() => handleDeletingProject(projectId)}>
         Delete Project
       </button>
