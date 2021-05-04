@@ -7,6 +7,7 @@ import LoginForm from './containers/loginForm';
 import UserHub from './containers/userHub';
 import Project from './containers/project';
 import NavBar from './components/navBar';
+import Footer from './components/footer';
 import theme from './styles/theme';
 import './App.css';
 import GlobalStyles from './styles/globalStyles';
@@ -24,6 +25,7 @@ function App(): JSX.Element {
           <Route path="/hub">{!loggedIn ? <Redirect to="/" /> : <UserHub />}</Route>
           <Route path="/">{loggedIn ? <Redirect to="/hub" /> : <LoginForm />}</Route>
         </Switch>
+        <Footer />
       </Router>
     </ThemeProvider>
   );

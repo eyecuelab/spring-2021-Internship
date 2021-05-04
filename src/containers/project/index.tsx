@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Draggable, DropResult } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
-import dayjs from 'dayjs';
 import {
   MaterialItem,
   LaborItem,
@@ -17,7 +16,6 @@ import {
   postItem,
   deleteItem,
   deleteProject,
-  putProject,
   putItem,
 } from '../../store/slices/projectSlice/thunks';
 import * as selectors from '../../store/selectors';
@@ -26,24 +24,20 @@ import NewFinance from '../../components/newFinance';
 import ProjTask from '../../components/projTasks';
 import Task from '../../components/task';
 import Item from '../../components/item';
+import ProjHeader from '../../components/projHeader';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
-import InlineEdit from '../../components/inlineEdit';
-import { Display, Edit } from './components';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const projName = useSelector(selectors.selectProjectName);
   const materialItemList = useSelector(selectors.selectMaterialItems);
   const laborItemList = useSelector(selectors.selectLaborItems);
   const otherItemList = useSelector(selectors.selectOtherItems);
   const toDoList = useSelector(selectors.selectProjToDoTasks);
   const doingList = useSelector(selectors.selectProjDoingTasks);
   const doneList = useSelector(selectors.selectProjDoneTasks);
-  const projStartDate = useSelector(selectors.selectProjectStartDate);
   const projectId = useSelector(selectors.selectProjectId);
-  const projEndDate = useSelector(selectors.selectProjectEndDate);
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
@@ -333,61 +327,9 @@ const Project = (): JSX.Element => {
   const laborTotals = calculateLaborTotal(laborItemList);
   const otherTotals = calculateOtherTotal(otherItemList);
 
-  const handleUpdateProject = (
-    projId: number,
-    projectName: string,
-    startDate: string,
-    endDate: string
-  ) => {
-    dispatch(putProject({ projId, projectName, startDate, endDate }));
-  };
-
-  const endDate = dayjs(projEndDate).format('MM/DD/YYYY');
-  const startDate = dayjs(projStartDate).format('MM/DD/YYYY');
-
-  const projId = parseInt(projectId, 10);
-  const handleNewProjName = (updatedValue: string | number) => {
-    handleUpdateProject(projId, updatedValue.toString(), projStartDate, projEndDate);
-  };
-  const handleNewProjStart = (updatedValue: string | number) => {
-    const newDate = dayjs(updatedValue);
-    handleUpdateProject(projId, projName, newDate.toString(), projEndDate);
-  };
-  const handleNewProjEnd = (updatedValue: string | number) => {
-    const newDate = dayjs(updatedValue);
-    handleUpdateProject(projId, projName, projStartDate, newDate.toString());
-  };
-
   return (
     <>
-      <h1>
-        <InlineEdit
-          value={projName}
-          updateValue={handleNewProjName}
-          renderDisplay={Display}
-          renderEdit={Edit}
-        />
-      </h1>
-
-      <h2>
-        Start Date:
-        <InlineEdit
-          value={startDate}
-          updateValue={handleNewProjStart}
-          renderDisplay={Display}
-          renderEdit={Edit}
-        />
-      </h2>
-
-      <h2>
-        End Date:
-        <InlineEdit
-          value={endDate}
-          updateValue={handleNewProjEnd}
-          renderDisplay={Display}
-          renderEdit={Edit}
-        />
-      </h2>
+      <ProjHeader deleteProject={handleDeletingProject} />
       {showTaskModal && (
         <NewTaskModal
           toggleModal={handleToggleTaskModal}
