@@ -8,6 +8,10 @@ import { Display, Edit } from '../../containers/project/components';
 import InlineEdit from '../inlineEdit';
 import { putProject } from '../../store/slices/projectSlice/thunks';
 
+type HeaderProps = {
+  deleteProject: (id: string) => void;
+};
+
 const Wrapper = styled.div`
   margin-top: 132px;
   position: relative;
@@ -46,9 +50,10 @@ const TrashIcon = styled.img`
   position: relative;
   margin-top: 17px;
   margin-left: 22px;
+  cursor: pointer;
 `;
 
-const ProjHeader = (): JSX.Element => {
+const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
   const projName = useSelector(selectors.selectProjectName);
   const projStartDate = useSelector(selectors.selectProjectStartDate);
   const projEndDate = useSelector(selectors.selectProjectEndDate);
@@ -116,7 +121,7 @@ const ProjHeader = (): JSX.Element => {
           </DetailText>
         </Container>
         <Container style={{ left: '1009px', width: '64px' }}>
-          <TrashIcon src={Trashcan} alt="trashcan icon" />
+          <TrashIcon src={Trashcan} alt="trashcan icon" onClick={() => deleteProject(projectId)} />
         </Container>
       </Wrapper>
     </>
