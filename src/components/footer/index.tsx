@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Curo from '../../assets/img/Curo.svg';
 
 const Wrapper = styled.div`
   height: 51px;
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
+  margin-top: 4px;
   width: 1120px;
 `;
 
@@ -22,7 +24,7 @@ const Footer = (): JSX.Element => {
     <>
       <Wrapper>
         <Container>
-          <h1 style={{ color: 'white' }}>CURO</h1>
+          <img src={Curo} alt="Curo logo" />
         </Container>
       </Wrapper>
     </>
