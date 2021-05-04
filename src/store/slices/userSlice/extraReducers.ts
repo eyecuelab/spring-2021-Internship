@@ -9,10 +9,9 @@ const extraReducers = (builder: ActionReducerMapBuilder<UserState>) => {
     state.userInfo = initialState.userInfo;
   });
   builder.addCase(signIn.fulfilled, (state, { payload }) => {
-    if (payload.existingUser) {
-      state.userInfo = payload.existingUser;
-    } else if (payload.newUser) {
-      state.userInfo = payload.newUser;
+    console.log('what', payload);
+    if (payload.user) {
+      state.userInfo = payload.user;
     }
   });
   builder.addCase(signIn.rejected, (state) => {
@@ -23,6 +22,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<UserState>) => {
     // state.userInfo = initialState.userInfo;
   });
   builder.addCase(signOut.fulfilled, (state) => {
+    console.log('what is happening', state.userInfo, initialState.userInfo);
     state.userInfo = initialState.userInfo;
   });
   builder.addCase(signOut.rejected, (state) => {

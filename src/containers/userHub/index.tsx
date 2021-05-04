@@ -47,6 +47,7 @@ const UserHub = (): JSX.Element => {
 
   const handleMakeGet = async () => {
     console.log(getmineuuid);
+
     dispatch(getProjects(getmineuuid));
   };
 
