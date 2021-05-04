@@ -2,8 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { RenderProps, Props } from '../../components/inlineEdit';
 
-const Button = styled.button``;
-const Input = styled.input``;
+const Button = styled.button`
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+`;
+const Input = styled.input`
+  background: none;
+  color: inherit;
+  border: none;
+  border-bottom: 2px dashed;
+  padding-bottom: 3px
+  width: auto;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+`;
 
 export const Display = ({ handleOnClick, valueState }: RenderProps): React.ReactNode => {
   return (
