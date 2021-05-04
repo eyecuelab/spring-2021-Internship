@@ -2,12 +2,10 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 /* eslint-disable import/no-cycle */
 import {
-  ProjectState,
   getProjects,
   getProjectById,
   updateTask,
   postProject,
-  initialState,
   postTask,
   postItem,
   putProject,
@@ -15,22 +13,20 @@ import {
   deleteItem,
   deleteProject,
   putItem,
-} from './index';
+} from './thunks';
+import { ProjectState, initialState } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => {
   // //////////GET ALL PROJECTS////////////////
   builder.addCase(getProjects.pending, (state) => {
     state.projectsList = [];
     state.error = '';
-    // state.loading = 'loading';
   });
   builder.addCase(getProjects.fulfilled, (state, { payload }) => {
     state.projectsList = payload;
     state.error = '';
-    // state.loading="loaded";
   });
   builder.addCase(getProjects.rejected, (state, action) => {
-    // state.loading ="error";
     state.error = action.error.message;
   });
 
@@ -38,15 +34,12 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   builder.addCase(getProjectById.pending, (state) => {
     state.currentProject = initialState.currentProject;
     state.error = '';
-    // state.loading = 'loading';
   });
   builder.addCase(getProjectById.fulfilled, (state, { payload }) => {
     state.currentProject = payload.currentProject;
     state.error = '';
-    // state.loading="loaded";
   });
   builder.addCase(getProjectById.rejected, (state, action) => {
-    // state.loading ="error";
     state.error = action.error.message;
   });
 
@@ -54,26 +47,21 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   builder.addCase(postProject.pending, (state) => {
     state.projectsList = [...state.projectsList];
     state.error = '';
-    // state.loading = 'loading';
   });
   builder.addCase(postProject.fulfilled, (state, { payload }) => {
     state.projectsList.push(payload.project);
     state.error = '';
-    // state.loading="loaded";
   });
   builder.addCase(postProject.rejected, (state, action) => {
-    // state.loading ="error";
     state.error = action.error.message;
   });
 
-  // // PUT PROJECT//////////////////
+  // /////////// PUT PROJECT//////////////////
   builder.addCase(putProject.pending, (state) => {
     state.projectsList = [...state.projectsList];
-    // state.loading = 'loading';
   });
   builder.addCase(putProject.fulfilled, (state) => {
     state.error = '';
-    // state.loading="loaded";
   });
   builder.addCase(putProject.rejected, (state, action) => {
     state.error = action.error.message;
@@ -82,35 +70,76 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   // //////////////DELETE PROJECT////////////////
   builder.addCase(deleteProject.pending, (state) => {
     state.error = '';
-    // state.loading = 'loading';
   });
   builder.addCase(deleteProject.fulfilled, (state, { payload }) => {
     state.currentProject = initialState.currentProject;
     state.projectsList = [...state.projectsList].filter((e) => e.id !== payload.id);
-    // state.loading="loaded";
     state.error = '';
   });
   builder.addCase(deleteProject.rejected, (state) => {
-    // state.loading ="error";
     state.error = '';
   });
 
-  // //////////////UPDATE ONE TASK//////////////////
-  builder.addCase(updateTask.pending, () => {
-    // state.loading = 'loading';
+  // ///////////POST TASK ///////////////
+  builder.addCase(postTask.pending, (state) => {
+    state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];
+    state.currentProject.tasks.doing = [...state.currentProject.tasks.doing];
+    state.currentProject.tasks.done = [...state.currentProject.tasks.done];
+    state.error = '';
   });
+  builder.addCase(postTask.fulfilled, (state, { payload }) => {
+    state.currentProject.tasks[payload.task.taskStatus].push(payload.task);
+    state.error = '';
+  });
+  builder.addCase(postTask.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
+  // //////////////UPDATE ONE TASK//////////////////
+  builder.addCase(updateTask.pending, () => {});
   builder.addCase(updateTask.fulfilled, (state) => {
     state.error = '';
-    // state.loading="loaded";
   });
   builder.addCase(updateTask.rejected, (state, action) => {
     state.error = action.error.message;
   });
 
-  // //////////UPDATE ONE ITEM /////////////////
-  builder.addCase(putItem.pending, () => {
-    // state.loading = 'loading';
+  // ///////////DELETE ONE TASK/////////////////
+  builder.addCase(deleteTask.pending, () => {});
+  builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
+    state.currentProject.tasks[payload.taskStatus] = [
+      ...state.currentProject.tasks[payload.taskStatus].filter((e) => e.id !== payload.id),
+    ];
   });
+  builder.addCase(deleteTask.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
+  // ///////////POST ITEMS ///////////////
+  builder.addCase(postItem.pending, (state) => {
+    state.currentProject.items.material = [...state.currentProject.items.material];
+    state.currentProject.items.labor = [...state.currentProject.items.labor];
+    state.currentProject.items.other = [...state.currentProject.items.other];
+    state.error = '';
+  });
+  builder.addCase(postItem.fulfilled, (state, { payload }) => {
+    if (payload.item.category === 'material') {
+      state.currentProject.items.material.push(payload.item);
+      state.error = '';
+    } else if (payload.item.category === 'labor') {
+      state.currentProject.items.labor.push(payload.item);
+      state.error = '';
+    } else if (payload.item.category === 'other') {
+      state.currentProject.items.other.push(payload.item);
+      state.error = '';
+    }
+  });
+  builder.addCase(postItem.rejected, (state, action) => {
+    state.error = action.error.message;
+  });
+
+  // //////////UPDATE ONE ITEM /////////////////
+  builder.addCase(putItem.pending, () => {});
   builder.addCase(putItem.fulfilled, (state, { payload }) => {
     if (payload.item.category === 'material') {
       state.currentProject.items.material = [
@@ -136,71 +165,8 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
     state.error = action.error.message;
   });
 
-  // ///////////DELETE ONE TASK/////////////////
-  builder.addCase(deleteTask.pending, () => {
-    // state.loading = 'loading';
-  });
-  builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
-    // console.log(payload.task.taskStatus[payload.task.taskStatus]);
-    state.currentProject.tasks[payload.taskStatus] = [
-      ...state.currentProject.tasks[payload.taskStatus].filter((e) => e.id !== payload.id),
-    ];
-    // state.error = '';
-    // state.loading="loaded";
-  });
-  builder.addCase(deleteTask.rejected, (state, action) => {
-    state.error = action.error.message;
-  });
-
-  // ///////////POST TASK ///////////////
-  builder.addCase(postTask.pending, (state) => {
-    state.currentProject.tasks.todo = [...state.currentProject.tasks.todo];
-    state.currentProject.tasks.doing = [...state.currentProject.tasks.doing];
-    state.currentProject.tasks.done = [...state.currentProject.tasks.done];
-    state.error = '';
-    // state.loading = 'loading';
-  });
-  builder.addCase(postTask.fulfilled, (state, { payload }) => {
-    state.currentProject.tasks[payload.task.taskStatus].push(payload.task);
-    state.error = '';
-    // state.loading="loaded";
-  });
-  builder.addCase(postTask.rejected, (state, action) => {
-    // state.loading ="error";
-    state.error = action.error.message;
-  });
-
-  // ///////////POST ITEMS ///////////////
-  // MATERIAL
-  builder.addCase(postItem.pending, (state) => {
-    state.currentProject.items.material = [...state.currentProject.items.material];
-    state.currentProject.items.labor = [...state.currentProject.items.labor];
-    state.currentProject.items.other = [...state.currentProject.items.other];
-    state.error = '';
-    // state.loading = 'loading';
-  });
-  builder.addCase(postItem.fulfilled, (state, { payload }) => {
-    if (payload.item.category === 'material') {
-      state.currentProject.items.material.push(payload.item);
-      state.error = '';
-    } else if (payload.item.category === 'labor') {
-      state.currentProject.items.labor.push(payload.item);
-      state.error = '';
-    } else if (payload.item.category === 'other') {
-      state.currentProject.items.other.push(payload.item);
-      state.error = '';
-    }
-    // state.loading="loaded";
-  });
-  builder.addCase(postItem.rejected, (state, action) => {
-    // state.loading ="error";
-    state.error = action.error.message;
-  });
-
   // //////////////DELETE ONE ITEM////////////////
-  builder.addCase(deleteItem.pending, () => {
-    // state.loading = 'loading';
-  });
+  builder.addCase(deleteItem.pending, () => {});
   builder.addCase(deleteItem.fulfilled, (state, { payload }) => {
     if (payload.category === 'material') {
       state.currentProject.items.material = [
