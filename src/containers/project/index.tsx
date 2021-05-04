@@ -329,7 +329,7 @@ const Project = (): JSX.Element => {
 
   return (
     <>
-      <ProjHeader />
+      <ProjHeader deleteProject={handleDeletingProject} />
       {showTaskModal && (
         <NewTaskModal
           toggleModal={handleToggleTaskModal}
