@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
-import axios from 'axios';
 // eslint-disable-next-line
 import { RootState } from '../../store';
 /* eslint-disable import/no-cycle */
@@ -482,41 +481,13 @@ export const projectSlice = createSlice({
       });
       state.currentProject.tasks[action.payload.taskStatus] = updatedDestinationArray;
     },
-    clearTasks: (state) => {
-      state.currentProject.tasks = initialState.currentProject.tasks;
-    },
-
-    clearItems: (state) => {
-      state.currentProject.items = initialState.currentProject.items;
-    },
-    // deleteTask: (
-    //   state,
-    //   action: PayloadAction<{
-    //     id: string;
-    //     taskStatus: string;
-    //   }>
-    // ) => {
-    //   state.currentProject.tasks[action.payload.taskStatus] = state.currentProject.tasks[
-    //     action.payload.taskStatus
-    //   ].filter((e) => e.id !== action.payload.id);
-    // },
   },
   extraReducers: (builder) => {
     extraReducers(builder);
   },
 });
 
-// export const { clearTasks, clearItems, moveTask, deleteTask } = projectSlice.actions;
-
-export const {
-  // setProjectName,
-  // setId,
-  clearTasks,
-  clearItems,
-  // setProjectStartDate,
-  // setProjectEndDate,
-  moveTask,
-} = projectSlice.actions;
+export const { moveTask } = projectSlice.actions;
 
 export const selectProject = (state: RootState): ProjectState => state.project;
 

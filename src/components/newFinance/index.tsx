@@ -55,7 +55,7 @@ const NewFinance = ({
       data.itemPrice,
       data.quantity,
       data.category,
-      data.date.toISOString(),
+      data.date?.toString(),
       data.minutes,
       data.hours,
       project
