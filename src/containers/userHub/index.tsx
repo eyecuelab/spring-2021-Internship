@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import dayjs from 'dayjs';
 import NewProjectModal from '../../components/newProjectModal';
 import * as selectors from '../../store/selectors';
-import { postProject, getProjects, getProjectById } from '../../store/slices/projectSlice';
+import { postProject, getProjects, getProjectById } from '../../store/slices/projectSlice/thunks';
 
 const UserHub = (): JSX.Element => {
   const history = useHistory();
@@ -46,7 +46,6 @@ const UserHub = (): JSX.Element => {
   };
 
   const handleMakeGet = async () => {
-    console.log(getmineuuid);
     dispatch(getProjects(getmineuuid));
   };
 
