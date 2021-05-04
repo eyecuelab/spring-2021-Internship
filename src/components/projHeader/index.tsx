@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
 import * as selectors from '../../store/selectors';
-import Trashcan from '../../assets/Trashcan.png';
+import Trashcan from '../../assets/img/Trashcan.png';
+import { Display, Edit } from '../../containers/project/components';
+import InlineEdit from '../inlineEdit';
+import { putProject } from '../../store/slices/projectSlice/thunks';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -93,7 +97,7 @@ const DueDateText = styled.p`
 `;
 
 const ProjectNameDetailText = styled.p`
-  color: ${(props) => props.theme.colors.blueGrey};
+  color: ${(props) => props.theme.colors.navy};
   position: relative;
   font-family: Montserrat;
   font-size: 20px;
@@ -103,7 +107,7 @@ const ProjectNameDetailText = styled.p`
   top: 17px;
 `;
 const ProjectDateDetailText = styled.p`
-  color: ${(props) => props.theme.colors.blueGrey};
+  color: ${(props) => props.theme.colors.navy};
   font-family: Montserrat;
   position: relative;
   font-size: 14px;
@@ -122,6 +126,33 @@ const ProjHeader = (): JSX.Element => {
   const projName = useSelector(selectors.selectProjectName);
   const projStartDate = useSelector(selectors.selectProjectStartDate);
   const projEndDate = useSelector(selectors.selectProjectEndDate);
+  const projectId = useSelector(selectors.selectProjectId);
+  const dispatch = useDispatch();
+
+  const handleUpdateProject = (
+    projId: number,
+    projectName: string,
+    startDate: string,
+    endDate: string
+  ) => {
+    dispatch(putProject({ projId, projectName, startDate, endDate }));
+  };
+
+  const endDate = dayjs(projEndDate).format('MM/DD/YYYY');
+  const startDate = dayjs(projStartDate).format('MM/DD/YYYY');
+
+  const projId = parseInt(projectId, 10);
+  const handleNewProjName = (updatedValue: string | number) => {
+    handleUpdateProject(projId, updatedValue.toString(), projStartDate, projEndDate);
+  };
+  const handleNewProjStart = (updatedValue: string | number) => {
+    const newDate = dayjs(updatedValue);
+    handleUpdateProject(projId, projName, newDate.toString(), projEndDate);
+  };
+  const handleNewProjEnd = (updatedValue: string | number) => {
+    const newDate = dayjs(updatedValue);
+    handleUpdateProject(projId, projName, projStartDate, newDate.toString());
+  };
   return (
     <>
       <Wrapper>
@@ -129,13 +160,34 @@ const ProjHeader = (): JSX.Element => {
         <StartDateText>Start Date</StartDateText>
         <DueDateText>Due Date</DueDateText>
         <NameContainer>
-          <ProjectNameDetailText>{projName}</ProjectNameDetailText>
+          <ProjectNameDetailText>
+            <InlineEdit
+              value={projName}
+              updateValue={handleNewProjName}
+              renderDisplay={Display}
+              renderEdit={Edit}
+            />
+          </ProjectNameDetailText>
         </NameContainer>
         <StartDateContainer>
-          <ProjectDateDetailText>{projStartDate}</ProjectDateDetailText>
+          <ProjectDateDetailText>
+            <InlineEdit
+              value={startDate}
+              updateValue={handleNewProjStart}
+              renderDisplay={Display}
+              renderEdit={Edit}
+            />
+          </ProjectDateDetailText>
         </StartDateContainer>
         <DueDateContainer>
-          <ProjectDateDetailText>{projEndDate}</ProjectDateDetailText>
+          <ProjectDateDetailText>
+            <InlineEdit
+              value={endDate}
+              updateValue={handleNewProjEnd}
+              renderDisplay={Display}
+              renderEdit={Edit}
+            />
+          </ProjectDateDetailText>
         </DueDateContainer>
         <DeleteContainer>
           <TrashIcon src={Trashcan} alt="trashcan icon" />
