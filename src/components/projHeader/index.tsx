@@ -9,12 +9,11 @@ import InlineEdit from '../inlineEdit';
 import { putProject } from '../../store/slices/projectSlice/thunks';
 
 const Wrapper = styled.div`
-  position: absolute;
+  margin-top: 132px;
+  position: relative;
   height: 163px;
   width: 1120px;
-  top: 140px;
   background: #fcfbf8;
-  display: inline-block;
 `;
 const Container = styled.div`
   position: absolute;
