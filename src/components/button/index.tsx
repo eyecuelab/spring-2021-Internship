@@ -15,6 +15,7 @@ const ButtonImg = styled.img`
 
 const ButtonStyle = styled.button<{
   size: string;
+  color: string;
 }>`
   background: none;
   color: inherit;
@@ -26,6 +27,8 @@ const ButtonStyle = styled.button<{
   z-index: 20;
   position: fixed;
   padding: 20px;
+  font-family: ${(props) => props.theme.font};
+  color: ${(props) => props.color};
 `;
 
 type ButtonProps = {
@@ -33,12 +36,15 @@ type ButtonProps = {
   size: string;
   margin: string;
   img: string;
+  color: string;
 };
 
-const Button = ({ buttonText, size, margin, img }: ButtonProps): JSX.Element => {
+const Button = ({ buttonText, size, margin, img, color }: ButtonProps): JSX.Element => {
   return (
     <ButtonWrapper margin={margin}>
-      <ButtonStyle size={size}>{buttonText}</ButtonStyle>
+      <ButtonStyle size={size} color={color}>
+        {buttonText}
+      </ButtonStyle>
       <ButtonImg src={img} />
     </ButtonWrapper>
   );

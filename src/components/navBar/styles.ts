@@ -56,8 +56,22 @@ export const NavItem = styled.li`
   display: flex;
 `;
 
-export const NavLink = styled(Link)`
+export const NavLink = styled(Link)<{ color: string; size: string }>`
   cursor: pointer;
   text-decoration: none;
   display: flex;
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.size};
+  color: ${(props) => props.color};
+`;
+
+export const AuthButton = styled.button<{ color: string; size: string }>`
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.size};
+  color: ${(props) => props.color};
 `;

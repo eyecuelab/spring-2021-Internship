@@ -1,6 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Nav, NavMenu, NavItem, NavLink, NavContainer, NavTwo, Wrapper, NavLogo } from './styles';
+import { RiArrowDownSLine } from 'react-icons/ri';
+import {
+  Nav,
+  NavMenu,
+  NavItem,
+  NavLink,
+  NavContainer,
+  NavTwo,
+  Wrapper,
+  NavLogo,
+  AuthButton,
+} from './styles';
 import { signOut } from '../../store/slices/userSlice/thunks';
 import Button from '../button';
 import theme from '../../styles/theme';
@@ -18,21 +29,31 @@ const NavBar = (): JSX.Element => {
         size={theme.fontSizes.medium}
         margin="43px 47.73px auto 892px"
         img={LgButton}
+        color={theme.colors.white}
       />
       <Nav>
         <NavContainer>
           <NavLogo />
           <NavMenu>
             <NavItem>
-              <NavLink to="/hub">Hub</NavLink>
+              <NavLink color={theme.colors.white} size={theme.fontSizes.medium} to="/hub">
+                Hub
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/project">Project</NavLink>
+              <NavLink color={theme.colors.white} size={theme.fontSizes.medium} to="/project">
+                Project
+                <RiArrowDownSLine />
+              </NavLink>
             </NavItem>
             <NavItem>
-              <button onClick={userSignout} type="submit">
+              <AuthButton
+                onClick={userSignout}
+                color={theme.colors.white}
+                size={theme.fontSizes.medium}
+              >
                 Log out
-              </button>
+              </AuthButton>
             </NavItem>
           </NavMenu>
         </NavContainer>
@@ -41,16 +62,24 @@ const NavBar = (): JSX.Element => {
         <NavContainer>
           <NavMenu>
             <NavItem>
-              <NavLink to="/">Project</NavLink>
+              <NavLink color={theme.colors.teal} size={theme.fontSizes.small} to="/">
+                Project
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/">Tasks</NavLink>
+              <NavLink color={theme.colors.teal} size={theme.fontSizes.small} to="/">
+                Tasks
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/">Cost</NavLink>
+              <NavLink color={theme.colors.teal} size={theme.fontSizes.small} to="/">
+                Cost
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/">Analysis</NavLink>
+              <NavLink color={theme.colors.teal} size={theme.fontSizes.small} to="/">
+                Analysis
+              </NavLink>
             </NavItem>
           </NavMenu>
         </NavContainer>
