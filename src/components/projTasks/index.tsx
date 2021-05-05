@@ -50,7 +50,6 @@ type ProjTasksProps = {
   doneItems: JSX.Element[];
   handleToggleNewTask: () => void;
   handleOnDragEnd: (result: DropResult) => void;
-  setDefaultForm: (taskStatus: string) => void;
 };
 
 const ProjTasks = ({

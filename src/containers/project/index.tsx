@@ -41,7 +41,6 @@ const Project = (): JSX.Element => {
   const [showTaskModal, setTaskModalView] = useState(false);
   const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
-  const [defaultTaskForm, setTaskForm] = useState('');
   const [defaultItemForm, setItemForm] = useState('');
   const [selectedTask, setSelectedTask] = useState<TaskItem>({
     taskName: '',
@@ -51,10 +50,6 @@ const Project = (): JSX.Element => {
     position: 0,
     activity: [],
   });
-
-  const setDefaultTaskForm = (taskStatus: string) => {
-    setTaskForm(taskStatus);
-  };
 
   const setDefaultItemForm = (taskStatus: string) => {
     setItemForm(taskStatus);
@@ -331,11 +326,7 @@ const Project = (): JSX.Element => {
     <>
       <ProjHeader deleteProject={handleDeletingProject} />
       {showTaskModal && (
-        <NewTaskModal
-          toggleModal={handleToggleTaskModal}
-          addNewTask={handleAddingTask}
-          defaultForm={defaultTaskForm}
-        />
+        <NewTaskModal toggleModal={handleToggleTaskModal} addNewTask={handleAddingTask} />
       )}
       {showFinanceModal && (
         <NewFinance
@@ -357,7 +348,6 @@ const Project = (): JSX.Element => {
         doneItems={doneItems}
         handleToggleNewTask={handleToggleTaskModal}
         handleOnDragEnd={handleOnDragEnd}
-        setDefaultForm={setDefaultTaskForm}
       />
       <ProjFinance
         materialTotals={materialTotals}

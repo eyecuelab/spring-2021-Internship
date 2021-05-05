@@ -8,7 +8,6 @@ import { Modal } from '../modal';
 type ModalProps = {
   addNewTask: (taskName: string, taskDesc: string, taskStatus: string, project: number) => void;
   toggleModal: () => void;
-  defaultForm: string;
 };
 
 type Inputs = {
@@ -17,7 +16,7 @@ type Inputs = {
   taskDesc: string;
 };
 
-const NewTaskModal = ({ addNewTask, toggleModal, defaultForm }: ModalProps): JSX.Element => {
+const NewTaskModal = ({ addNewTask, toggleModal }: ModalProps): JSX.Element => {
   const projectId = useSelector(selectors.selectProjectId);
   const project = parseInt(projectId, 10);
   const {
@@ -39,27 +38,11 @@ const NewTaskModal = ({ addNewTask, toggleModal, defaultForm }: ModalProps): JSX
             <TextArea placeholder="Task Description" {...register('taskDesc')} />
           </Form.Field>
           <select {...register('taskStatus', { required: true })}>
-            {defaultForm === 'todo' ? (
-              <option selected value="todo">
-                To Do
-              </option>
-            ) : (
-              <option value="todo">To Do</option>
-            )}
-            {defaultForm === 'doing' ? (
-              <option selected value="doing">
-                Doing
-              </option>
-            ) : (
-              <option value="doing">Doing</option>
-            )}
-            {defaultForm === 'done' ? (
-              <option selected value="done">
-                Done
-              </option>
-            ) : (
-              <option value="done">Done</option>
-            )}
+            <option selected value="todo">
+              To Do
+            </option>
+            <option value="doing">Doing</option>
+            <option value="done">Done</option>
           </select>
           <Button type="submit">Submit</Button>
         </Form>
