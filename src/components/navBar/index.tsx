@@ -13,6 +13,12 @@ const NavBar = (): JSX.Element => {
   };
   return (
     <Wrapper>
+      <Button
+        buttonText="New Project"
+        size={theme.fontSizes.medium}
+        margin="43px 47.73px auto 892px"
+        img={LgButton}
+      />
       <Nav>
         <NavContainer>
           <NavLogo />
@@ -31,12 +37,6 @@ const NavBar = (): JSX.Element => {
           </NavMenu>
         </NavContainer>
       </Nav>
-      <Button
-        buttonText="New Project"
-        size={theme.fontSizes.medium}
-        margin="43px 47.73px auto 892px"
-        img={LgButton}
-      />
       <NavTwo>
         <NavContainer>
           <NavMenu>

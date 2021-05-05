@@ -5,6 +5,7 @@ const ButtonWrapper = styled.div<{ margin: string }>`
   margin: ${(props) => props.margin};
   z-index: 15;
   justify-content: center;
+  display: float;
 `;
 
 const ButtonImg = styled.img`
