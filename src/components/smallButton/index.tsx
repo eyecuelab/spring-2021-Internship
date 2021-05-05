@@ -21,7 +21,7 @@ const ButtonStyle = styled.button<{
   border: none;
   cursor: pointer;
   font-size: ${(props) => props.size};
-  z-index: 20;
+  z-index: 2;
   padding: 20px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.color};
