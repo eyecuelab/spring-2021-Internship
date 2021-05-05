@@ -9,13 +9,7 @@ type ListProps = {
   setDefaultForm: (taskStatus: string) => void;
 };
 
-const Box = styled.div`
-  width: 340px;
-  height: 750px;
-  margin: 10px;
-  padding: 15px;
-  display: inline-block;
-`;
+const Box = styled.div``;
 
 const List = ({ title, toggleModal, children, setDefaultForm }: ListProps): JSX.Element => {
   const addTask = (): void => {
