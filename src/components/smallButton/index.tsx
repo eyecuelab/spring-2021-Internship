@@ -33,12 +33,20 @@ type ButtonProps = {
   margin: string;
   img: string;
   color: string;
+  onClick: () => void;
 };
 
-const SmallButton = ({ buttonText, size, margin, img, color }: ButtonProps): JSX.Element => {
+const SmallButton = ({
+  buttonText,
+  size,
+  margin,
+  img,
+  color,
+  onClick,
+}: ButtonProps): JSX.Element => {
   return (
     <ButtonWrapper margin={margin}>
-      <ButtonStyle size={size} color={color}>
+      <ButtonStyle onClick={onClick} size={size} color={color}>
         {buttonText}
       </ButtonStyle>
       <ButtonImg src={img} />
