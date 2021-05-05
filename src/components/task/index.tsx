@@ -3,11 +3,27 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import * as selectors from '../../store/selectors';
 import { TaskItem } from '../../store/slices/projectSlice';
+import Texture from '../../assets/img/Affordance.svg';
 
 const Wrapper = styled.div`
-  background-color: #a3a3a3;
-  padding: 10px;
+  height: 46px;
+  background: ${(props) => props.theme.colors.burntOrange};
+  border-radius: 3px;
   margin: 10px 0px;
+`;
+
+const Affordance = styled.img`
+  position: absolute;
+  margin-left: 6px;
+  margin-top: 6.5px;
+`;
+const TaskText = styled.p`
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  margin-left: 25px;
+  padding-top: 15px;
+  color: ${(props) => props.theme.colors.white};
+  line-height: 17px;
 `;
 
 type TaskProps = {
@@ -49,7 +65,10 @@ const Task = ({ taskName, toggleModal, id, status, selectTask }: TaskProps): JSX
 
   return (
     <>
-      <Wrapper onClick={clickAction}>{taskName}</Wrapper>
+      <Wrapper onClick={clickAction}>
+        <Affordance src={Texture} alt="Affordance graphic" />
+        <TaskText>{taskName}</TaskText>
+      </Wrapper>
     </>
   );
 };
