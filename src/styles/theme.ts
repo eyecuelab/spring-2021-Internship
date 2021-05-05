@@ -6,7 +6,7 @@ const theme = {
     skyBlue: '#BAE5F2',
     offWhite: '#FCFBF8',
     white: '#FFFFFF',
-    grey: '#E5E5E5',
+    grey: '#F3F3F3',
     darkGrey: '#DBE3E6',
     blueGrey: '#C1D2D8',
     burntOrange: '#DA7F5B',
