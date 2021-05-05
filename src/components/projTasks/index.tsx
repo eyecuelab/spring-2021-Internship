@@ -14,10 +14,13 @@ const Wrapper = styled.div`
 
 const TaskContainer = styled.div`
   background: ${(props) => props.theme.colors.darkGrey};
+  border-radius: 3px;
+  width: 333px;
 `;
 
 const TaskUl = styled.ul`
-  height: 600px;
+  min-height: 62px;
+  height: auto;
   padding: 5px 10px;
 `;
 
