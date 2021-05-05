@@ -23,7 +23,7 @@ const Container = styled.div`
   position: absolute;
   height: 54px;
   top: 73px;
-  radius: 3px;
+  border-radius: 3px;
   background: ${(props) => props.theme.colors.white};
 `;
 
