@@ -1,28 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaPlus } from 'react-icons/fa';
 
 type ListProps = {
   title: string;
-  toggleModal: () => void;
   children?: JSX.Element;
-  setDefaultForm: (taskStatus: string) => void;
 };
 
-const Box = styled.div``;
+const ColumnTitle = styled.p`
+  font-family: ${(props) => props.theme.font};
+  color: ${(props) => props.theme.colors.black};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  margin-left: 10px;
+`;
 
-const List = ({ title, toggleModal, children, setDefaultForm }: ListProps): JSX.Element => {
-  const addTask = (): void => {
-    toggleModal();
-    setDefaultForm(title);
-  };
+const List = ({ title, children }: ListProps): JSX.Element => {
   return (
     <>
-      <Box>
-        <FaPlus onClick={addTask} />
-        <h1>{title}</h1>
+      <div>
+        <ColumnTitle>{title}</ColumnTitle>
         {children}
-      </Box>
+      </div>
     </>
   );
 };
