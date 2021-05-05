@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   padding: 0.25rem 9999rem;
   margin-right: -9999rem;
   margin-left: -9999rem;
+  z-index: 10;
 `;
 
 const Container = styled.div`
