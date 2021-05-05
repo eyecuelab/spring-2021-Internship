@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri';
 import List from '../list';
 
-const Wrapper = styled.div<{ open: boolean }>`
+const Wrapper = styled.div`
   margin: 10px;
   align-items: flex-start;
   display: flex;
-  max-height: ${(props) => (props.open ? '100%' : '0')};
+  max-height: 100%;
   overflow: hidden;
-  padding: ${(props) => (props.open ? '25px 0' : '0')};
-  transition: all 0.3s ease-out;
-`;
-
-const Heading = styled.h2`
-  padding: 3px;
-  background: #d1cfcf;
+  padding: 25px 0;
 `;
 
 const TaskContainer = styled.div`
-  background: #dbdbdb;
+  background: ${(props) => props.theme.colors.darkGrey};
 `;
 
 const TaskUl = styled.ul`
@@ -45,16 +38,9 @@ const ProjTasks = ({
   handleOnDragEnd,
   setDefaultForm,
 }: ProjTasksProps): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(true);
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
   return (
-    <div>
-      <Heading onClick={handleClick}>
-        {isOpen ? <RiArrowDownSLine /> : <RiArrowRightSLine />}Project Tasks
-      </Heading>
-      <Wrapper open={isOpen}>
+    <>
+      <Wrapper>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="todo">
             {(provided) => (
@@ -109,7 +95,7 @@ const ProjTasks = ({
           </Droppable>
         </DragDropContext>
       </Wrapper>
-    </div>
+    </>
   );
 };
 

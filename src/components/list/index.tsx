@@ -10,16 +10,11 @@ type ListProps = {
 };
 
 const Box = styled.div`
-  background: pink;
   width: 340px;
   height: 750px;
   margin: 10px;
   padding: 15px;
   display: inline-block;
-
-  @media screen and (max-width: 768px) {
-    background: yellow;
-  }
 `;
 
 const List = ({ title, toggleModal, children, setDefaultForm }: ListProps): JSX.Element => {
