@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import * as selectors from '../../store/selectors';
 import Trashcan from '../../assets/img/Trashcan.png';
+import Tear from '../../assets/img/ProjectTear.svg';
 import { Display, Edit } from '../../containers/project/components';
 import InlineEdit from '../inlineEdit';
 import { putProject } from '../../store/slices/projectSlice/thunks';
@@ -13,11 +14,17 @@ type HeaderProps = {
 };
 
 const Wrapper = styled.div`
-  margin-top: 132px;
+  margin-top: 90px;
   position: relative;
   height: 163px;
   width: 1120px;
   background: #fcfbf8;
+`;
+
+const Footer = styled.div`
+  position: relative;
+  top: 0px;
+  z-index: 2;
 `;
 const Container = styled.div`
   position: absolute;
@@ -124,6 +131,9 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
           <TrashIcon src={Trashcan} alt="trashcan icon" onClick={() => deleteProject(projectId)} />
         </Container>
       </Wrapper>
+      <Footer>
+        <img src={Tear} alt="torn paper edge" />
+      </Footer>
     </>
   );
 };

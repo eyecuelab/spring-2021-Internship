@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   padding: 25px 0;
   position: relative;
+  margin-top: -33px;
 `;
 
 const HeaderText = styled.p`
