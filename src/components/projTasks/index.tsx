@@ -2,26 +2,33 @@ import React from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import List from '../list';
+import theme from '../../styles/theme';
+import SmallButton from '../smallButton';
+import SmButton from '../../assets/img/SmButton.svg';
 
 const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.grey};
   max-height: 100%;
   overflow: hidden;
   padding: 25px 0;
+  position: relative;
 `;
 
 const HeaderText = styled.p`
-  position: relative;
+  position: absolute;
   top: 37px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;
   line-height: 17px;
+  left: 48px;
+  font-size: 24px;
 `;
 
 const ListRow = styled.div`
-  justify-content: center;
   display: flex;
+  margin-top: 80px;
+  margin-left: 40px;
 `;
 
 const TaskContainer = styled.div`
@@ -50,23 +57,26 @@ const ProjTasks = ({
   toDoItems,
   doingItems,
   doneItems,
-  handleToggleNewTask,
   handleOnDragEnd,
-  setDefaultForm,
+  handleToggleNewTask,
 }: ProjTasksProps): JSX.Element => {
   return (
     <>
       <Wrapper>
-        <HeaderText style={{ left: '48px', fontSize: '24px' }}>Tasks</HeaderText>
+        <SmallButton
+          buttonText="New Task"
+          size="12px"
+          margin="-10px 0px auto 120px"
+          img={SmButton}
+          color={theme.colors.white}
+          onClick={handleToggleNewTask}
+        />
+        <HeaderText>Tasks</HeaderText>
         <ListRow>
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="todo">
               {(provided) => (
-                <List
-                  title="To Do"
-                  toggleModal={handleToggleNewTask}
-                  setDefaultForm={setDefaultForm}
-                >
+                <List title="To Do">
                   <TaskContainer>
                     <TaskUl
                       className="todo"
@@ -83,11 +93,7 @@ const ProjTasks = ({
             </Droppable>
             <Droppable droppableId="doing">
               {(provided) => (
-                <List
-                  title="Doing"
-                  toggleModal={handleToggleNewTask}
-                  setDefaultForm={setDefaultForm}
-                >
+                <List title="Doing">
                   <TaskContainer>
                     <TaskUl
                       className="doing"
@@ -104,11 +110,7 @@ const ProjTasks = ({
             </Droppable>
             <Droppable droppableId="done">
               {(provided) => (
-                <List
-                  title="Done"
-                  toggleModal={handleToggleNewTask}
-                  setDefaultForm={setDefaultForm}
-                >
+                <List title="Done">
                   <TaskContainer>
                     <TaskUl
                       className="done"
