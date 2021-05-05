@@ -5,6 +5,7 @@ import List from '../list';
 import theme from '../../styles/theme';
 import SmallButton from '../smallButton';
 import SmButton from '../../assets/img/SmButton.svg';
+import Tear from '../../assets/img/TaskTear.svg';
 
 const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.grey};
@@ -13,6 +14,12 @@ const Wrapper = styled.div`
   padding: 25px 0;
   position: relative;
   margin-top: -33px;
+`;
+
+const Footer = styled.div`
+  position: relative;
+  top: 0px;
+  z-index: 2;
 `;
 
 const HeaderText = styled.p`
@@ -128,6 +135,9 @@ const ProjTasks = ({
           </DragDropContext>
         </ListRow>
       </Wrapper>
+      <Footer>
+        <img src={Tear} alt="torn paper edge" />
+      </Footer>
     </>
   );
 };
