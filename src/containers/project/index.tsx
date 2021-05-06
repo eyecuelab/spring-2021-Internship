@@ -365,9 +365,6 @@ const Project = (): JSX.Element => {
         laborTotals={laborTotals}
         otherTotals={otherTotals}
       />
-      <button type="submit" onClick={() => handleDeletingProject(projectId)}>
-        Delete Project
-      </button>
     </>
   );
 };
