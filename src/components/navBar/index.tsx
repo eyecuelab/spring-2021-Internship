@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import {
   Nav,
@@ -8,56 +8,56 @@ import {
   NavLink,
   NavContainer,
   NavTwo,
-  Wrapper,
   NavLogo,
   AuthButton,
+  DropDownLi,
 } from './styles';
 import { signOut } from '../../store/slices/userSlice/thunks';
 import Button from '../button';
 import theme from '../../styles/theme';
 import LgButton from '../../assets/img/LgButton.svg';
+import Dropdown from './dropdownMenu';
+import * as selectors from '../../store/selectors';
+import { postProject, getProjects } from '../../store/slices/projectSlice/thunks';
+import NewProjectModal from '../newProjectModal';
 
 const NavBar = (): JSX.Element => {
+  const [isOpenDropdown, setisOpenDropdown] = useState(false);
+  const [isOpenNewProj, setisOpenNewProj] = useState(false);
+  const getmineuuid = useSelector(selectors.selectUUID);
   const dispatch = useDispatch();
+
+  const handleToggleDropdown = () => {
+    setisOpenDropdown(!isOpenDropdown);
+  };
+
+  const handleToggleNewProj = () => {
+    setisOpenNewProj(!isOpenNewProj);
+  };
+
   const userSignout = () => {
     dispatch(signOut());
   };
+
+  const handleMakeGet = async () => {
+    dispatch(getProjects(getmineuuid));
+  };
+
+  const handleNewProject = (
+    projectName: string,
+    startDate: string,
+    endDate: string,
+    uuid: string
+  ) => {
+    dispatch(postProject({ projectName, startDate, endDate, uuid }));
+  };
+
+  const handleClick = () => {
+    handleToggleDropdown();
+    handleMakeGet();
+  };
   return (
-    <Wrapper>
-      <Button
-        buttonText="New Project"
-        size={theme.fontSizes.medium}
-        margin="43px 47.73px auto 892px"
-        img={LgButton}
-        color={theme.colors.white}
-      />
-      <Nav>
-        <NavContainer>
-          <NavLogo />
-          <NavMenu>
-            <NavItem>
-              <NavLink color={theme.colors.white} size={theme.fontSizes.medium} to="/hub">
-                Hub
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink color={theme.colors.white} size={theme.fontSizes.medium} to="/project">
-                Project
-                <RiArrowDownSLine />
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <AuthButton
-                onClick={userSignout}
-                color={theme.colors.white}
-                size={theme.fontSizes.medium}
-              >
-                Log out
-              </AuthButton>
-            </NavItem>
-          </NavMenu>
-        </NavContainer>
-      </Nav>
+    <>
       <NavTwo>
         <NavContainer>
           <NavMenu>
@@ -84,7 +84,51 @@ const NavBar = (): JSX.Element => {
           </NavMenu>
         </NavContainer>
       </NavTwo>
-    </Wrapper>
+      <Dropdown isOpen={isOpenDropdown} handleToggleDropdown={handleToggleDropdown} />
+      <Nav>
+        <NavContainer>
+          <NavLogo />
+          <NavMenu>
+            <NavItem>
+              {/* <NavLink color={theme.colors.white} size={theme.fontSizes.medium} to="/hub">
+                Hub
+              </NavLink> */}
+            </NavItem>
+            <NavItem>
+              <DropDownLi
+                color={theme.colors.white}
+                size={theme.fontSizes.medium}
+                isOpen={isOpenDropdown}
+                onClick={handleClick}
+              >
+                Project
+                <RiArrowDownSLine />
+              </DropDownLi>
+            </NavItem>
+            <NavItem>
+              <AuthButton
+                onClick={userSignout}
+                color={theme.colors.white}
+                size={theme.fontSizes.medium}
+              >
+                Log out
+              </AuthButton>
+            </NavItem>
+          </NavMenu>
+        </NavContainer>
+      </Nav>
+      <Button
+        buttonText="New Project"
+        size={theme.fontSizes.medium}
+        margin="43px 47.73px auto 892px"
+        img={LgButton}
+        color={theme.colors.white}
+        handleToggle={handleToggleNewProj}
+      />
+      {isOpenNewProj && (
+        <NewProjectModal toggleModal={handleToggleNewProj} addProject={handleNewProject} />
+      )}
+    </>
   );
 };
 

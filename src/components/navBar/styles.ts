@@ -2,17 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Curo from '../../assets/img/Curo.svg';
 
-export const Wrapper = styled.div`
-  // position: fixed;
-`;
-
 export const Nav = styled.nav`
   background: ${(props) => props.theme.colors.cloudyGreen};
   height: 72px;
   display: flex;
   top: 0;
   position: fixed;
-  z-index: 10;
+  z-index: 30;
   margin: 0 -9999rem;
   padding: 0.25rem 9999rem;
 `;
@@ -74,4 +70,78 @@ export const AuthButton = styled.button<{ color: string; size: string }>`
   font-family: ${(props) => props.theme.font};
   font-size: ${(props) => props.size};
   color: ${(props) => props.color};
+`;
+
+export const DropDownLi = styled.h1<{ color: string; size: string; isOpen: boolean }>`
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.size};
+  color: ${({ isOpen }) => (isOpen ? (props) => props.theme.colors.pink : (props) => props.color)};
+`;
+
+export const DropDownContent = styled.div<{ isOpen: boolean }>`
+  top: ${({ isOpen }) => (isOpen ? '72px' : '-100%')};
+  transition: 0.5s ease-in-out;
+  z-index: 20;
+  width: 100%;
+  margin-right: -9999rem;
+  margin-left: -9999rem;
+  padding: 55px 9999rem 39px 9999rem;
+  position: fixed;
+  background: ${(props) => props.theme.colors.cloudyGreen};
+`;
+
+export const DropdownWrapper = styled.div`
+  width: 1120px;
+`;
+
+export const DropDownHeaderContainer = styled.div`
+  position: static;
+  padding: 0;
+  width: 1120px;
+`;
+
+export const DropDownHeader = styled.h2<{ margin: string }>`
+  display: inline-block;
+  top: 37px;
+  margin-left: ${(props) => props.margin};
+  font-family: ${(props) => props.theme.font};
+  font-style: normal;
+  color: ${(props) => props.theme.colors.black};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  opacity: 0.2;
+  line-height: 17px;
+`;
+
+export const DropDownList = styled.ul`
+  list-style-type: none;
+  display: block;
+  padding-inline-start: 0;
+`;
+
+export const DropDownContainer = styled.div`
+  cursor: pointer;
+  background: ${(props) => props.theme.colors.white};
+  border: 8px solid;
+  margin: 12px auto 0 auto;
+  border-color: ${(props) => props.theme.colors.pink};
+  width: 925px;
+  height: 70px;
+`;
+
+// export const TextWrapper = styled.div<{ width: string }>`
+//   width: ${(props) => props.width};
+// `;
+
+export const DropDownText = styled.div<{ marginL: string; marginR: string; width: string }>`
+  color: ${(props) => props.theme.colors.navy};
+  font-family: ${(props) => props.theme.font};
+  display: inline-block;
+  line-height: 17px;
+  margin-top: 17px;
+  margin-left: ${(props) => props.marginL};
+  margin-right: ${(props) => props.marginR};
+  width: ${(props) => props.width};
 `;
