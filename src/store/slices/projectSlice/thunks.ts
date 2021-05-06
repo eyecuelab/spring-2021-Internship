@@ -2,18 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-export const getProjects = createAsyncThunk('project/getProjects', async (id: string, thunkAPI) => {
+export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
-    const response = await axios.post(
-      `http://localhost:3000/api/projects/myprojects`,
-      { id },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`http://localhost:3000/api/projects/`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
     return response.data.projects;
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error.message });
