@@ -34,7 +34,7 @@ const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element =
   };
   return (
     <>
-      <Modal width="250px" toggleModal={toggleModal} color={theme.colors.burntOrange}>
+      <Modal width="250px" color={theme.colors.burntOrange}>
         <Form onSubmit={handleSubmit(onSubmit)}>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <Form.Input placeholder="Project Name" {...register('projectName', { required: true })} />
@@ -64,6 +64,9 @@ const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element =
               />
             )}
           />
+          <Button type="button" onClick={toggleModal} margin="458px">
+            Cancel
+          </Button>
           <Button type="submit">Submit</Button>
         </Form>
       </Modal>

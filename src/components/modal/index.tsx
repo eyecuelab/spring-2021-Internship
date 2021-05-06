@@ -31,13 +31,12 @@ type ModalProps = {
   children: JSX.Element;
   width: string;
   color: string;
-  toggleModal: () => void;
 };
 
-export const Modal = ({ width, color, children, toggleModal }: ModalProps): JSX.Element => {
+export const Modal = ({ width, color, children }: ModalProps): JSX.Element => {
   return ReactDOM.createPortal(
-    <Wrapper onClick={toggleModal}>
-      <Card onClick={(e) => e.stopPropagation()} width={width} color={color}>
+    <Wrapper>
+      <Card width={width} color={color}>
         {children}
       </Card>
     </Wrapper>,

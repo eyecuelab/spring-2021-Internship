@@ -72,7 +72,7 @@ const NewTaskModal = ({ addNewTask, toggleModal }: ModalProps): JSX.Element => {
   };
   return (
     <>
-      <Modal toggleModal={toggleModal} width="664px" color={theme.colors.burntOrange}>
+      <Modal width="664px" color={theme.colors.burntOrange}>
         <>
           <Header>Create New Task</Header>
           <form onSubmit={handleSubmit(onSubmit)}>
