@@ -9,9 +9,6 @@ const Wrapper = styled.div`
 `;
 
 const clientId: string = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID ?? '';
-const Wrapper = styled.div`
-  margin-top: 200px;
-`;
 
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
