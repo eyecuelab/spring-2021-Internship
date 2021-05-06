@@ -10,7 +10,7 @@ const ButtonWrapper = styled.div<{ margin: string }>`
 
 const ButtonImg = styled.img`
   position: fixed;
-  z-index: 15;
+  z-index: 100;
 `;
 
 const ButtonStyle = styled.button<{
@@ -24,7 +24,7 @@ const ButtonStyle = styled.button<{
   cursor: pointer;
   outline: inherit;
   font-size: ${(props) => props.size};
-  z-index: 20;
+  z-index: 200;
   position: fixed;
   padding: 20px;
   font-family: ${(props) => props.theme.font};
@@ -37,11 +37,19 @@ type ButtonProps = {
   margin: string;
   img: string;
   color: string;
+  handleToggle: () => void;
 };
 
-const Button = ({ buttonText, size, margin, img, color }: ButtonProps): JSX.Element => {
+const Button = ({
+  buttonText,
+  size,
+  margin,
+  img,
+  color,
+  handleToggle,
+}: ButtonProps): JSX.Element => {
   return (
-    <ButtonWrapper margin={margin}>
+    <ButtonWrapper margin={margin} onClick={handleToggle}>
       <ButtonStyle size={size} color={color}>
         {buttonText}
       </ButtonStyle>
