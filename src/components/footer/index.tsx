@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Curo from '../../assets/img/Curo.svg';
 
 const Wrapper = styled.div`
-  position: fixed;
   bottom: 0px;
   height: 51px;
   background: ${(props) => props.theme.colors.cloudyGreen};
