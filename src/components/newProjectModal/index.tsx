@@ -6,6 +6,7 @@ import { Form, Button } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { Modal } from '../modal';
 import * as selectors from '../../store/selectors';
+import theme from '../../styles/theme';
 
 type ModalProps = {
   addProject: (projectName: string, startDate: string, endDate: string, uuid: string) => void;
@@ -33,7 +34,7 @@ const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element =
   };
   return (
     <>
-      <Modal width="250px" toggleModal={toggleModal}>
+      <Modal width="250px" toggleModal={toggleModal} color={theme.colors.burntOrange}>
         <Form onSubmit={handleSubmit(onSubmit)}>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <Form.Input placeholder="Project Name" {...register('projectName', { required: true })} />

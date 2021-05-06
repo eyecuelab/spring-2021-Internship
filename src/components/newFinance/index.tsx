@@ -152,7 +152,7 @@ const NewFinance = ({
 
   return (
     <>
-      <Modal width="250px" toggleModal={toggleModal}>
+      <Modal width="250px" toggleModal={toggleModal} color="theme.colors.burntOrange">
         <Form>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <select onChange={handleChange}>
