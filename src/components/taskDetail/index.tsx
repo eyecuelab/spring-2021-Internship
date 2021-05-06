@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { Modal } from '../modal';
 import { TaskItem } from '../../store/slices/projectSlice';
+import theme from '../../styles/theme';
 
 const LogWrapper = styled.div`
   margin: auto;
@@ -34,7 +35,7 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
   });
   return (
     <>
-      <Modal width="350px" toggleModal={toggleModal}>
+      <Modal width="664px" toggleModal={toggleModal} color={theme.colors.burntOrange}>
         <>
           <h2>Task Detail</h2>
           <h3>{task?.taskName}</h3>

@@ -2,43 +2,45 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-const Flex = styled.div`
+const Wrapper = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   position: fixed;
   z-index: 998;
-  background: rgba(0, 0, 0, 0.3);
-  justify-content: center;
+  background: rgba(98, 141, 157, 0.5);
   align-items: center;
 `;
 
-const Card = styled.div`
-  border-radius: 8px;
+const Card = styled.div<{ width: string; color: string }>`
   margin: auto;
-  margin-top: 100px;
   max-height: 500px;
   z-index: 100000;
-  padding: 20px 0 20px 0;
-  background-color: DarkSeaGreen;
-  justify-content: center;
-  text-align: center;
+  padding: 20px 40px 20px 40px;
+  // justify-content: center;
+  // text-align: center;
+  width: ${(props) => props.width};
+  background-color: ${(props) => props.color};
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 type ModalProps = {
   children: JSX.Element;
-  width: string | number;
+  width: string;
+  color: string;
   toggleModal: () => void;
 };
 
-export const Modal = ({ width, children, toggleModal }: ModalProps): JSX.Element => {
+export const Modal = ({ width, color, children, toggleModal }: ModalProps): JSX.Element => {
   return ReactDOM.createPortal(
-    <Flex onClick={toggleModal}>
-      <Card onClick={(e) => e.stopPropagation()} style={{ width: `${width}` }}>
+    <Wrapper onClick={toggleModal}>
+      <Card onClick={(e) => e.stopPropagation()} width={width} color={color}>
         {children}
       </Card>
-    </Flex>,
+    </Wrapper>,
     document.body
   );
 };
