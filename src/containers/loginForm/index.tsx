@@ -4,6 +4,10 @@ import { GoogleLogin } from 'react-google-login';
 import styled from 'styled-components';
 import { signIn } from '../../store/slices/userSlice/thunks';
 
+const Wrapper = styled.div`
+  margin-top: 150px;
+`;
+
 const clientId: string = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID ?? '';
 const Wrapper = styled.div`
   margin-top: 200px;
