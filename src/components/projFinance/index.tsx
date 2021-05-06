@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-
-import { Form, Statistic, Tab } from 'semantic-ui-react';
+import React from 'react';
+import styled from 'styled-components';
 import Finance from '../finance';
+import Tear from '../../assets/img/ProjectTear.svg';
 
 type ProjFinanceProps = {
   materialTotals: number;
@@ -14,6 +14,53 @@ type ProjFinanceProps = {
   setDefaultForm: (taskStatus: string) => void;
 };
 
+const Wrapper = styled.div`
+  margin-top: 0px;
+  position: relative;
+  width: 1120px;
+  background: #fcfbf8;
+`;
+
+const Footer = styled.div`
+  position: relative;
+  margin-top: 0px;
+  z-index: 2;
+`;
+const Container = styled.div`
+  position: absolute;
+  height: 54px;
+  top: 73px;
+  border-radius: 3px;
+  background: ${(props) => props.theme.colors.white};
+`;
+
+const HeaderText = styled.p`
+  position: absolute;
+  top: 37px;
+  font-family: ${(props) => props.theme.font};
+  color: ${(props) => props.theme.colors.black};
+  opacity: 0.2;
+  line-height: 17px;
+  left: 48px;
+  font-size: 24px;
+`;
+
+const DetailText = styled.p`
+  color: ${(props) => props.theme.colors.navy};
+  position: relative;
+  font-family: Montserrat;
+  line-height: 17px;
+  margin-top: 17px;
+  top: 17px;
+`;
+
+const TrashIcon = styled.img`
+  position: relative;
+  margin-top: 17px;
+  margin-left: 22px;
+  cursor: pointer;
+`;
+
 const ProjFinance = ({
   materialTotals,
   laborTotals,
@@ -24,167 +71,45 @@ const ProjFinance = ({
   handleToggleFinance,
   setDefaultForm,
 }: ProjFinanceProps): JSX.Element => {
-  const [costPerUnit, setCostPerUnit] = useState(0);
-  const [pricePerUnit, setPricePerUnit] = useState(0);
-  const [projectValues, setProjectValues] = useState({
-    units: 1,
-    materials: materialTotals,
-    labor: laborTotals,
-    other: otherTotals,
-    hourlyRate: 15,
-    markUp: 30,
-  });
-  const { units, materials, labor, other, hourlyRate, markUp } = projectValues;
-
-  useEffect(() => {
-    const hourly: number = labor * hourlyRate;
-    const markUpPercent = markUp / 100 + 1;
-    setCostPerUnit((materials + hourly + other) / units);
-    setPricePerUnit(costPerUnit * markUpPercent);
-  }, [projectValues, materials, other, units, costPerUnit, hourlyRate, labor, markUp]);
-
-  const panes = [
-    {
-      menuItem: 'Project Costs',
-      render: () => (
-        <Tab.Pane>
-          <Finance
-            columnOne="Material"
-            columnTwo="Quantity"
-            columnThree="Cost (Per Unit)"
-            totals={materialTotals}
-            handleToggleFinance={handleToggleFinance}
-            setDefaultForm={setDefaultForm}
-          >
-            <>{materialItems}</>
-          </Finance>
-
-          <Finance
-            columnOne="Activity"
-            columnTwo="Hours"
-            columnThree="Date"
-            totals={laborTotals}
-            handleToggleFinance={handleToggleFinance}
-            setDefaultForm={setDefaultForm}
-          >
-            <>{laborItems}</>
-          </Finance>
-          <Finance
-            columnOne="Other Cost"
-            columnTwo=""
-            columnThree="Cost"
-            totals={otherTotals}
-            handleToggleFinance={handleToggleFinance}
-            setDefaultForm={setDefaultForm}
-          >
-            <>{otherItems}</>
-          </Finance>
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: 'Project Analysis',
-      render: () => (
-        <Tab.Pane>
-          <h1>This will be where some analysis magic happens</h1>
-          <Form>
-            <Form.Group widths={2}>
-              <Form.Input
-                label="Material Totals:"
-                type="number"
-                name="materials"
-                defaultValue={materialTotals}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-              <Form.Input
-                label="Labor Totals:"
-                type="number"
-                name="labor"
-                defaultValue={laborTotals.toFixed(2)}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-            </Form.Group>
-            <Form.Group widths={2}>
-              <Form.Input
-                label="Hourly Rate:"
-                type="number"
-                name="hourlyRate"
-                defaultValue={hourlyRate}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-              <Form.Input
-                label="Other Costs:"
-                type="number"
-                name="other"
-                defaultValue={otherTotals}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-            </Form.Group>
-            <Form.Group widths={2}>
-              <Form.Input
-                label="Total Units:"
-                type="number"
-                name="units"
-                defaultValue={units}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-              <Form.Input
-                label="Markup (%):"
-                type="number"
-                name="markUp"
-                defaultValue={markUp}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-            </Form.Group>
-          </Form>
-          <Statistic.Group widths="two">
-            <Statistic>
-              <Statistic.Value>${costPerUnit.toFixed(2)}</Statistic.Value>
-              <Statistic.Label>Cost per Unit</Statistic.Label>
-            </Statistic>
-            <Statistic>
-              <Statistic.Value>${pricePerUnit.toFixed(2)}</Statistic.Value>
-              <Statistic.Label>Price per Unit</Statistic.Label>
-            </Statistic>
-          </Statistic.Group>
-        </Tab.Pane>
-      ),
-    },
-  ];
-
   return (
     <>
-      <Tab panes={panes} />
+      <Wrapper>
+        <HeaderText>Cost</HeaderText>
+        <Finance
+          columnOne="Material"
+          columnTwo="Quantity"
+          columnThree="Cost (Per Unit)"
+          totals={materialTotals}
+          handleToggleFinance={handleToggleFinance}
+          setDefaultForm={setDefaultForm}
+        >
+          <>{materialItems}</>
+        </Finance>
+
+        <Finance
+          columnOne="Activity"
+          columnTwo="Hours"
+          columnThree="Date"
+          totals={laborTotals}
+          handleToggleFinance={handleToggleFinance}
+          setDefaultForm={setDefaultForm}
+        >
+          <>{laborItems}</>
+        </Finance>
+        <Finance
+          columnOne="Other Cost"
+          columnTwo=""
+          columnThree="Cost"
+          totals={otherTotals}
+          handleToggleFinance={handleToggleFinance}
+          setDefaultForm={setDefaultForm}
+        >
+          <>{otherItems}</>
+        </Finance>
+      </Wrapper>
+      <Footer>
+        <img src={Tear} alt="torn paper edge" />
+      </Footer>
     </>
   );
 };

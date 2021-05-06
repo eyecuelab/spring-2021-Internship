@@ -27,6 +27,7 @@ import Item from '../../components/item';
 import ProjHeader from '../../components/projHeader';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
+import ProjAnalysis from '../../components/projAnalysis';
 
 const Project = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -359,9 +360,11 @@ const Project = (): JSX.Element => {
         handleToggleFinance={handleToggleFinance}
         setDefaultForm={setDefaultItemForm}
       />
-      <button type="submit" onClick={() => handleDeletingProject(projectId)}>
-        Delete Project
-      </button>
+      <ProjAnalysis
+        materialTotals={materialTotals}
+        laborTotals={laborTotals}
+        otherTotals={otherTotals}
+      />
     </>
   );
 };
