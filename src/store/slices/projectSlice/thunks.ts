@@ -169,8 +169,15 @@ export const updateTask = createAsyncThunk(
       taskName,
       intId,
       taskStatus,
+      taskDesc,
       updatedPosition,
-    }: { taskName: string; intId: number; taskStatus: string; updatedPosition: number },
+    }: {
+      taskName: string;
+      intId: number;
+      taskStatus: string;
+      taskDesc: string;
+      updatedPosition: number;
+    },
     thunkAPI
   ) => {
     try {
@@ -179,8 +186,10 @@ export const updateTask = createAsyncThunk(
         `http://localhost:3000/api/tasks/${intId}`,
         {
           task: {
+            taskName,
             id: intId,
             taskStatus,
+            taskDesc,
             position: updatedPosition,
           },
         },
