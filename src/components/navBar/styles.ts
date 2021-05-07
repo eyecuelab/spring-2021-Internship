@@ -145,3 +145,23 @@ export const DropDownText = styled.div<{ marginL: string; marginR: string; width
   margin-right: ${(props) => props.marginR};
   width: ${(props) => props.width};
 `;
+
+export const Text = styled.h1<{ margin: string }>`
+  color: ${(props) => props.theme.colors.black};
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.theme.fontSizes.large};
+  text-align: center;
+  margin: ${(props) => props.margin};
+  z-index: 12;
+`;
+
+export const Freeze = styled.div`
+  top: 290px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 11;
+  background: rgba(98, 141, 157, 0.5);
+  align-items: center;
+`;

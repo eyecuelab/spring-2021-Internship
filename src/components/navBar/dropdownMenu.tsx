@@ -12,6 +12,7 @@ import {
   DropDownText,
   DropdownWrapper,
   Text,
+  Freeze,
 } from './styles';
 import { getProjectById } from '../../store/slices/projectSlice/thunks';
 
@@ -67,7 +68,10 @@ const Dropdown = ({ isOpen, handleToggleDropdown }: DropdownProps): JSX.Element 
               <DropDownList>{projects}</DropDownList>
             </>
           ) : (
-            <Text margin="200px">Please Add a New Project</Text>
+            <>
+              <Text margin="100px">Please Add a New Project</Text>
+              <Freeze />
+            </>
           )}
         </DropdownWrapper>
       </DropDownContent>
