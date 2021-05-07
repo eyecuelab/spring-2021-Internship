@@ -19,6 +19,32 @@ const CategoryContainer = styled.div`
   border-radius: 3px;
 `;
 
+const TotalsWrapper = styled.div`
+  position: relative;
+  width: 332px;
+  height: 80px;
+  margin-left: 740px;
+  margin-top: 12px;
+  background: ${(props) => props.theme.colors.white};
+  border-radius: 3px;
+`;
+
+const TotalsText = styled.p`
+  color: ${(props) => props.theme.colors.teal};
+  font-size: ${(props) => props.theme.fontSizes.xsmall};
+  font-family: ${(props) => props.theme.font};
+  position: relative;
+  line-height: 17px;
+`;
+
+const TotalsContainer = styled.div`
+  width: 145px;
+  margin-top: 30px;
+  display: inline-block;
+  text-align: center;
+  border-bottom: 2px solid ${(props) => props.theme.colors.teal};
+`;
+
 const Header = styled.h2`
   margin-left: 48px;
   font-family: ${(props) => props.theme.font};
@@ -63,6 +89,12 @@ const Finance = ({
           color={theme.colors.white}
           onClick={() => addItem(columnThree)}
         />
+        <TotalsWrapper>
+          <TotalsText>
+            <TotalsContainer style={{ borderBottom: 'none' }}>{columnOne} Total:</TotalsContainer>
+            <TotalsContainer>{totals}</TotalsContainer>
+          </TotalsText>
+        </TotalsWrapper>
       </Wrapper>
     </>
   );
