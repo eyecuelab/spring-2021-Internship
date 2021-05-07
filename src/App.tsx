@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import * as selectors from './store/selectors';
 import LoginForm from './containers/loginForm';
-import UserHub from './containers/userHub';
 import Project from './containers/project';
 import NavBar from './components/navBar';
 import Footer from './components/footer';
@@ -22,7 +21,6 @@ function App(): JSX.Element {
         <NavBar />
         <Switch>
           <Route path="/project">{!loggedIn ? <Redirect to="/" /> : <Project />}</Route>
-          <Route path="/hub">{!loggedIn ? <Redirect to="/" /> : <UserHub />}</Route>
           <Route path="/">{loggedIn ? <Redirect to="/project" /> : <LoginForm />}</Route>
         </Switch>
         <Footer />
