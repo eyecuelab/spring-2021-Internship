@@ -48,9 +48,7 @@ const DetailText = styled.p`
   color: ${(props) => props.theme.colors.navy};
   position: relative;
   font-family: Montserrat;
-  line-height: 17px;
-  margin-top: 17px;
-  top: 17px;
+  top: 15px;
 `;
 
 const TrashIcon = styled.img`

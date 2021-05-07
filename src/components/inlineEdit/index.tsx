@@ -49,8 +49,8 @@ const InlineEdit = ({ value, updateValue, renderDisplay, renderEdit }: Props): J
   );
 
   if (isEditingState === false) {
-    return <div>{renderDisplay({ handleOnClick, valueState })}</div>;
+    return <>{renderDisplay({ handleOnClick, valueState })}</>;
   }
-  return <div>{renderEdit({ valueState, handleOnBlur, handleOnKeyDown, handleOnChange })}</div>;
+  return <>{renderEdit({ valueState, handleOnBlur, handleOnKeyDown, handleOnChange })}</>;
 };
 export default InlineEdit;

@@ -16,11 +16,13 @@ const Input = styled.input`
   color: inherit;
   border: none;
   border-bottom: 2px dashed;
-  padding-bottom: 3px
-  width: auto;
+  padding-bottom: 3px;
+  width: 100%;
   padding: 0;
   font: inherit;
   outline: inherit;
+  text-align: inherit;
+  position: inherit;
 `;
 
 export const Display = ({ handleOnClick, valueState }: RenderProps): React.ReactNode => {
