@@ -27,14 +27,15 @@ type ItemProps = {
   id: string;
 };
 const Wrapper = styled.div`
-  position: absolute;
+  position: relative;
   display: flex;
   flex-direction: row;
-  max-width: 200px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 `;
 
 const Container = styled.div`
-  position: absolute;
+  position: relative;
   top: 20px;
   border-bottom: 2px solid ${(props) => props.theme.colors.teal};
 `;
@@ -148,7 +149,7 @@ const Item = ({
             />
           </DetailText>
         </Container>
-        <Container style={{ marginLeft: '400px', width: '120px', textAlign: 'center' }}>
+        <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
           <DetailText>
             <InlineEdit
               value={quantity}
@@ -158,7 +159,7 @@ const Item = ({
             />
           </DetailText>
         </Container>
-        <Container style={{ marginLeft: '544px', width: '120px', textAlign: 'center' }}>
+        <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
           <DetailText>
             <InlineEdit
               value={itemPrice}
@@ -168,17 +169,17 @@ const Item = ({
             />
           </DetailText>
         </Container>
-        <Container style={{ marginLeft: '716px', borderBottom: 'none' }}>
+        <Container style={{ marginLeft: '52px', borderBottom: 'none' }}>
           <TrashIcon
             src={Trashcan}
             alt="trashcan icon"
             onClick={() => handleDelete(id, category)}
           />
         </Container>
-        <Container style={{ marginLeft: '798px', borderBottom: 'none' }}>
+        <Container style={{ marginLeft: '63px', borderBottom: 'none' }}>
           <DetailText>Total</DetailText>
         </Container>
-        <Container style={{ marginLeft: '843px', width: '145px', textAlign: 'center' }}>
+        <Container style={{ marginLeft: '9px', width: '145px', textAlign: 'center' }}>
           <DetailText>$70.00</DetailText>
         </Container>
       </Wrapper>
