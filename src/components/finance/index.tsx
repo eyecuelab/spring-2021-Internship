@@ -1,39 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Table } from 'semantic-ui-react';
+import SmallButton from '../smallButton';
+import SmButton from '../../assets/img/SmButton.svg';
+import theme from '../../styles/theme';
 
 const Wrapper = styled.div`
   position: relative;
-  margin-top: -50px;
-  padding: 25px 0;
+  margin-top: 20px;
+  margin-bottom: 80px;
 `;
 
 const CategoryContainer = styled.div`
   position: relative;
   width: 1024px;
-  height: auto;
+  min-height: 80px;
   left: 48px;
   background: ${(props) => props.theme.colors.white};
   border-radius: 3px;
 `;
 
-// const HeadingContainer = styled.div`
-//   background: #d1cfcf;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   width: 100%;
-// `;
-// const HeadingName = styled.h2`
-//   margin: 0 10px 0 10px;
-//   padding: 3px;
-// `;
-
-// const HeadingTotal = styled.h4`
-//   opacity: 0;
-//   display: flex;
-//   margin: 0px 10px;
-// `;
+const Header = styled.h2`
+  margin-left: 48px;
+  font-family: ${(props) => props.theme.font};
+  color: ${(props) => props.theme.colors.black};
+  font-size: ${(props) => props.theme.fontSizes.small};
+`;
 
 type FinanceProps = {
   columnOne: string;
@@ -61,44 +52,17 @@ const Finance = ({
 
   return (
     <>
-      {/* <HeadingContainer>
-        <HeadingName>{columnOne}</HeadingName>
-        <HeadingTotal>
-          {columnOne === 'Activity'
-            ? `Total: ${totals.toFixed(2)} hrs`
-            : `Total: $${totals.toFixed(2)}`}
-        </HeadingTotal>
-      </HeadingContainer> */}
       <Wrapper>
-        <CategoryContainer>
-          <Table basic="very" celled style={{ marginTop: '50px', padding: '50px' }}>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>{columnOne}</Table.HeaderCell>
-                <Table.HeaderCell>{columnTwo}</Table.HeaderCell>
-                <Table.HeaderCell>{columnThree}</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            {children}
-            <Table.Footer>
-              <Table.Row>
-                <Table.HeaderCell>
-                  {/* {columnOne === 'Material' ? <FaPlus onClick={() => addItem('materials')} /> : null}
-                {columnOne === 'Activity' ? <FaPlus onClick={() => addItem('labor')} /> : null}
-                {columnOne === 'Other Cost' ? <FaPlus onClick={() => addItem('other')} /> : null} */}
-                </Table.HeaderCell>
-                <Table.HeaderCell />
-                <Table.HeaderCell>
-                  {columnOne === 'Activity' ? (
-                    <h2>Total Hours {totals.toFixed(2)}</h2>
-                  ) : (
-                    <h2>Total ${totals.toFixed(2)}</h2>
-                  )}
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Footer>
-          </Table>
-        </CategoryContainer>
+        <Header>{columnOne}</Header>
+        <CategoryContainer>{children}</CategoryContainer>
+        <SmallButton
+          buttonText={columnTwo}
+          size="12px"
+          margin="10px 10px 10px 65px"
+          img={SmButton}
+          color={theme.colors.white}
+          onClick={handleToggleFinance}
+        />
       </Wrapper>
     </>
   );

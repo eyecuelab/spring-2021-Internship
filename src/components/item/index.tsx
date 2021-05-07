@@ -1,7 +1,8 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import styled from 'styled-components';
 import dayjs from 'dayjs';
 import InlineEdit from '../inlineEdit';
+import Trashcan from '../../assets/img/Trashcan.png';
 import { Display, Edit } from '../../containers/project/components';
 
 type ItemProps = {
@@ -25,6 +26,31 @@ type ItemProps = {
   ) => void;
   id: string;
 };
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin-top: 24px;
+  margin-bottom: 24px;
+`;
+
+const Container = styled.div`
+  position: relative;
+  top: 20px;
+  border-bottom: 2px solid ${(props) => props.theme.colors.teal};
+`;
+
+const DetailText = styled.p`
+  color: ${(props) => props.theme.colors.teal};
+  font-size: ${(props) => props.theme.fontSizes.xsmall};
+  font-family: Montserrat;
+  position: relative;
+`;
+
+const TrashIcon = styled.img`
+  position: absolute;
+  cursor: pointer;
+`;
 
 const Item = ({
   itemName,
@@ -112,55 +138,51 @@ const Item = ({
   };
   return (
     <>
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell>
+      <Wrapper>
+        <Container style={{ marginLeft: '36px', width: '340px' }}>
+          <DetailText>
             <InlineEdit
               value={itemName}
               updateValue={handleNewItemName}
               renderDisplay={Display}
               renderEdit={Edit}
             />
-            <button type="button" onClick={() => handleDelete(id, category)}>
-              Delete
-            </button>
-          </Table.Cell>
-          <Table.Cell>
-            {category === 'labor' ? (
-              <InlineEdit
-                value={laborTime}
-                updateValue={handleNewItemTime}
-                renderDisplay={Display}
-                renderEdit={Edit}
-              />
-            ) : (
-              <InlineEdit
-                value={quantity}
-                updateValue={handleNewItemQuantity}
-                renderDisplay={Display}
-                renderEdit={Edit}
-              />
-            )}
-          </Table.Cell>
-          <Table.Cell>
-            {category === 'labor' ? (
-              <InlineEdit
-                value={stringDate}
-                updateValue={handleNewItemDate}
-                renderDisplay={Display}
-                renderEdit={Edit}
-              />
-            ) : (
-              <InlineEdit
-                value={itemPrice}
-                updateValue={handleNewItemPrice}
-                renderDisplay={Display}
-                renderEdit={Edit}
-              />
-            )}
-          </Table.Cell>
-        </Table.Row>
-      </Table.Body>
+          </DetailText>
+        </Container>
+        <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
+          <DetailText>
+            <InlineEdit
+              value={quantity}
+              updateValue={handleNewItemQuantity}
+              renderDisplay={Display}
+              renderEdit={Edit}
+            />
+          </DetailText>
+        </Container>
+        <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
+          <DetailText>
+            <InlineEdit
+              value={itemPrice}
+              updateValue={handleNewItemPrice}
+              renderDisplay={Display}
+              renderEdit={Edit}
+            />
+          </DetailText>
+        </Container>
+        <Container style={{ marginLeft: '52px', borderBottom: 'none' }}>
+          <TrashIcon
+            src={Trashcan}
+            alt="trashcan icon"
+            onClick={() => handleDelete(id, category)}
+          />
+        </Container>
+        <Container style={{ marginLeft: '63px', borderBottom: 'none' }}>
+          <DetailText>Total</DetailText>
+        </Container>
+        <Container style={{ marginLeft: '9px', width: '145px', textAlign: 'center' }}>
+          <DetailText>$70.00</DetailText>
+        </Container>
+      </Wrapper>
     </>
   );
 };
