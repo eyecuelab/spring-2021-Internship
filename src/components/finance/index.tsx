@@ -7,7 +7,7 @@ import theme from '../../styles/theme';
 const Wrapper = styled.div`
   position: relative;
   margin-top: 20px;
-  margin-bottom: 80px;
+  margin-bottom: 30px;
 `;
 
 const CategoryContainer = styled.div`

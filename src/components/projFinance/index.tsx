@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Finance from '../finance';
 import Tear from '../../assets/img/ProjectTear.svg';
+import DottedBorder from '../../assets/img/DottedBorder.svg';
 
 type ProjFinanceProps = {
   materialTotals: number;
@@ -24,7 +25,6 @@ const Wrapper = styled.div`
 
 const Footer = styled.div`
   position: relative;
-  margin-top: 0px;
   z-index: 2;
 `;
 const Container = styled.div`
@@ -55,11 +55,9 @@ const DetailText = styled.p`
   top: 17px;
 `;
 
-const TrashIcon = styled.img`
+const Border = styled.img`
   position: relative;
-  margin-top: 17px;
-  margin-left: 22px;
-  cursor: pointer;
+  margin-left: 49px;
 `;
 
 const ProjFinance = ({
@@ -86,7 +84,7 @@ const ProjFinance = ({
         >
           <>{materialItems}</>
         </Finance>
-
+        <Border src={DottedBorder} alt="dotted border" />
         <Finance
           columnOne="Labor"
           columnTwo="Add Activity"
@@ -97,6 +95,7 @@ const ProjFinance = ({
         >
           <>{laborItems}</>
         </Finance>
+        <Border src={DottedBorder} alt="dotted border" />
         <Finance
           columnOne="Other Costs"
           columnTwo="Add Cost"
