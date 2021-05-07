@@ -61,7 +61,7 @@ const Finance = ({
           margin="10px 10px 10px 65px"
           img={SmButton}
           color={theme.colors.white}
-          onClick={handleToggleFinance}
+          onClick={() => addItem(columnThree)}
         />
       </Wrapper>
     </>

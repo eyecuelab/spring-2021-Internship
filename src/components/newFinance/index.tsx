@@ -40,7 +40,7 @@ const NewFinance = ({
   // addOtherItem,
   defaultForm,
 }: ModalProps): JSX.Element => {
-  const [formType, setFormType] = useState(defaultForm);
+  const [formType, setFormType] = useState('materials');
   const projectId = useSelector(selectors.selectProjectId);
   const project = parseInt(projectId, 10);
   const {

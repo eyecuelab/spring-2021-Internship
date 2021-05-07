@@ -79,7 +79,7 @@ const ProjFinance = ({
         <Finance
           columnOne="Materials"
           columnTwo="Add Material"
-          columnThree="Cost (Per Unit)"
+          columnThree="materials"
           totals={materialTotals}
           handleToggleFinance={handleToggleFinance}
           setDefaultForm={setDefaultForm}
@@ -90,7 +90,7 @@ const ProjFinance = ({
         <Finance
           columnOne="Labor"
           columnTwo="Add Activity"
-          columnThree="Date"
+          columnThree="labor"
           totals={laborTotals}
           handleToggleFinance={handleToggleFinance}
           setDefaultForm={setDefaultForm}
@@ -100,7 +100,7 @@ const ProjFinance = ({
         <Finance
           columnOne="Other Costs"
           columnTwo="Add Cost"
-          columnThree="Cost"
+          columnThree="other"
           totals={otherTotals}
           handleToggleFinance={handleToggleFinance}
           setDefaultForm={setDefaultForm}
