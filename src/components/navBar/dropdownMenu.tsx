@@ -11,6 +11,7 @@ import {
   DropDownList,
   DropDownText,
   DropdownWrapper,
+  Text,
 } from './styles';
 import { getProjectById } from '../../store/slices/projectSlice/thunks';
 
@@ -56,12 +57,18 @@ const Dropdown = ({ isOpen, handleToggleDropdown }: DropdownProps): JSX.Element 
     <div>
       <DropDownContent isOpen={isOpen}>
         <DropdownWrapper>
-          <DropDownHeaderContainer>
-            <DropDownHeader margin="110px">Project</DropDownHeader>
-            <DropDownHeader margin="497px">Start Date</DropDownHeader>
-            <DropDownHeader margin="112px">End Date</DropDownHeader>
-          </DropDownHeaderContainer>
-          <DropDownList>{projects}</DropDownList>
+          {projectList.length !== 0 ? (
+            <>
+              <DropDownHeaderContainer>
+                <DropDownHeader margin="110px">Project</DropDownHeader>
+                <DropDownHeader margin="497px">Start Date</DropDownHeader>
+                <DropDownHeader margin="112px">End Date</DropDownHeader>
+              </DropDownHeaderContainer>
+              <DropDownList>{projects}</DropDownList>
+            </>
+          ) : (
+            <Text margin="200px">Please Add a New Project</Text>
+          )}
         </DropdownWrapper>
       </DropDownContent>
     </div>

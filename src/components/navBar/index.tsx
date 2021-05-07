@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import {
   Nav,
@@ -19,8 +19,10 @@ import LgButton from '../../assets/img/LgButton.svg';
 import Dropdown from './dropdownMenu';
 import { postProject, getProjects } from '../../store/slices/projectSlice/thunks';
 import NewProjectModal from '../newProjectModal';
+import * as selectors from '../../store/selectors';
 
 const NavBar = (): JSX.Element => {
+  const projectList = useSelector(selectors.selectProjectList);
   const [isOpenDropdown, setisOpenDropdown] = useState(false);
   const [isOpenNewProj, setisOpenNewProj] = useState(false);
   const dispatch = useDispatch();
@@ -54,6 +56,12 @@ const NavBar = (): JSX.Element => {
     handleToggleDropdown();
     handleMakeGet();
   };
+
+  useEffect(() => {
+    console.log(projectList);
+    if (projectList.length === 0) setisOpenDropdown(true);
+  }, [projectList]);
+
   return (
     <>
       <NavTwo>

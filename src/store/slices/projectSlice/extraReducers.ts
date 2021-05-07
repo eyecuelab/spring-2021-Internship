@@ -1,5 +1,4 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-
 /* eslint-disable import/no-cycle */
 import {
   getProjects,
@@ -19,7 +18,6 @@ import { ProjectState, initialState } from './index';
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => {
   // //////////GET ALL PROJECTS////////////////
   builder.addCase(getProjects.pending, (state) => {
-    state.projectsList = [];
     state.error = '';
   });
   builder.addCase(getProjects.fulfilled, (state, { payload }) => {
