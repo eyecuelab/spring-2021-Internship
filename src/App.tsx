@@ -23,7 +23,7 @@ function App(): JSX.Element {
         <Switch>
           <Route path="/project">{!loggedIn ? <Redirect to="/" /> : <Project />}</Route>
           <Route path="/hub">{!loggedIn ? <Redirect to="/" /> : <UserHub />}</Route>
-          <Route path="/">{loggedIn ? <Redirect to="/hub" /> : <LoginForm />}</Route>
+          <Route path="/">{loggedIn ? <Redirect to="/project" /> : <LoginForm />}</Route>
         </Switch>
         <Footer />
       </Router>
