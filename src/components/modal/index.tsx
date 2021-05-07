@@ -31,6 +31,7 @@ type ModalProps = {
   children: JSX.Element;
   width: string;
   color: string;
+  toggleModal?: () => void;
 };
 
 export const Modal = ({ width, color, children }: ModalProps): JSX.Element => {
