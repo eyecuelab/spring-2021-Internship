@@ -97,8 +97,26 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
 
   // //////////////UPDATE ONE TASK//////////////////
   builder.addCase(updateTask.pending, () => {});
-  builder.addCase(updateTask.fulfilled, (state) => {
-    state.error = '';
+  builder.addCase(updateTask.fulfilled, (state, { payload }) => {
+    if (payload.task.taskStatus === 'todo') {
+      state.currentProject.tasks.todo = [
+        ...state.currentProject.tasks.todo.filter((e) => e.id === payload.id),
+      ];
+      state.currentProject.tasks.todo.push(payload.task);
+      state.error = '';
+    } else if (payload.task.taskStatus === 'doing') {
+      state.currentProject.tasks.doing = [
+        ...state.currentProject.tasks.doing.filter((e) => e.id === payload.id),
+      ];
+      state.currentProject.tasks.doing.push(payload.task);
+      state.error = '';
+    } else if (payload.task.taskStatus === 'done') {
+      state.currentProject.tasks.done = [
+        ...state.currentProject.tasks.done.filter((e) => e.id === payload.id),
+      ];
+      state.currentProject.tasks.done.push(payload.task);
+      state.error = '';
+    }
   });
   builder.addCase(updateTask.rejected, (state, action) => {
     state.error = action.error.message;

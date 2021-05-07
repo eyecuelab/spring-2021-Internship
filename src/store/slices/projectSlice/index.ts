@@ -125,10 +125,10 @@ export const projectSlice = createSlice({
         id: action.payload.id,
         position: action.payload.updatedPosition,
         activity: [
-          ...action.payload.activity,
+          // ...action.payload.activity,
           {
             dateTime: now,
-            description: `${action.payload.taskName} was moved to ${action.payload.taskStatus}`,
+            description: ``,
           },
         ],
       });

@@ -1,12 +1,45 @@
 import React from 'react';
+import styled from 'styled-components';
 import ReactDatePicker from 'react-datepicker';
 import { useForm, Controller } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Form, Button } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { Modal } from '../modal';
 import * as selectors from '../../store/selectors';
 import theme from '../../styles/theme';
+
+const Header = styled.h1`
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.theme.fontSizes.large};
+  color: ${(props) => props.theme.colors.white};
+  text-alight: left;
+  margin-bottom: 36px;
+`;
+
+const Input = styled.input`
+  width: 584px;
+  height: 54px;
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  padding: 18px;
+  margin-bottom: 24px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+`;
+
+const Button = styled.button<{ margin: string }>`
+  display: inline;
+  margin-top: 22px;
+  margin-left: ${(props) => props.margin};
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: ${(props) => props.theme.font};
+  color: ${(props) => props.theme.colors.white};
+`;
 
 type ModalProps = {
   addProject: (projectName: string, startDate: string, endDate: string, uuid: string) => void;
@@ -34,10 +67,11 @@ const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element =
   };
   return (
     <>
-      <Modal width="250px" toggleModal={toggleModal} color={theme.colors.burntOrange}>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+      <Modal width="664px" color={theme.colors.teal}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Header>Create New Project</Header>
           {/* eslint-disable react/jsx-props-no-spreading */}
-          <Form.Input placeholder="Project Name" {...register('projectName', { required: true })} />
+          <Input placeholder="Project Name" {...register('projectName', { required: true })} />
           {errors.projectName && <p>This field is required</p>}
           {/* <input type="datetime" placeholder="Due Date" {...register('endDate')} /> */}
           <Controller
@@ -64,8 +98,15 @@ const NewProjectModal = ({ addProject, toggleModal }: ModalProps): JSX.Element =
               />
             )}
           />
-          <Button type="submit">Submit</Button>
-        </Form>
+          <ButtonWrapper>
+            <Button type="button" onClick={toggleModal} margin="458px">
+              Cancel
+            </Button>
+            <Button type="submit" margin="15px">
+              Submit
+            </Button>
+          </ButtonWrapper>
+        </form>
       </Modal>
     </>
   );

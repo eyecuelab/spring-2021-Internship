@@ -142,7 +142,7 @@ const Project = (): JSX.Element => {
             activity,
           })
         );
-        dispatch(updateTask({ taskName, intId, taskStatus, updatedPosition }));
+        dispatch(updateTask({ taskName, intId, taskStatus, taskDesc, updatedPosition }));
       } else {
         console.error(`Unrecognized result.source.droppableId: "${result.source.droppableId}".`);
       }
