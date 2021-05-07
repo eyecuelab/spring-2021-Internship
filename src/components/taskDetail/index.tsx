@@ -78,16 +78,6 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
     dispatch(updateTask({ taskName, intId, taskStatus, taskDesc, updatedPosition }));
   };
 
-  // const handleEditTaskName = (updatedValue: string | number) => {
-  //   console.log(updatedValue.toString());
-  //   handleUpdateTask(
-  //     task?.id,
-  //     updatedValue.toString(),
-  //     task?.taskStatus,
-  //     task?.taskDesc,
-  //     task?.position
-  //   );
-  // };
   const {
     register,
     handleSubmit,
@@ -107,11 +97,15 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
             <Input defaultValue={task.taskName} {...register('taskName', { required: true })} />
             {errors.taskName && <p>This field is required</p>}
             <TextArea defaultValue={task.taskDesc} {...register('taskDesc')} />
-            <button type="button" onClick={() => deleteTask(task?.id, task?.taskStatus)}>
-              delete
-            </button>
             <ButtonWrapper>
-              <Button type="button" onClick={toggleModal} margin="458px">
+              <Button
+                type="button"
+                onClick={() => deleteTask(task?.id, task?.taskStatus)}
+                margin="0"
+              >
+                delete
+              </Button>
+              <Button type="button" onClick={toggleModal} margin="405px">
                 Cancel
               </Button>
               <Button type="submit" margin="15px">
