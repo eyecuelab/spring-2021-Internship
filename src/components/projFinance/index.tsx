@@ -15,10 +15,11 @@ type ProjFinanceProps = {
 };
 
 const Wrapper = styled.div`
-  margin-top: 0px;
+  margin-top: -50px;
   position: relative;
   width: 1120px;
   background: #fcfbf8;
+  padding-top: 80px;
 `;
 
 const Footer = styled.div`
@@ -76,8 +77,8 @@ const ProjFinance = ({
       <Wrapper>
         <HeaderText>Cost</HeaderText>
         <Finance
-          columnOne="Material"
-          columnTwo="Quantity"
+          columnOne="Materials"
+          columnTwo="Add Material"
           columnThree="Cost (Per Unit)"
           totals={materialTotals}
           handleToggleFinance={handleToggleFinance}
@@ -87,8 +88,8 @@ const ProjFinance = ({
         </Finance>
 
         <Finance
-          columnOne="Activity"
-          columnTwo="Hours"
+          columnOne="Labor"
+          columnTwo="Add Activity"
           columnThree="Date"
           totals={laborTotals}
           handleToggleFinance={handleToggleFinance}
@@ -97,8 +98,8 @@ const ProjFinance = ({
           <>{laborItems}</>
         </Finance>
         <Finance
-          columnOne="Other Cost"
-          columnTwo=""
+          columnOne="Other Costs"
+          columnTwo="Add Cost"
           columnThree="Cost"
           totals={otherTotals}
           handleToggleFinance={handleToggleFinance}
