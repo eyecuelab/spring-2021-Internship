@@ -67,6 +67,7 @@ const Item = ({
   // const dispatch = useDispatch();
   const laborDate = date ? new Date(date) : undefined;
   const stringDate = dayjs(laborDate).format('MM/DD/YYYY');
+  const total = itemPrice * quantity;
 
   const hoursToMin = hours * 60;
   const laborTime = ((hoursToMin + minutes * 1) / 60).toFixed(2);
@@ -180,7 +181,7 @@ const Item = ({
           <DetailText>Total</DetailText>
         </Container>
         <Container style={{ marginLeft: '9px', width: '145px', textAlign: 'center' }}>
-          <DetailText>$70.00</DetailText>
+          <DetailText>${total}</DetailText>
         </Container>
       </Wrapper>
     </>
