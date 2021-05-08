@@ -17,7 +17,8 @@ const Wrapper = styled.div`
 const CategoryContainer = styled.div`
   position: relative;
   width: 1024px;
-  min-height: 80px;
+  padding-bottom: 24px;
+  overflow: auto;
   left: 48px;
   background: ${(props) => props.theme.colors.white};
   border-radius: 3px;
@@ -79,11 +80,6 @@ const Finance = ({
   const projectId = useSelector(selectors.selectProjectId);
   const intId = parseInt(projectId, 10);
 
-  // const addItem = (category: string): void => {
-  //   handleToggleFinance();
-  //   setDefaultForm(category);
-  // };
-
   const addItem = (
     itemName: string,
     itemPrice: number,
@@ -107,26 +103,12 @@ const Finance = ({
       })
     );
   };
-  const [newItem, setNewItem] = useState(false);
 
   return (
     <>
       <Wrapper>
         <Header>{columnOne}</Header>
-        <CategoryContainer>
-          {children}
-          {newItem ? (
-            <Item
-              id="test"
-              itemName="Enter Name"
-              itemPrice={0}
-              quantity={0}
-              handleDelete={handleToggleFinance}
-              handleUpdateItem={handleToggleFinance}
-              category="material"
-            />
-          ) : null}
-        </CategoryContainer>
+        <CategoryContainer>{children}</CategoryContainer>
         <SmallButton
           buttonText={columnTwo}
           size="12px"
