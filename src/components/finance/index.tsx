@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import * as selectors from '../../store/selectors';
+import { postItem } from '../../store/slices/projectSlice/thunks';
 import SmallButton from '../smallButton';
 import SmButton from '../../assets/img/SmButton.svg';
 import theme from '../../styles/theme';
@@ -72,9 +75,37 @@ const Finance = ({
   handleToggleFinance,
   setDefaultForm,
 }: FinanceProps): JSX.Element => {
-  const addItem = (category: string): void => {
-    handleToggleFinance();
-    setDefaultForm(category);
+  const dispatch = useDispatch();
+  const projectId = useSelector(selectors.selectProjectId);
+  const intId = parseInt(projectId, 10);
+
+  // const addItem = (category: string): void => {
+  //   handleToggleFinance();
+  //   setDefaultForm(category);
+  // };
+
+  const addItem = (
+    itemName: string,
+    itemPrice: number,
+    quantity: number,
+    category: string,
+    date: string,
+    minutes: number,
+    hours: number,
+    project: number
+  ) => {
+    dispatch(
+      postItem({
+        itemName,
+        itemPrice,
+        quantity,
+        category,
+        date,
+        minutes,
+        hours,
+        project,
+      })
+    );
   };
   const [newItem, setNewItem] = useState(false);
 
@@ -102,7 +133,7 @@ const Finance = ({
           margin="10px 10px 10px 65px"
           img={SmButton}
           color={theme.colors.white}
-          onClick={() => setNewItem(!newItem)}
+          onClick={() => addItem('Enter Name', 1, 1, columnThree, 'Enter Date', 1, 1, intId)}
         />
         <TotalsWrapper>
           <TotalsText>
