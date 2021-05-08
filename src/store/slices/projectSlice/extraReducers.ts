@@ -14,7 +14,7 @@ import {
   deleteProject,
   putItem,
 } from './thunks';
-import { ProjectState, initialState } from './index';
+import { ProjectState, initialState, TaskItem } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => {
   // //////////GET ALL PROJECTS////////////////
@@ -99,22 +99,19 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   builder.addCase(updateTask.pending, () => {});
   builder.addCase(updateTask.fulfilled, (state, { payload }) => {
     if (payload.task.taskStatus === 'todo') {
-      state.currentProject.tasks.todo = [
-        ...state.currentProject.tasks.todo.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.tasks.todo.push(payload.task);
+      const targetTask = (e: TaskItem) => e.id === payload.task.id;
+      const targetIndex = state.currentProject.tasks.todo.findIndex(targetTask);
+      state.currentProject.tasks.todo[targetIndex] = payload.task;
       state.error = '';
     } else if (payload.task.taskStatus === 'doing') {
-      state.currentProject.tasks.doing = [
-        ...state.currentProject.tasks.doing.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.tasks.doing.push(payload.task);
+      const targetTask = (e: TaskItem) => e.id === payload.task.id;
+      const targetIndex = state.currentProject.tasks.doing.findIndex(targetTask);
+      state.currentProject.tasks.doing[targetIndex] = payload.task;
       state.error = '';
     } else if (payload.task.taskStatus === 'done') {
-      state.currentProject.tasks.done = [
-        ...state.currentProject.tasks.done.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.tasks.done.push(payload.task);
+      const targetTask = (e: TaskItem) => e.id === payload.task.id;
+      const targetIndex = state.currentProject.tasks.done.findIndex(targetTask);
+      state.currentProject.tasks.done[targetIndex] = payload.task;
       state.error = '';
     }
   });
@@ -161,19 +158,19 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   builder.addCase(putItem.fulfilled, (state, { payload }) => {
     if (payload.item.category === 'material') {
       state.currentProject.items.material = [
-        ...state.currentProject.items.material.filter((e) => e.id === payload.id),
+        ...state.currentProject.items.material.filter((e) => e.id !== payload.item.id),
       ];
       state.currentProject.items.material.push(payload.item);
       state.error = '';
     } else if (payload.item.category === 'labor') {
       state.currentProject.items.labor = [
-        ...state.currentProject.items.labor.filter((e) => e.id === payload.id),
+        ...state.currentProject.items.labor.filter((e) => e.id !== payload.item.id),
       ];
       state.currentProject.items.labor.push(payload.item);
       state.error = '';
     } else if (payload.item.category === 'other') {
       state.currentProject.items.other = [
-        ...state.currentProject.items.other.filter((e) => e.id === payload.id),
+        ...state.currentProject.items.other.filter((e) => e.id !== payload.item.id),
       ];
       state.currentProject.items.other.push(payload.item);
       state.error = '';
