@@ -11,8 +11,6 @@ type ProjFinanceProps = {
   materialItems: JSX.Element[];
   laborItems: JSX.Element[];
   otherItems: JSX.Element[];
-  handleToggleFinance: () => void;
-  setDefaultForm: (taskStatus: string) => void;
 };
 
 const Wrapper = styled.div`
@@ -27,13 +25,6 @@ const Footer = styled.div`
   position: relative;
   z-index: 2;
 `;
-const Container = styled.div`
-  position: absolute;
-  height: 54px;
-  top: 73px;
-  border-radius: 3px;
-  background: ${(props) => props.theme.colors.white};
-`;
 
 const HeaderText = styled.p`
   position: absolute;
@@ -44,15 +35,6 @@ const HeaderText = styled.p`
   line-height: 17px;
   left: 48px;
   font-size: 24px;
-`;
-
-const DetailText = styled.p`
-  color: ${(props) => props.theme.colors.navy};
-  position: relative;
-  font-family: Montserrat;
-  line-height: 17px;
-  margin-top: 17px;
-  top: 17px;
 `;
 
 const Border = styled.img`
@@ -67,8 +49,6 @@ const ProjFinance = ({
   materialItems,
   laborItems,
   otherItems,
-  handleToggleFinance,
-  setDefaultForm,
 }: ProjFinanceProps): JSX.Element => {
   return (
     <>
@@ -79,8 +59,6 @@ const ProjFinance = ({
           columnTwo="Add Material"
           columnThree="material"
           totals={materialTotals}
-          handleToggleFinance={handleToggleFinance}
-          setDefaultForm={setDefaultForm}
         >
           <>{materialItems}</>
         </Finance>
@@ -90,8 +68,6 @@ const ProjFinance = ({
           columnTwo="Add Activity"
           columnThree="labor"
           totals={laborTotals}
-          handleToggleFinance={handleToggleFinance}
-          setDefaultForm={setDefaultForm}
         >
           <>{laborItems}</>
         </Finance>
@@ -101,8 +77,6 @@ const ProjFinance = ({
           columnTwo="Add Cost"
           columnThree="other"
           totals={otherTotals}
-          handleToggleFinance={handleToggleFinance}
-          setDefaultForm={setDefaultForm}
         >
           <>{otherItems}</>
         </Finance>

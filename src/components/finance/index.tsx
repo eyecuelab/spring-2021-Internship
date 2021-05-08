@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import * as selectors from '../../store/selectors';
@@ -6,7 +6,6 @@ import { postItem } from '../../store/slices/projectSlice/thunks';
 import SmallButton from '../smallButton';
 import SmButton from '../../assets/img/SmButton.svg';
 import theme from '../../styles/theme';
-import Item from '../item';
 
 const Wrapper = styled.div`
   position: relative;
@@ -63,8 +62,6 @@ type FinanceProps = {
   columnThree: string;
   totals: number;
   children?: JSX.Element;
-  handleToggleFinance: () => void;
-  setDefaultForm: (category: string) => void;
 };
 
 const Finance = ({
@@ -73,8 +70,6 @@ const Finance = ({
   columnThree,
   children,
   totals,
-  handleToggleFinance,
-  setDefaultForm,
 }: FinanceProps): JSX.Element => {
   const dispatch = useDispatch();
   const projectId = useSelector(selectors.selectProjectId);
