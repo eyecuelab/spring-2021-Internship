@@ -77,7 +77,7 @@ const ProjFinance = ({
         <Finance
           columnOne="Materials"
           columnTwo="Add Material"
-          columnThree="materials"
+          columnThree="material"
           totals={materialTotals}
           handleToggleFinance={handleToggleFinance}
           setDefaultForm={setDefaultForm}
