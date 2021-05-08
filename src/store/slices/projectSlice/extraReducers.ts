@@ -98,22 +98,11 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   // //////////////UPDATE ONE TASK//////////////////
   builder.addCase(updateTask.pending, () => {});
   builder.addCase(updateTask.fulfilled, (state, { payload }) => {
-    if (payload.task.taskStatus === 'todo') {
-      const targetTask = (e: TaskItem) => e.id === payload.task.id;
-      const targetIndex = state.currentProject.tasks.todo.findIndex(targetTask);
-      state.currentProject.tasks.todo[targetIndex] = payload.task;
-      state.error = '';
-    } else if (payload.task.taskStatus === 'doing') {
-      const targetTask = (e: TaskItem) => e.id === payload.task.id;
-      const targetIndex = state.currentProject.tasks.doing.findIndex(targetTask);
-      state.currentProject.tasks.doing[targetIndex] = payload.task;
-      state.error = '';
-    } else if (payload.task.taskStatus === 'done') {
-      const targetTask = (e: TaskItem) => e.id === payload.task.id;
-      const targetIndex = state.currentProject.tasks.done.findIndex(targetTask);
-      state.currentProject.tasks.done[targetIndex] = payload.task;
-      state.error = '';
-    }
+    const targetTask = (e: TaskItem) => e.id === payload.task.id;
+    const targetArray = state.currentProject.tasks[payload.task.taskStatus];
+    const targetIndex = targetArray.findIndex(targetTask);
+    state.currentProject.tasks[payload.task.taskStatus][targetIndex] = payload.task;
+    state.error = '';
   });
   builder.addCase(updateTask.rejected, (state, action) => {
     state.error = action.error.message;
