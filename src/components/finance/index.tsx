@@ -56,6 +56,15 @@ const Header = styled.h2`
   font-size: ${(props) => props.theme.fontSizes.small};
 `;
 
+const DollarSign = styled.p`
+  color: ${(props) => props.theme.colors.teal};
+  font-size: ${(props) => props.theme.fontSizes.xsmall};
+  font-family: Montserrat;
+  position: absolute;
+  float: left;
+  margin-left: 20px;
+`;
+
 type FinanceProps = {
   columnOne: string;
   columnTwo: string;
@@ -110,12 +119,19 @@ const Finance = ({
           margin="10px 10px 10px 65px"
           img={SmButton}
           color={theme.colors.white}
-          onClick={() => addItem('Enter Name', 1, 1, columnThree, 'Enter Date', 1, 1, intId)}
+          onClick={() => addItem('Enter Name', 1, 1, columnThree, 'Enter Date', 0, 1, intId)}
         />
         <TotalsWrapper>
           <TotalsText>
             <TotalsContainer style={{ borderBottom: 'none' }}>{columnOne} Total:</TotalsContainer>
-            <TotalsContainer>{totals}</TotalsContainer>
+            {columnThree === 'material' || columnThree === 'other' ? (
+              <TotalsContainer>
+                <DollarSign>$</DollarSign>
+                {totals}
+              </TotalsContainer>
+            ) : (
+              <TotalsContainer>{totals} hours</TotalsContainer>
+            )}
           </TotalsText>
         </TotalsWrapper>
       </Wrapper>
