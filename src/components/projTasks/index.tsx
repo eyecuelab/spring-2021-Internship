@@ -78,7 +78,7 @@ const ProjTasks = ({
           color={theme.colors.white}
           onClick={handleToggleNewTask}
         />
-        <HeaderText>Tasks</HeaderText>
+        <HeaderText id="tasks">Tasks</HeaderText>
         <ListRow>
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="todo">

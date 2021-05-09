@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Link as LinkS } from 'react-scroll';
 import Curo from '../../assets/img/Curo.svg';
 
 export const Nav = styled.nav`
@@ -52,12 +53,12 @@ export const NavItem = styled.li`
   display: flex;
 `;
 
-export const NavLink = styled(Link)<{ color: string; size: string }>`
+export const NavLink = styled(LinkS)<{ color: string }>`
   cursor: pointer;
   text-decoration: none;
   display: flex;
   font-family: ${(props) => props.theme.font};
-  font-size: ${(props) => props.size};
+  font-size: ${(props) => props.theme.fontSizes.small};
   color: ${(props) => props.color};
 `;
 
