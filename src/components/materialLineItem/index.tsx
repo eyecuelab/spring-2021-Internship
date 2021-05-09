@@ -46,6 +46,15 @@ const DetailText = styled.p`
   position: relative;
 `;
 
+const DollarSign = styled.p`
+  color: ${(props) => props.theme.colors.teal};
+  font-size: ${(props) => props.theme.fontSizes.xsmall};
+  font-family: Montserrat;
+  position: absolute;
+  float: left;
+  margin-left: 20px;
+`;
+
 const TrashIcon = styled.img`
   position: absolute;
   cursor: pointer;
@@ -83,20 +92,6 @@ const Item = ({
       hours
     );
   };
-  const handleNewItemTime = (updatedValue: string | number) => {
-    // const int: string = updatedValue ?? '';
-    // const intValue = parseInt(int, 10);
-    handleUpdateItem(
-      id,
-      itemName,
-      itemPrice,
-      quantity,
-      category,
-      date?.toString(),
-      minutes,
-      parseInt(`${updatedValue}`, 10)
-    );
-  };
 
   const handleNewItemQuantity = (updatedValue: string | number) => {
     handleUpdateItem(
@@ -106,19 +101,6 @@ const Item = ({
       parseInt(`${updatedValue}`, 10),
       category,
       date?.toString(),
-      minutes,
-      hours
-    );
-  };
-
-  const handleNewItemDate = (updatedValue: string | number) => {
-    handleUpdateItem(
-      id,
-      itemName,
-      itemPrice,
-      quantity,
-      category,
-      updatedValue.toString(),
       minutes,
       hours
     );
@@ -136,6 +118,7 @@ const Item = ({
       hours
     );
   };
+
   return (
     <>
       <Wrapper>
@@ -161,6 +144,7 @@ const Item = ({
         </Container>
         <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
           <DetailText>
+            <DollarSign>$</DollarSign>
             <InlineEdit
               value={itemPrice}
               updateValue={handleNewItemPrice}
@@ -180,6 +164,7 @@ const Item = ({
           <DetailText>Total</DetailText>
         </Container>
         <Container style={{ marginLeft: '9px', width: '145px', textAlign: 'center' }}>
+          <DollarSign>$</DollarSign>
           <DetailText>{total}</DetailText>
         </Container>
       </Wrapper>
