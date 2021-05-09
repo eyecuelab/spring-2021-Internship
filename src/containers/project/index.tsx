@@ -13,17 +13,17 @@ import {
   deleteTask,
   updateTask,
   postTask,
-  postItem,
   deleteItem,
   deleteProject,
   putItem,
 } from '../../store/slices/projectSlice/thunks';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
-import NewFinance from '../../components/newFinance';
 import ProjTask from '../../components/projTasks';
 import Task from '../../components/task';
-import Item from '../../components/item';
+import MaterialLineItem from '../../components/materialLineItem';
+import LaborLineItem from '../../components/laborLineItem';
+import OtherLineItem from '../../components/otherLineItem';
 import ProjHeader from '../../components/projHeader';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
@@ -39,7 +39,6 @@ const Project = (): JSX.Element => {
   const doingList = useSelector(selectors.selectProjDoingTasks);
   const doneList = useSelector(selectors.selectProjDoneTasks);
   const [showTaskModal, setTaskModalView] = useState(false);
-  const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskItem>({
     taskName: '',
@@ -254,7 +253,7 @@ const Project = (): JSX.Element => {
 
   const materialItems: JSX.Element[] = materialItemList.map((e) => {
     return (
-      <Item
+      <MaterialLineItem
         id={e.id}
         itemName={e.itemName}
         itemPrice={e.itemPrice}
@@ -268,7 +267,7 @@ const Project = (): JSX.Element => {
 
   const laborItems: JSX.Element[] = laborItemList.map((e) => {
     return (
-      <Item
+      <LaborLineItem
         id={e.id}
         itemName={e.itemName}
         minutes={e.minutes}
@@ -283,7 +282,7 @@ const Project = (): JSX.Element => {
 
   const otherItems: JSX.Element[] = otherItemList.map((e) => {
     return (
-      <Item
+      <OtherLineItem
         id={e.id}
         itemName={e.itemName}
         itemPrice={e.itemPrice}
