@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Form, Statistic } from 'semantic-ui-react';
+import theme from '../../styles/theme';
 
 const Wrapper = styled.div`
   min-height: 1000px;
@@ -17,6 +17,7 @@ const HeaderText = styled.p`
   opacity: 0.2;
   line-height: 17px;
   margin-left: 48px;
+  margin-bottom 91px;
 `;
 
 const Button = styled.button``;
@@ -28,11 +29,33 @@ const Row = styled.div`
 
 const Container = styled.div`
   display: inline;
+  height: 102px;
+  width: 187px;
+  margin: 36px 59px;
 `;
 
-const Input = styled.input``;
+const TextContainer = styled.div`
+  border-bottom: 2px solid ${(props) => props.theme.colors.teal};
+`;
 
-const Text = styled.p``;
+const Input = styled.input<{ color: string }>`
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  color: ${(props) => props.color};
+  height: 45px;
+  width: 145px;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  margin: 0 auto;
+`;
+
+const Text = styled.p<{ color: string }>`
+  font-family: ${(props) => props.theme.font};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  color: ${(props) => props.color};
+  text-align: center;
+`;
 
 type ProjAnalysisProps = {
   materialTotals: number;
@@ -47,13 +70,15 @@ const ProjAnalysis = ({
 }: ProjAnalysisProps): JSX.Element => {
   const [costPerUnit, setCostPerUnit] = useState(0);
   const [pricePerUnit, setPricePerUnit] = useState(0);
+  const [totalPricePerUnit, setTotalPrice] = useState(0.0);
+  const [totalCostPerUnit, setTotalCost] = useState(0.0);
   const [projectValues, setProjectValues] = useState({
     units: 1,
     materials: materialTotals,
     labor: laborTotals,
     other: otherTotals,
-    hourlyRate: 15,
-    markUp: 30,
+    hourlyRate: 0,
+    markUp: 1,
   });
   const { units, materials, labor, other, hourlyRate, markUp } = projectValues;
 
@@ -63,6 +88,19 @@ const ProjAnalysis = ({
     setCostPerUnit((materials + hourly + other) / units);
     setPricePerUnit(costPerUnit * markUpPercent);
   }, [projectValues, materials, other, units, costPerUnit, hourlyRate, labor, markUp]);
+
+  // const handleOnBlur = (value: any) => {
+  //   setProjectValues(value);
+  // };
+
+  // let totalPricePerUnit;
+  // let totalCostPerUnit;
+
+  const handleClick = () => {
+    setTotalCost(costPerUnit);
+    setTotalPrice(pricePerUnit);
+  };
+
   return (
     <>
       <Wrapper>
@@ -70,106 +108,88 @@ const ProjAnalysis = ({
         <form>
           <Row>
             <Container>
-              <Input
-                type="number"
-                name="materials"
-                defaultValue={materialTotals}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-              <Text>Material Totals</Text>
+              <TextContainer>
+                <Text color={theme.colors.teal}>{materialTotals}</Text>
+              </TextContainer>
+              <Text color={theme.colors.teal}>Material Totals</Text>
             </Container>
             <Container>
-              <Input
-                type="number"
-                name="labor"
-                defaultValue={laborTotals.toFixed(2)}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-              <Text>Labor Totals</Text>
+              <TextContainer>
+                <Text color={theme.colors.teal}>{laborTotals.toFixed(2)}</Text>
+              </TextContainer>
+              <Text color={theme.colors.teal}>Labor Totals</Text>
             </Container>
             <Container>
-              <Input
-                // label="Other Costs:"
-                type="number"
-                name="other"
-                defaultValue={otherTotals}
-                onChange={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
-              <Text>Other Costs</Text>
+              <TextContainer>
+                <Text color={theme.colors.teal}>{otherTotals}</Text>
+              </TextContainer>
+              <Text color={theme.colors.teal}>Other Costs</Text>
             </Container>
           </Row>
           <Row>
             <Container>
               <Input
+                color={theme.colors.burntOrange}
                 type="number"
                 name="hourlyRate"
                 defaultValue={hourlyRate}
-                onChange={(e) =>
+                // onBlur={() => handleOnBlur(hourlyRate)}
+                onBlur={(e) =>
                   setProjectValues({
                     ...projectValues,
                     [e.target.name]: parseInt(e.target.value, 10),
                   })
                 }
               />
-              <Text>Hourly Rate</Text>
+              <Text color={theme.colors.black}>Hourly Rate</Text>
             </Container>
             <Container>
               <Input
+                color={theme.colors.burntOrange}
                 type="number"
                 name="units"
                 defaultValue={units}
-                onChange={(e) =>
+                // onBlur={() => handleOnBlur(units)}
+                onBlur={(e) =>
                   setProjectValues({
                     ...projectValues,
                     [e.target.name]: parseInt(e.target.value, 10),
                   })
                 }
               />
-              <Text>Total Units</Text>
+              <Text color={theme.colors.black}>Total Units</Text>
             </Container>
             <Container>
               <Input
+                color={theme.colors.burntOrange}
                 // label="Markup (%):"
                 type="number"
                 name="markUp"
                 defaultValue={markUp}
-                onChange={(e) =>
+                // onBlur={() => handleOnBlur(markUp)}
+                onBlur={(e) =>
                   setProjectValues({
                     ...projectValues,
                     [e.target.name]: parseInt(e.target.value, 10),
                   })
                 }
               />
-              <Text>Markup (%)</Text>
+              <Text color={theme.colors.black}>Markup (%)</Text>
             </Container>
           </Row>
-
-          <Statistic.Group widths="two">
-            <Statistic>
-              <Statistic.Value>${costPerUnit.toFixed(2)}</Statistic.Value>
-              <Statistic.Label>Cost per Unit</Statistic.Label>
-            </Statistic>
-            <Statistic>
-              <Statistic.Value>${pricePerUnit.toFixed(2)}</Statistic.Value>
-              <Statistic.Label>Price per Unit</Statistic.Label>
-            </Statistic>
-          </Statistic.Group>
-          <Button>Calculate</Button>
+          <Row>
+            <Container>
+              <Input color={theme.colors.black} value={totalCostPerUnit.toFixed(2)} disabled />
+              <Text color={theme.colors.black}>Cost per Unit</Text>
+            </Container>
+            <Container>
+              <Input color={theme.colors.black} value={totalPricePerUnit.toFixed(2)} disabled />
+              <Text color={theme.colors.black}>Price per Unit</Text>
+            </Container>
+          </Row>
+          <Button type="button" onClick={handleClick}>
+            Calculate
+          </Button>
         </form>
       </Wrapper>
     </>
