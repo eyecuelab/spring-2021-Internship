@@ -13,30 +13,40 @@ type HeaderProps = {
   deleteProject: (id: string) => void;
 };
 
-const Wrapper = styled.div`
-  margin-top: 90px;
-  position: relative;
-  height: 163px;
-  width: 1120px;
+const Layout = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
   background: #fcfbf8;
+`;
+
+const Wrapper = styled.div`
+  margin-top: 100px;
+  position: relative;
+  height: 193px;
+  width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const Footer = styled.div`
   position: relative;
-  top: 0px;
   z-index: 2;
+  width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 const Container = styled.div`
   position: absolute;
   height: 54px;
-  top: 73px;
+  top: 113px;
   border-radius: 3px;
   background: ${(props) => props.theme.colors.white};
 `;
 
 const HeaderText = styled.p`
   position: absolute;
-  top: 37px;
+  top: 77px;
   font-family: ${(props) => props.theme.font};
   font-style: normal;
   color: ${(props) => props.theme.colors.black};
@@ -91,49 +101,55 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
   };
   return (
     <>
-      <Wrapper>
-        <HeaderText style={{ left: '48px', fontSize: '24px' }} id="project">
-          Project
-        </HeaderText>
-        <HeaderText style={{ left: '565px', fontSize: '20px' }}>Start Date</HeaderText>
-        <HeaderText style={{ left: '824px', fontSize: '20px' }}>Due Date</HeaderText>
-        <Container style={{ left: '49px', width: '418px' }}>
-          <DetailText style={{ fontSize: '20px', left: '24px' }}>
-            <InlineEdit
-              value={projName}
-              updateValue={handleNewProjName}
-              renderDisplay={Display}
-              renderEdit={Edit}
+      <Layout>
+        <Wrapper>
+          <HeaderText style={{ left: '48px', fontSize: '24px' }} id="project">
+            Project
+          </HeaderText>
+          <HeaderText style={{ left: '565px', fontSize: '20px' }}>Start Date</HeaderText>
+          <HeaderText style={{ left: '824px', fontSize: '20px' }}>Due Date</HeaderText>
+          <Container style={{ left: '49px', width: '418px' }}>
+            <DetailText style={{ fontSize: '20px', left: '24px' }}>
+              <InlineEdit
+                value={projName}
+                updateValue={handleNewProjName}
+                renderDisplay={Display}
+                renderEdit={Edit}
+              />
+            </DetailText>
+          </Container>
+          <Container style={{ left: '489px', width: '237px' }}>
+            <DetailText style={{ fontSize: '14px', textAlign: 'center' }}>
+              <InlineEdit
+                value={startDate}
+                updateValue={handleNewProjStart}
+                renderDisplay={Display}
+                renderEdit={Edit}
+              />
+            </DetailText>
+          </Container>
+          <Container style={{ left: '748px', width: '237px' }}>
+            <DetailText style={{ fontSize: '14px', textAlign: 'center' }}>
+              <InlineEdit
+                value={endDate}
+                updateValue={handleNewProjEnd}
+                renderDisplay={Display}
+                renderEdit={Edit}
+              />
+            </DetailText>
+          </Container>
+          <Container style={{ left: '1009px', width: '64px' }}>
+            <TrashIcon
+              src={Trashcan}
+              alt="trashcan icon"
+              onClick={() => deleteProject(projectId)}
             />
-          </DetailText>
-        </Container>
-        <Container style={{ left: '489px', width: '237px' }}>
-          <DetailText style={{ fontSize: '14px', textAlign: 'center' }}>
-            <InlineEdit
-              value={startDate}
-              updateValue={handleNewProjStart}
-              renderDisplay={Display}
-              renderEdit={Edit}
-            />
-          </DetailText>
-        </Container>
-        <Container style={{ left: '748px', width: '237px' }}>
-          <DetailText style={{ fontSize: '14px', textAlign: 'center' }}>
-            <InlineEdit
-              value={endDate}
-              updateValue={handleNewProjEnd}
-              renderDisplay={Display}
-              renderEdit={Edit}
-            />
-          </DetailText>
-        </Container>
-        <Container style={{ left: '1009px', width: '64px' }}>
-          <TrashIcon src={Trashcan} alt="trashcan icon" onClick={() => deleteProject(projectId)} />
-        </Container>
-      </Wrapper>
-      <Footer>
-        <img src={Tear} alt="torn paper edge" />
-      </Footer>
+          </Container>
+        </Wrapper>
+        <Footer>
+          <img src={Tear} alt="torn paper edge" />
+        </Footer>
+      </Layout>
     </>
   );
 };
