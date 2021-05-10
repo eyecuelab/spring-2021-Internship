@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import {
+  Layout,
   Nav,
+  NavFooter,
   NavMenu,
   NavItem,
   NavLink,
   NavContainer,
   NavTwo,
+  NavTwoFooter,
   NavLogo,
   AuthButton,
   DropDownLi,
@@ -16,6 +19,8 @@ import { signOut } from '../../store/slices/userSlice/thunks';
 import Button from '../button';
 import theme from '../../styles/theme';
 import LgButton from '../../assets/img/LgButton.svg';
+import GreenTear from '../../assets/img/GNavTear.svg';
+import BlueTear from '../../assets/img/BNavTear.svg';
 import Dropdown from './dropdownMenu';
 import { postProject, getProjects } from '../../store/slices/projectSlice/thunks';
 import NewProjectModal from '../newProjectModal';
@@ -69,7 +74,7 @@ const NavBar = (): JSX.Element => {
       <>
         <NavTwo>
           <NavContainer>
-            <NavMenu>
+            <NavMenu style={{ marginLeft: '38px' }}>
               <NavItem>
                 <NavLink color={theme.colors.teal} to="project" offset={-155}>
                   Project
@@ -91,18 +96,16 @@ const NavBar = (): JSX.Element => {
                 </NavLink>
               </NavItem>
             </NavMenu>
+            <NavTwoFooter>
+              <img src={BlueTear} alt="torn paper edge" />
+            </NavTwoFooter>
           </NavContainer>
         </NavTwo>
         <Dropdown isOpen={isOpenDropdown} handleToggleDropdown={handleToggleDropdown} />
         <Nav>
           <NavContainer>
             <NavLogo />
-            <NavMenu>
-              <NavItem>
-                {/* <NavLink color={theme.colors.white} size={theme.fontSizes.medium} to="/hub">
-                Hub
-              </NavLink> */}
-              </NavItem>
+            <NavMenu style={{ marginLeft: '390px' }}>
               <NavItem>
                 <DropDownLi
                   color={theme.colors.white}
@@ -124,16 +127,18 @@ const NavBar = (): JSX.Element => {
                 </AuthButton>
               </NavItem>
             </NavMenu>
+            <Button
+              buttonText="New Project"
+              size={theme.fontSizes.medium}
+              img={LgButton}
+              color={theme.colors.white}
+              handleToggle={handleToggleNewProj}
+            />
+            <NavFooter>
+              <img src={GreenTear} alt="torn paper edge" />
+            </NavFooter>
           </NavContainer>
         </Nav>
-        <Button
-          buttonText="New Project"
-          size={theme.fontSizes.medium}
-          margin="43px 47.73px auto 892px"
-          img={LgButton}
-          color={theme.colors.white}
-          handleToggle={handleToggleNewProj}
-        />
         {isOpenNewProj && (
           <NewProjectModal toggleModal={handleToggleNewProj} addProject={handleNewProject} />
         )}
@@ -141,22 +146,13 @@ const NavBar = (): JSX.Element => {
     );
   }
   return (
-    <Nav>
-      <NavContainer>
-        <NavLogo />
-        {/* <NavMenu>
-          <NavItem>
-            <AuthButton
-              onClick={userSignout}
-              color={theme.colors.white}
-              size={theme.fontSizes.medium}
-            >
-              Log out
-            </AuthButton>
-          </NavItem>
-        </NavMenu> */}
-      </NavContainer>
-    </Nav>
+    <Layout>
+      <Nav>
+        <NavContainer>
+          <NavLogo />
+        </NavContainer>
+      </Nav>
+    </Layout>
   );
 };
 
