@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const ButtonWrapper = styled.div<{ margin: string }>`
-  margin: ${(props) => props.margin};
-  z-index: 15;
+// margin: ${(props) => props.margin};
+const ButtonWrapper = styled.div`
+  z-index: 31;
   justify-content: center;
-  display: float;
+  position: absolute;
+  margin-left: 892px;
+  margin-top: 20px;
 `;
 
 const ButtonImg = styled.img`
@@ -27,6 +28,7 @@ const ButtonStyle = styled.button<{
   z-index: 200;
   position: fixed;
   padding: 20px;
+  padding-left: 30px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.color};
 `;
@@ -34,22 +36,14 @@ const ButtonStyle = styled.button<{
 type ButtonProps = {
   buttonText: string;
   size: string;
-  margin: string;
   img: string;
   color: string;
   handleToggle: () => void;
 };
 
-const Button = ({
-  buttonText,
-  size,
-  margin,
-  img,
-  color,
-  handleToggle,
-}: ButtonProps): JSX.Element => {
+const Button = ({ buttonText, size, img, color, handleToggle }: ButtonProps): JSX.Element => {
   return (
-    <ButtonWrapper margin={margin} onClick={handleToggle}>
+    <ButtonWrapper onClick={handleToggle}>
       <ButtonStyle size={size} color={color}>
         {buttonText}
       </ButtonStyle>
