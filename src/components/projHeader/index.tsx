@@ -94,7 +94,9 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
   return (
     <>
       <Wrapper>
-        <HeaderText style={{ left: '48px', fontSize: '24px' }}>Project</HeaderText>
+        <HeaderText style={{ left: '48px', fontSize: '24px' }} id="project">
+          Project
+        </HeaderText>
         <HeaderText style={{ left: '565px', fontSize: '20px' }}>Start Date</HeaderText>
         <HeaderText style={{ left: '824px', fontSize: '20px' }}>Due Date</HeaderText>
         <Container style={{ left: '49px', width: '418px' }}>

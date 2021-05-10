@@ -75,7 +75,7 @@ const ProjFinance = ({
   return (
     <>
       <Wrapper>
-        <HeaderText>Cost</HeaderText>
+        <HeaderText id="costs">Cost</HeaderText>
         <Finance
           columnOne="Materials"
           columnTwo="Add Material"
