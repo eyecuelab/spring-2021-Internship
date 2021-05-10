@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Finance from '../finance';
 import Tear from '../../assets/img/ProjectTear.svg';
+import DottedBorder from '../../assets/img/DottedBorder.svg';
 
 type ProjFinanceProps = {
   materialTotals: number;
@@ -10,8 +11,6 @@ type ProjFinanceProps = {
   materialItems: JSX.Element[];
   laborItems: JSX.Element[];
   otherItems: JSX.Element[];
-  handleToggleFinance: () => void;
-  setDefaultForm: (taskStatus: string) => void;
 };
 
 const Wrapper = styled.div`
@@ -24,15 +23,7 @@ const Wrapper = styled.div`
 
 const Footer = styled.div`
   position: relative;
-  margin-top: 0px;
   z-index: 2;
-`;
-const Container = styled.div`
-  position: absolute;
-  height: 54px;
-  top: 73px;
-  border-radius: 3px;
-  background: ${(props) => props.theme.colors.white};
 `;
 
 const HeaderText = styled.p`
@@ -46,20 +37,9 @@ const HeaderText = styled.p`
   font-size: 24px;
 `;
 
-const DetailText = styled.p`
-  color: ${(props) => props.theme.colors.navy};
+const Border = styled.img`
   position: relative;
-  font-family: Montserrat;
-  line-height: 17px;
-  margin-top: 17px;
-  top: 17px;
-`;
-
-const TrashIcon = styled.img`
-  position: relative;
-  margin-top: 17px;
-  margin-left: 22px;
-  cursor: pointer;
+  margin-left: 49px;
 `;
 
 const ProjFinance = ({
@@ -69,8 +49,6 @@ const ProjFinance = ({
   materialItems,
   laborItems,
   otherItems,
-  handleToggleFinance,
-  setDefaultForm,
 }: ProjFinanceProps): JSX.Element => {
   return (
     <>
@@ -79,31 +57,26 @@ const ProjFinance = ({
         <Finance
           columnOne="Materials"
           columnTwo="Add Material"
-          columnThree="Cost (Per Unit)"
+          columnThree="material"
           totals={materialTotals}
-          handleToggleFinance={handleToggleFinance}
-          setDefaultForm={setDefaultForm}
         >
           <>{materialItems}</>
         </Finance>
-
+        <Border src={DottedBorder} alt="dotted border" />
         <Finance
           columnOne="Labor"
           columnTwo="Add Activity"
-          columnThree="Date"
+          columnThree="labor"
           totals={laborTotals}
-          handleToggleFinance={handleToggleFinance}
-          setDefaultForm={setDefaultForm}
         >
           <>{laborItems}</>
         </Finance>
+        <Border src={DottedBorder} alt="dotted border" />
         <Finance
           columnOne="Other Costs"
           columnTwo="Add Cost"
-          columnThree="Cost"
+          columnThree="other"
           totals={otherTotals}
-          handleToggleFinance={handleToggleFinance}
-          setDefaultForm={setDefaultForm}
         >
           <>{otherItems}</>
         </Finance>

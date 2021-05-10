@@ -13,17 +13,17 @@ import {
   deleteTask,
   updateTask,
   postTask,
-  postItem,
   deleteItem,
   deleteProject,
   putItem,
 } from '../../store/slices/projectSlice/thunks';
 import * as selectors from '../../store/selectors';
 import NewTaskModal from '../../components/newTaskModal';
-import NewFinance from '../../components/newFinance';
 import ProjTask from '../../components/projTasks';
 import Task from '../../components/task';
-import Item from '../../components/item';
+import MaterialLineItem from '../../components/materialLineItem';
+import LaborLineItem from '../../components/laborLineItem';
+import OtherLineItem from '../../components/otherLineItem';
 import ProjHeader from '../../components/projHeader';
 import ProjFinance from '../../components/projFinance';
 import TaskDetail from '../../components/taskDetail';
@@ -38,11 +38,8 @@ const Project = (): JSX.Element => {
   const toDoList = useSelector(selectors.selectProjToDoTasks);
   const doingList = useSelector(selectors.selectProjDoingTasks);
   const doneList = useSelector(selectors.selectProjDoneTasks);
-  const projectId = useSelector(selectors.selectProjectId);
   const [showTaskModal, setTaskModalView] = useState(false);
-  const [showFinanceModal, setFinanceModalView] = useState(false);
   const [showTaskDetail, setTaskDetailView] = useState(false);
-  const [defaultItemForm, setItemForm] = useState('');
   const [selectedTask, setSelectedTask] = useState<TaskItem>({
     taskName: '',
     taskStatus: '',
@@ -52,16 +49,8 @@ const Project = (): JSX.Element => {
     activity: [],
   });
 
-  const setDefaultItemForm = (taskStatus: string) => {
-    setItemForm(taskStatus);
-  };
-
   const handleToggleTaskModal = () => {
     setTaskModalView(!showTaskModal);
-  };
-
-  const handleToggleFinance = () => {
-    setFinanceModalView(!showFinanceModal);
   };
 
   const handleToggleTaskDetail = () => {
@@ -90,20 +79,6 @@ const Project = (): JSX.Element => {
   const handleDeleteTask = (id: string, taskStatus: string) => {
     dispatch(deleteTask({ id, taskStatus }));
     setTaskDetailView(!showTaskDetail);
-  };
-
-  const handleAddingMaterial = (
-    itemName: string,
-    itemPrice: number,
-    quantity: number,
-    category: string,
-    date: string,
-    minutes: number,
-    hours: number,
-    project: number
-  ) => {
-    dispatch(postItem({ itemName, itemPrice, quantity, category, date, minutes, hours, project }));
-    setFinanceModalView(!showFinanceModal);
   };
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -278,7 +253,7 @@ const Project = (): JSX.Element => {
 
   const materialItems: JSX.Element[] = materialItemList.map((e) => {
     return (
-      <Item
+      <MaterialLineItem
         id={e.id}
         itemName={e.itemName}
         itemPrice={e.itemPrice}
@@ -292,7 +267,7 @@ const Project = (): JSX.Element => {
 
   const laborItems: JSX.Element[] = laborItemList.map((e) => {
     return (
-      <Item
+      <LaborLineItem
         id={e.id}
         itemName={e.itemName}
         minutes={e.minutes}
@@ -307,7 +282,7 @@ const Project = (): JSX.Element => {
 
   const otherItems: JSX.Element[] = otherItemList.map((e) => {
     return (
-      <Item
+      <OtherLineItem
         id={e.id}
         itemName={e.itemName}
         itemPrice={e.itemPrice}
@@ -328,13 +303,6 @@ const Project = (): JSX.Element => {
       <ProjHeader deleteProject={handleDeletingProject} />
       {showTaskModal && (
         <NewTaskModal toggleModal={handleToggleTaskModal} addNewTask={handleAddingTask} />
-      )}
-      {showFinanceModal && (
-        <NewFinance
-          toggleModal={handleToggleFinance}
-          addItem={handleAddingMaterial}
-          defaultForm={defaultItemForm}
-        />
       )}
       {showTaskDetail && (
         <TaskDetail
@@ -357,8 +325,6 @@ const Project = (): JSX.Element => {
         materialItems={materialItems}
         laborItems={laborItems}
         otherItems={otherItems}
-        handleToggleFinance={handleToggleFinance}
-        setDefaultForm={setDefaultItemForm}
       />
       <ProjAnalysis
         materialTotals={materialTotals}

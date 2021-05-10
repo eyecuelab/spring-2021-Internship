@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import InlineEdit from '../inlineEdit';
 import Trashcan from '../../assets/img/Trashcan.png';
 import { Display, Edit } from '../../containers/project/components';
@@ -30,7 +29,6 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
-  margin-top: 24px;
   margin-bottom: 24px;
 `;
 
@@ -52,7 +50,7 @@ const TrashIcon = styled.img`
   cursor: pointer;
 `;
 
-const Item = ({
+const LaborItem = ({
   itemName,
   itemPrice = 0,
   quantity = 0,
@@ -64,13 +62,6 @@ const Item = ({
   handleDelete,
   handleUpdateItem,
 }: ItemProps): JSX.Element => {
-  // const dispatch = useDispatch();
-  const laborDate = date ? new Date(date) : undefined;
-  const stringDate = dayjs(laborDate).format('MM/DD/YYYY');
-
-  const hoursToMin = hours * 60;
-  const laborTime = ((hoursToMin + minutes * 1) / 60).toFixed(2);
-
   const handleNewItemName = (updatedValue: string | number) => {
     handleUpdateItem(
       id,
@@ -84,8 +75,6 @@ const Item = ({
     );
   };
   const handleNewItemTime = (updatedValue: string | number) => {
-    // const int: string = updatedValue ?? '';
-    // const intValue = parseInt(int, 10);
     handleUpdateItem(
       id,
       itemName,
@@ -98,48 +87,10 @@ const Item = ({
     );
   };
 
-  const handleNewItemQuantity = (updatedValue: string | number) => {
-    handleUpdateItem(
-      id,
-      itemName,
-      itemPrice,
-      parseInt(`${updatedValue}`, 10),
-      category,
-      date?.toString(),
-      minutes,
-      hours
-    );
-  };
-
-  const handleNewItemDate = (updatedValue: string | number) => {
-    handleUpdateItem(
-      id,
-      itemName,
-      itemPrice,
-      quantity,
-      category,
-      updatedValue.toString(),
-      minutes,
-      hours
-    );
-  };
-
-  const handleNewItemPrice = (updatedValue: string | number) => {
-    handleUpdateItem(
-      id,
-      itemName,
-      parseInt(`${updatedValue}`, 10),
-      quantity,
-      category,
-      date?.toString(),
-      minutes,
-      hours
-    );
-  };
   return (
     <>
       <Wrapper>
-        <Container style={{ marginLeft: '36px', width: '340px' }}>
+        <Container style={{ marginLeft: '36px', width: '484px' }}>
           <DetailText>
             <InlineEdit
               value={itemName}
@@ -152,18 +103,8 @@ const Item = ({
         <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
           <DetailText>
             <InlineEdit
-              value={quantity}
-              updateValue={handleNewItemQuantity}
-              renderDisplay={Display}
-              renderEdit={Edit}
-            />
-          </DetailText>
-        </Container>
-        <Container style={{ marginLeft: '24px', width: '120px', textAlign: 'center' }}>
-          <DetailText>
-            <InlineEdit
-              value={itemPrice}
-              updateValue={handleNewItemPrice}
+              value={hours}
+              updateValue={handleNewItemTime}
               renderDisplay={Display}
               renderEdit={Edit}
             />
@@ -180,16 +121,16 @@ const Item = ({
           <DetailText>Total</DetailText>
         </Container>
         <Container style={{ marginLeft: '9px', width: '145px', textAlign: 'center' }}>
-          <DetailText>$70.00</DetailText>
+          <DetailText>{hours} hour(s)</DetailText>
         </Container>
       </Wrapper>
     </>
   );
 };
 
-export default Item;
+export default LaborItem;
 
-Item.defaultProps = {
+LaborItem.defaultProps = {
   itemPrice: null,
   quantity: null,
   minutes: 0,

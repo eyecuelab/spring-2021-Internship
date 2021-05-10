@@ -13,7 +13,7 @@ import {
   deleteProject,
   putItem,
 } from './thunks';
-import { ProjectState, initialState } from './index';
+import { ProjectState, initialState, TaskItem, FinanceItem } from './index';
 
 const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => {
   // //////////GET ALL PROJECTS////////////////
@@ -96,25 +96,11 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   // //////////////UPDATE ONE TASK//////////////////
   builder.addCase(updateTask.pending, () => {});
   builder.addCase(updateTask.fulfilled, (state, { payload }) => {
-    if (payload.task.taskStatus === 'todo') {
-      state.currentProject.tasks.todo = [
-        ...state.currentProject.tasks.todo.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.tasks.todo.push(payload.task);
-      state.error = '';
-    } else if (payload.task.taskStatus === 'doing') {
-      state.currentProject.tasks.doing = [
-        ...state.currentProject.tasks.doing.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.tasks.doing.push(payload.task);
-      state.error = '';
-    } else if (payload.task.taskStatus === 'done') {
-      state.currentProject.tasks.done = [
-        ...state.currentProject.tasks.done.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.tasks.done.push(payload.task);
-      state.error = '';
-    }
+    const targetTask = (e: TaskItem) => e.id === payload.task.id;
+    const targetArray = state.currentProject.tasks[payload.task.taskStatus];
+    const targetIndex = targetArray.findIndex(targetTask);
+    state.currentProject.tasks[payload.task.taskStatus][targetIndex] = payload.task;
+    state.error = '';
   });
   builder.addCase(updateTask.rejected, (state, action) => {
     state.error = action.error.message;
@@ -158,22 +144,19 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   builder.addCase(putItem.pending, () => {});
   builder.addCase(putItem.fulfilled, (state, { payload }) => {
     if (payload.item.category === 'material') {
-      state.currentProject.items.material = [
-        ...state.currentProject.items.material.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.items.material.push(payload.item);
+      const targetItem = (e: FinanceItem) => e.id === payload.item.id;
+      const targetIndex = state.currentProject.items.material.findIndex(targetItem);
+      state.currentProject.items.material[targetIndex] = payload.item;
       state.error = '';
     } else if (payload.item.category === 'labor') {
-      state.currentProject.items.labor = [
-        ...state.currentProject.items.labor.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.items.labor.push(payload.item);
+      const targetItem = (e: FinanceItem) => e.id === payload.item.id;
+      const targetIndex = state.currentProject.items.labor.findIndex(targetItem);
+      state.currentProject.items.labor[targetIndex] = payload.item;
       state.error = '';
     } else if (payload.item.category === 'other') {
-      state.currentProject.items.other = [
-        ...state.currentProject.items.other.filter((e) => e.id === payload.id),
-      ];
-      state.currentProject.items.other.push(payload.item);
+      const targetItem = (e: FinanceItem) => e.id === payload.item.id;
+      const targetIndex = state.currentProject.items.other.findIndex(targetItem);
+      state.currentProject.items.other[targetIndex] = payload.item;
       state.error = '';
     }
   });
