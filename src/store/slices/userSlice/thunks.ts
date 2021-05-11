@@ -3,10 +3,12 @@ import axios from 'axios';
 // eslint-disable-next-line
 import { UserState } from '.';
 
+const API_URL: string = process.env.REACT_APP_API_URL ?? 'http://localhost:3000';
+
 export const signIn = createAsyncThunk('user/signIn', async (googleData: any, thunkAPI) => {
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/auth/',
+      `${API_URL}/api/auth/`,
       { token: googleData.tokenId },
       {
         headers: {
@@ -24,7 +26,7 @@ export const signIn = createAsyncThunk('user/signIn', async (googleData: any, th
 
 export const signOut = createAsyncThunk('user/signOut', async (_, thunkAPI) => {
   try {
-    const response = await axios.delete('http://localhost:3000/api/auth/', {
+    const response = await axios.delete(`${API_URL}/api/auth/`, {
       withCredentials: true,
     });
     return response;

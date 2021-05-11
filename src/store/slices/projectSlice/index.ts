@@ -30,7 +30,6 @@ export interface LaborItem {
   quantity?: never;
   category: ItemCategory.Labor;
   date: Date;
-  minutes: number;
   hours: number;
   id: string;
 }
@@ -40,7 +39,6 @@ export interface MaterialItem {
   quantity: number;
   category: ItemCategory.Material;
   date?: never;
-  minutes?: never;
   hours?: never;
   id: string;
 }
@@ -50,7 +48,6 @@ export interface OtherItem {
   quantity?: never;
   category: ItemCategory.Other;
   date?: never;
-  minutes?: never;
   hours?: never;
   id: string;
 }
