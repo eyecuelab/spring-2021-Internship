@@ -13,22 +13,38 @@ type ProjFinanceProps = {
   otherItems: JSX.Element[];
 };
 
+const Layout = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  background: #fcfbf8;
+`;
+
 const Wrapper = styled.div`
-  margin-top: -50px;
+  margin-top: -80px;
   position: relative;
   width: 1120px;
   background: #fcfbf8;
-  padding-top: 80px;
+  padding-top: 120px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const Footer = styled.div`
+  width: 100vw;
+  position: relative;
+  z-index: 2;
+`;
+
+const FooterImg = styled.img`
+  width: 100vw;
   position: relative;
   z-index: 2;
 `;
 
 const HeaderText = styled.p`
   position: absolute;
-  top: 37px;
+  top: 57px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;
@@ -52,38 +68,40 @@ const ProjFinance = ({
 }: ProjFinanceProps): JSX.Element => {
   return (
     <>
-      <Wrapper>
-        <HeaderText id="costs">Cost</HeaderText>
-        <Finance
-          columnOne="Materials"
-          columnTwo="Add Material"
-          columnThree="material"
-          totals={materialTotals}
-        >
-          <>{materialItems}</>
-        </Finance>
-        <Border src={DottedBorder} alt="dotted border" />
-        <Finance
-          columnOne="Labor"
-          columnTwo="Add Activity"
-          columnThree="labor"
-          totals={laborTotals}
-        >
-          <>{laborItems}</>
-        </Finance>
-        <Border src={DottedBorder} alt="dotted border" />
-        <Finance
-          columnOne="Other Costs"
-          columnTwo="Add Cost"
-          columnThree="other"
-          totals={otherTotals}
-        >
-          <>{otherItems}</>
-        </Finance>
-      </Wrapper>
-      <Footer>
-        <img src={Tear} alt="torn paper edge" />
-      </Footer>
+      <Layout>
+        <Wrapper>
+          <HeaderText id="costs">Cost</HeaderText>
+          <Finance
+            columnOne="Materials"
+            columnTwo="Add Material"
+            columnThree="material"
+            totals={materialTotals}
+          >
+            <>{materialItems}</>
+          </Finance>
+          <Border src={DottedBorder} alt="dotted border" />
+          <Finance
+            columnOne="Labor"
+            columnTwo="Add Activity"
+            columnThree="labor"
+            totals={laborTotals}
+          >
+            <>{laborItems}</>
+          </Finance>
+          <Border src={DottedBorder} alt="dotted border" />
+          <Finance
+            columnOne="Other Costs"
+            columnTwo="Add Cost"
+            columnThree="other"
+            totals={otherTotals}
+          >
+            <>{otherItems}</>
+          </Finance>
+        </Wrapper>
+        <Footer>
+          <FooterImg src={Tear} alt="torn paper edge" />
+        </Footer>
+      </Layout>
     </>
   );
 };

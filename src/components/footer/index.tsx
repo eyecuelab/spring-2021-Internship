@@ -8,13 +8,14 @@ const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.cloudyGreen};
   border-top: 2px ${(props) => props.theme.colors.white} dashed;
   text-align: center;
-  padding: 0.25rem 9999rem;
-  margin-right: -9999rem;
-  margin-left: -9999rem;
+  margin-right: auto;
+  margin-left: auto;
   z-index: 10;
 `;
 
 const Container = styled.div`
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 4px;
   width: 1120px;
 `;

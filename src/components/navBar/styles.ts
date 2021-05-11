@@ -3,28 +3,48 @@ import { Link } from 'react-router-dom';
 import { Link as LinkS } from 'react-scroll';
 import Curo from '../../assets/img/Curo.svg';
 
+export const Layout = styled.div`
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+`;
+
 export const Nav = styled.nav`
   background: ${(props) => props.theme.colors.cloudyGreen};
+  width: 100%;
   height: 72px;
   display: flex;
   top: 0;
   position: fixed;
   z-index: 30;
-  margin: 0 -9999rem;
-  padding: 0.25rem 9999rem;
+`;
+
+export const NavFooter = styled.div`
+  top: 72px;
+  position: fixed;
+  z-index: 30;
+  width: 100%;
+  margin-left: -200px;
 `;
 
 export const NavTwo = styled.nav`
   background: ${(props) => props.theme.colors.skyBlue};
+  width: 100%;
   margin-top: 72px;
-  height: 60px;
+  height: 65px;
   display: flex;
   top: 0;
   position: fixed;
   z-index: 10;
-  margin-right: -9999rem;
-  margin-left: -9999rem;
-  padding: 0.25rem 9999rem;
+`;
+
+export const NavTwoFooter = styled.div`
+  top: 72px;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  margin-top: 65px;
+  margin-left: -1000px;
 `;
 
 export const NavContainer = styled.div`
@@ -33,15 +53,19 @@ export const NavContainer = styled.div`
   z-index: 1;
   padding: 0;
   width: 1120px;
+  margin-right: auto;
+  margin-left: auto;
   align-items: center;
 `;
 
 export const NavLogo = styled.img.attrs({ src: `${Curo}` })`
   height: 48px;
+  margin-left: 46px;
 `;
 
 export const NavMenu = styled.ul`
   list-style-type: none;
+  width: 1120px;
   display: flex;
   padding-inline-start: 0;
   padding-inline-end: 269px;
@@ -86,16 +110,15 @@ export const DropDownContent = styled.div<{ isOpen: boolean }>`
   top: ${({ isOpen }) => (isOpen ? '72px' : '-100%')};
   transition: 0.5s ease-in-out;
   z-index: 20;
-  width: 100%;
-  margin-right: -9999rem;
-  margin-left: -9999rem;
-  padding: 55px 9999rem 39px 9999rem;
+  width: 100vw;
   position: fixed;
   background: ${(props) => props.theme.colors.cloudyGreen};
 `;
 
 export const DropdownWrapper = styled.div`
   width: 1120px;
+  margin-right: auto;
+  margin-left: auto;
 `;
 
 export const DropDownHeaderContainer = styled.div`
@@ -130,6 +153,12 @@ export const DropDownContainer = styled.div`
   border-color: ${(props) => props.theme.colors.pink};
   width: 925px;
   height: 70px;
+`;
+
+export const DropDownFooter = styled.div`
+  position: fixed;
+  z-index: 10;
+  margin-left: -200px;
 `;
 
 // export const TextWrapper = styled.div<{ width: string }>`

@@ -7,19 +7,31 @@ import SmallButton from '../smallButton';
 import SmButton from '../../assets/img/SmButton.svg';
 import Tear from '../../assets/img/TaskTear.svg';
 
+const Layout = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  background: ${(props) => props.theme.colors.grey};
+`;
+
 const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.grey};
+  width: 1120px;
   max-height: 100%;
-  overflow: hidden;
-  padding: 25px 0;
+  padding-top: 25px;
+  padding-bottom: 110px;
   position: relative;
   margin-top: -33px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
 `;
 
 const Footer = styled.div`
-  position: relative;
-  top: 0px;
+  position: absolute;
   z-index: 2;
+  width: 1120px;
+  margin-top: -80px;
 `;
 
 const HeaderText = styled.p`
@@ -69,75 +81,77 @@ const ProjTasks = ({
 }: ProjTasksProps): JSX.Element => {
   return (
     <>
-      <Wrapper>
-        <SmallButton
-          buttonText="New Task"
-          size="12px"
-          margin="-10px 0px auto 120px"
-          img={SmButton}
-          color={theme.colors.white}
-          onClick={handleToggleNewTask}
-        />
-        <HeaderText id="tasks">Tasks</HeaderText>
-        <ListRow>
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="todo">
-              {(provided) => (
-                <List title="To Do">
-                  <TaskContainer>
-                    <TaskUl
-                      className="todo"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{ listStyleType: 'none' }}
-                    >
-                      {toDoItems}
-                      {provided.placeholder}
-                    </TaskUl>
-                  </TaskContainer>
-                </List>
-              )}
-            </Droppable>
-            <Droppable droppableId="doing">
-              {(provided) => (
-                <List title="Doing">
-                  <TaskContainer>
-                    <TaskUl
-                      className="doing"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{ listStyleType: 'none' }}
-                    >
-                      {doingItems}
-                      {provided.placeholder}
-                    </TaskUl>
-                  </TaskContainer>
-                </List>
-              )}
-            </Droppable>
-            <Droppable droppableId="done">
-              {(provided) => (
-                <List title="Done">
-                  <TaskContainer>
-                    <TaskUl
-                      className="done"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{ listStyleType: 'none' }}
-                    >
-                      {doneItems}
-                      {provided.placeholder}
-                    </TaskUl>
-                  </TaskContainer>
-                </List>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </ListRow>
-      </Wrapper>
-      <Footer>
-        <img src={Tear} alt="torn paper edge" />
-      </Footer>
+      <Layout>
+        <Wrapper>
+          <SmallButton
+            buttonText="New Task"
+            size="12px"
+            margin="-10px 0px auto 120px"
+            img={SmButton}
+            color={theme.colors.white}
+            onClick={handleToggleNewTask}
+          />
+          <HeaderText id="tasks">Tasks</HeaderText>
+          <ListRow>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId="todo">
+                {(provided) => (
+                  <List title="To Do">
+                    <TaskContainer>
+                      <TaskUl
+                        className="todo"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{ listStyleType: 'none' }}
+                      >
+                        {toDoItems}
+                        {provided.placeholder}
+                      </TaskUl>
+                    </TaskContainer>
+                  </List>
+                )}
+              </Droppable>
+              <Droppable droppableId="doing">
+                {(provided) => (
+                  <List title="Doing">
+                    <TaskContainer>
+                      <TaskUl
+                        className="doing"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{ listStyleType: 'none' }}
+                      >
+                        {doingItems}
+                        {provided.placeholder}
+                      </TaskUl>
+                    </TaskContainer>
+                  </List>
+                )}
+              </Droppable>
+              <Droppable droppableId="done">
+                {(provided) => (
+                  <List title="Done">
+                    <TaskContainer>
+                      <TaskUl
+                        className="done"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{ listStyleType: 'none' }}
+                      >
+                        {doneItems}
+                        {provided.placeholder}
+                      </TaskUl>
+                    </TaskContainer>
+                  </List>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </ListRow>
+        </Wrapper>
+        <Footer>
+          <img src={Tear} alt="torn paper edge" />
+        </Footer>
+      </Layout>
     </>
   );
 };

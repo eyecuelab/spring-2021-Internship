@@ -13,7 +13,9 @@ import {
   DropdownWrapper,
   Text,
   Freeze,
+  DropDownFooter,
 } from './styles';
+import GreenTear from '../../assets/img/GNavTear.svg';
 import { getProjectById } from '../../store/slices/projectSlice/thunks';
 
 type DropdownProps = {
@@ -73,6 +75,9 @@ const Dropdown = ({ isOpen, handleToggleDropdown }: DropdownProps): JSX.Element 
               <Freeze />
             </>
           )}
+          <DropDownFooter>
+            <img src={GreenTear} alt="torn paper edge" />
+          </DropDownFooter>
         </DropdownWrapper>
       </DropDownContent>
     </div>
