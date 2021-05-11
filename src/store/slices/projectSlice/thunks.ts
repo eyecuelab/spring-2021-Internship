@@ -2,9 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
+const API_URL: string = process.env.REACT_APP_API_URL ?? 'http://localhost:3000';
+
 export const getProjects = createAsyncThunk('project/getProjects', async (_, thunkAPI) => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/projects/`, {
+    const response = await axios.get(`${API_URL}/api/projects/`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -20,7 +22,7 @@ export const getProjectById = createAsyncThunk(
   'project/getProjectById',
   async (id: string, thunkAPI) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/projects/${id}`, {
+      const response = await axios.get(`${API_URL}/api/projects/${id}`, {
         withCredentials: true,
       });
       return response.data;
@@ -43,7 +45,7 @@ export const postProject = createAsyncThunk(
   ) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/projects/`,
+        `${API_URL}/api/projects/`,
         {
           project: {
             projectName,
@@ -84,7 +86,7 @@ export const putProject = createAsyncThunk(
   ) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/projects/${projId}`,
+        `${API_URL}/api/projects/${projId}`,
         {
           project: {
             id: projId,
@@ -111,7 +113,7 @@ export const deleteProject = createAsyncThunk(
   'project/deleteProject',
   async (id: string, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3000/api/projects/${id}`, { withCredentials: true });
+      await axios.delete(`${API_URL}/api/projects/${id}`, { withCredentials: true });
       return { id };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
@@ -133,7 +135,7 @@ export const postTask = createAsyncThunk(
     try {
       const now = dayjs();
       const response = await axios.post(
-        `http://localhost:3000/api/tasks/`,
+        `${API_URL}/api/tasks/`,
         {
           task: {
             taskName,
@@ -183,7 +185,7 @@ export const updateTask = createAsyncThunk(
     try {
       const now = dayjs().toString();
       const taskResponse = await axios.put(
-        `http://localhost:3000/api/tasks/${intId}`,
+        `${API_URL}/api/tasks/${intId}`,
         {
           task: {
             taskName,
@@ -201,7 +203,7 @@ export const updateTask = createAsyncThunk(
         }
       );
       await axios.post(
-        `http://localhost:3000/api/task-activities`,
+        `${API_URL}/api/task-activities`,
         {
           taskActivity: {
             dateTime: now,
@@ -228,7 +230,7 @@ export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async ({ id, taskStatus }: { id: string; taskStatus: string }, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3000/api/tasks/${id}`, { withCredentials: true });
+      await axios.delete(`${API_URL}/api/tasks/${id}`, { withCredentials: true });
       return { id, taskStatus };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
@@ -260,7 +262,7 @@ export const postItem = createAsyncThunk(
   ) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/items/`,
+        `${API_URL}/api/items/`,
         {
           item: {
             itemName,
@@ -310,7 +312,7 @@ export const putItem = createAsyncThunk(
   ) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/items/${id}`,
+        `${API_URL}/api/items/${id}`,
         {
           item: {
             id,
@@ -340,7 +342,7 @@ export const deleteItem = createAsyncThunk(
   'items/deleteItem',
   async ({ id, category }: { id: string; category: string }, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3000/api/items/${id}`, { withCredentials: true });
+      await axios.delete(`${API_URL}/api/items/${id}`, { withCredentials: true });
       return { id, category };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
