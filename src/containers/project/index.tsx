@@ -213,7 +213,6 @@ const Project = (): JSX.Element => {
     arr.forEach((e: LaborItem) => {
       const hours = e.hours * 60;
       total += hours * 1;
-      total += e.minutes * 1;
     });
     return total / 60;
   }
@@ -233,7 +232,6 @@ const Project = (): JSX.Element => {
     quantity: number | undefined,
     category: string,
     date: string | undefined,
-    minutes: number | undefined,
     hours: number | undefined
   ) => {
     const itemId = parseInt(id, 10);
@@ -245,7 +243,6 @@ const Project = (): JSX.Element => {
         quantity,
         category,
         date,
-        minutes,
         hours,
       })
     );
@@ -270,7 +267,6 @@ const Project = (): JSX.Element => {
       <LaborLineItem
         id={e.id}
         itemName={e.itemName}
-        minutes={e.minutes}
         date={e.date}
         hours={e.hours}
         handleDelete={handleDeleteItem}

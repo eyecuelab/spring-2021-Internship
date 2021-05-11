@@ -245,7 +245,6 @@ export const postItem = createAsyncThunk(
       quantity,
       category,
       date,
-      minutes,
       hours,
       project,
     }: {
@@ -254,7 +253,6 @@ export const postItem = createAsyncThunk(
       quantity: number;
       category: string;
       date: string;
-      minutes: number;
       hours: number;
       project: number;
     },
@@ -270,7 +268,6 @@ export const postItem = createAsyncThunk(
             quantity,
             category,
             date,
-            minutes,
             hours,
             project,
           },
@@ -299,7 +296,6 @@ export const putItem = createAsyncThunk(
       quantity,
       category,
       date,
-      minutes,
       hours,
     }: {
       id: number;
@@ -308,7 +304,6 @@ export const putItem = createAsyncThunk(
       quantity: number | undefined;
       category: string;
       date: string | undefined;
-      minutes: number | undefined;
       hours: number | undefined;
     },
     thunkAPI
@@ -324,7 +319,6 @@ export const putItem = createAsyncThunk(
             quantity,
             category,
             date,
-            minutes,
             hours,
           },
         },
