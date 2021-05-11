@@ -8,7 +8,6 @@ type ItemProps = {
   itemName: string;
   itemPrice?: number;
   quantity?: number;
-  minutes?: number;
   category: string;
   date?: Date;
   hours?: number;
@@ -20,7 +19,6 @@ type ItemProps = {
     quantity: number | undefined,
     category: string,
     date: string | undefined,
-    minutes: number | undefined,
     hours: number | undefined
   ) => void;
   id: string;
@@ -63,7 +61,6 @@ const OtherItem = ({
   itemName,
   itemPrice = 0,
   quantity = 0,
-  minutes = 0,
   category,
   date,
   hours = 0,
@@ -79,7 +76,6 @@ const OtherItem = ({
       quantity,
       category,
       date?.toString(),
-      minutes,
       hours
     );
   };
@@ -87,11 +83,10 @@ const OtherItem = ({
     handleUpdateItem(
       id,
       itemName,
-      parseInt(`${updatedValue}`, 10),
+      parseFloat(`${updatedValue}`),
       quantity,
       category,
       date?.toString(),
-      minutes,
       hours
     );
   };
@@ -144,7 +139,6 @@ export default OtherItem;
 OtherItem.defaultProps = {
   itemPrice: null,
   quantity: null,
-  minutes: 0,
   date: null,
   hours: 0,
 };
