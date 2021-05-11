@@ -20,7 +20,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavFooter = styled.div`
-  top: 72px;
+  top: 70px;
   position: fixed;
   z-index: 30;
   width: 100%;
