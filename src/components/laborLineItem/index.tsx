@@ -8,7 +8,6 @@ type ItemProps = {
   itemName: string;
   itemPrice?: number;
   quantity?: number;
-  minutes?: number;
   category: string;
   date?: Date;
   hours?: number;
@@ -20,7 +19,6 @@ type ItemProps = {
     quantity: number | undefined,
     category: string,
     date: string | undefined,
-    minutes: number | undefined,
     hours: number | undefined
   ) => void;
   id: string;
@@ -54,7 +52,6 @@ const LaborItem = ({
   itemName,
   itemPrice = 0,
   quantity = 0,
-  minutes = 0,
   category,
   date,
   hours = 0,
@@ -70,7 +67,6 @@ const LaborItem = ({
       quantity,
       category,
       date?.toString(),
-      minutes,
       hours
     );
   };
@@ -82,8 +78,7 @@ const LaborItem = ({
       quantity,
       category,
       date?.toString(),
-      minutes,
-      parseInt(`${updatedValue}`, 10)
+      parseFloat(`${updatedValue}`)
     );
   };
 
@@ -133,7 +128,6 @@ export default LaborItem;
 LaborItem.defaultProps = {
   itemPrice: null,
   quantity: null,
-  minutes: 0,
   date: null,
   hours: 0,
 };
