@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import InlineEdit from '../inlineEdit';
 import Trashcan from '../../assets/img/Trashcan.png';
 import { Display, Edit } from '../../containers/project/components';
@@ -9,7 +8,6 @@ type ItemProps = {
   itemName: string;
   itemPrice?: number;
   quantity?: number;
-  minutes?: number;
   category: string;
   date?: Date;
   hours?: number;
@@ -21,7 +19,6 @@ type ItemProps = {
     quantity: number | undefined,
     category: string,
     date: string | undefined,
-    minutes: number | undefined,
     hours: number | undefined
   ) => void;
   id: string;
@@ -64,7 +61,6 @@ const Item = ({
   itemName,
   itemPrice = 0,
   quantity = 0,
-  minutes = 0,
   category,
   date,
   hours = 0,
@@ -73,12 +69,7 @@ const Item = ({
   handleUpdateItem,
 }: ItemProps): JSX.Element => {
   // const dispatch = useDispatch();
-  const laborDate = date ? new Date(date) : undefined;
-  const stringDate = dayjs(laborDate).format('MM/DD/YYYY');
   const total = new Intl.NumberFormat().format(itemPrice * quantity);
-
-  const hoursToMin = hours * 60;
-  const laborTime = ((hoursToMin + minutes * 1) / 60).toFixed(2);
 
   const handleNewItemName = (updatedValue: string | number) => {
     handleUpdateItem(
@@ -88,7 +79,6 @@ const Item = ({
       quantity,
       category,
       date?.toString(),
-      minutes,
       hours
     );
   };
@@ -98,10 +88,9 @@ const Item = ({
       id,
       itemName,
       itemPrice,
-      parseInt(`${updatedValue}`, 10),
+      parseFloat(`${updatedValue}`),
       category,
       date?.toString(),
-      minutes,
       hours
     );
   };
@@ -110,11 +99,10 @@ const Item = ({
     handleUpdateItem(
       id,
       itemName,
-      parseInt(`${updatedValue}`, 10),
+      parseFloat(`${updatedValue}`),
       quantity,
       category,
       date?.toString(),
-      minutes,
       hours
     );
   };
@@ -177,7 +165,6 @@ export default Item;
 Item.defaultProps = {
   itemPrice: null,
   quantity: null,
-  minutes: 0,
   date: null,
   hours: 0,
 };
