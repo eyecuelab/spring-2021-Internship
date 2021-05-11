@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "productName": "Change When We Decide",
+  "name": "curo",
+  "productName": "Curo",
   "author": "EyeCue Lab <hello@eyecuelab.com> (https://eyecuelab.com)",
   "license": "MIT",
   "contributors": [
@@ -10,14 +10,14 @@
       "url": "https://eyecuelab.com"
     },
     {
-      "name": "Kaila",
-      "email": "replace-me",
-      "url": "replace-me"
+      "name": "Kaila Sprague McRae",
+      "email": "kaila.sprague@icloud.com",
+      "url": "https://github.com/kaila-spraguemcrae"
     },
     {
-      "name": "Zahnen",
-      "email": "replace-me",
-      "url": "replace-me"
+      "name": "Zahnen Garner",
+      "email": "hello@zahnen.co",
+      "url": "https://github.com/Zahnen"
     }
   ],
   "version": "0.1.0",
@@ -25,21 +25,42 @@
   "description": "Short description goes here",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "@types/node": "^12.20.7",
+    "@types/node": "^15.0.1",
     "@types/react": "^16.14.5",
+    "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-big-calendar": "^0.31.0",
+    "@types/react-datepicker": "^3.1.8",
     "@types/react-dom": "^16.9.12",
     "@types/react-redux": "^7.1.16",
+    "@types/react-scroll": "^1.8.2",
+    "@types/redux-persist": "^4.3.1",
     "@types/uuid": "^8.3.0",
+    "axios": "^0.21.1",
+    "date-fns": "^2.21.1",
+    "dayjs": "^1.10.4",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-big-calendar": "^0.33.2",
+    "react-datepicker": "^3.7.0",
     "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
+    "react-hook-form": "^7.0.3",
+    "react-icons": "^4.2.0",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-scroll": "^1.8.2",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "sass": "^1.32.11",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3",
     "styled-components": "^5.2.3",
-    "typescript": "~3.8.2",
+    "styled-css-grid": "^1.2.1",
+    "typescript": "^4.2.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -67,16 +88,38 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": ">=6",
+    "identity-obj-proxy": "^3.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1"
   },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "ts",
+      "tsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setupTests.ts"
+    ]
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "PORT=5000 react-scripts start",
+    "build": "CI=false react-scripts build",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && TIMING=1 eslint src/**/*.ts{,x} --fix",
     "prepare": "husky install"
   },
   "eslintConfig": {

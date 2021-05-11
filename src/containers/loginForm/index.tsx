@@ -1,45 +1,33 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { GoogleLogin } from 'react-google-login';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { selectUser, setEmail, setPassword, setUUID } from './loginSlice';
+import { signIn } from '../../store/slices/userSlice/thunks';
+
+const Wrapper = styled.div`
+  margin-top: 150px;
+`;
+
+const clientId: string = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID ?? '';
 
 const LoginForm = (): JSX.Element => {
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
 
-  function submitUser() {
-    dispatch(setEmail(String(userEmail)));
-    dispatch(setPassword(String(userPassword)));
-    dispatch(setUUID());
-    history.push('/hub');
+  function handleLogin(googleData: any) {
+    dispatch(signIn(googleData));
   }
 
   return (
     <>
-      <p>Sign In:</p>
-      <form>
-        <input
-          name="email"
-          type="text"
-          value={userEmail}
-          placeholder="Email Address"
-          onChange={(event) => setUserEmail(event.target.value)}
+      <Wrapper>
+        <GoogleLogin
+          clientId={clientId}
+          buttonText="Log in with Google"
+          onSuccess={handleLogin}
+          onFailure={handleLogin}
+          cookiePolicy="single_host_origin"
         />
-        <input
-          name="password"
-          type="text"
-          value={userPassword}
-          placeholder="Password"
-          onChange={(event) => setUserPassword(event.target.value)}
-        />
-        <button type="submit" onClick={() => submitUser()}>
-          Submit
-        </button>
-      </form>
+      </Wrapper>
     </>
   );
 };
