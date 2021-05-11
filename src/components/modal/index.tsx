@@ -25,7 +25,7 @@ const TopTear = styled.div`
 const BottomTear = styled.div`
   position: fixed;
   margin-left: -40px;
-  margin-top: 20px;
+  margin-top: 19px;
 `;
 
 const Card = styled.div<{ width: string; color: string }>`
