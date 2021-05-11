@@ -26,6 +26,7 @@ const Wrapper = styled.div`
   width: 1120px;
   background: #fcfbf8;
   padding-top: 120px;
+  padding-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -38,7 +39,7 @@ const Footer = styled.div`
 
 const FooterImg = styled.img`
   width: 100vw;
-  position: relative;
+  position: absolute;
   z-index: 2;
 `;
 
