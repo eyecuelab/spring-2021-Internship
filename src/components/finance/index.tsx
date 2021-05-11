@@ -90,7 +90,6 @@ const Finance = ({
     quantity: number,
     category: string,
     date: string,
-    minutes: number,
     hours: number,
     project: number
   ) => {
@@ -101,7 +100,6 @@ const Finance = ({
         quantity,
         category,
         date,
-        minutes,
         hours,
         project,
       })
@@ -119,7 +117,7 @@ const Finance = ({
           margin="10px 10px 10px 65px"
           img={SmButton}
           color={theme.colors.white}
-          onClick={() => addItem('Enter Name', 1, 1, columnThree, 'Enter Date', 0, 1, intId)}
+          onClick={() => addItem('Enter Name', 1, 1, columnThree, 'Enter Date', 1.0, intId)}
         />
         <TotalsWrapper>
           <TotalsText>
