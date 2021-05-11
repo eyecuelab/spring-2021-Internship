@@ -38,6 +38,8 @@ const TextContainer = styled.div`
   border-bottom: 2px solid ${(props) => props.theme.colors.teal};
 `;
 
+const KeyContainer = styled.div``;
+
 const Input = styled.input<{ color: string }>`
   font-family: ${(props) => props.theme.font};
   font-size: ${(props) => props.theme.fontSizes.small};
@@ -72,22 +74,38 @@ const ProjAnalysis = ({
   const [pricePerUnit, setPricePerUnit] = useState(0);
   const [totalPricePerUnit, setTotalPrice] = useState(0.0);
   const [totalCostPerUnit, setTotalCost] = useState(0.0);
-  const [projectValues, setProjectValues] = useState({
-    units: 1,
-    materials: materialTotals,
-    labor: laborTotals,
-    other: otherTotals,
-    hourlyRate: 0,
-    markUp: 1,
-  });
-  const { units, materials, labor, other, hourlyRate, markUp } = projectValues;
+  const [units, setUnits] = useState(1);
+  const [hourlyRate, setHourlyRate] = useState(0.0);
+  const [markUp, setMarkUp] = useState(0.0);
+  // const [projectValues, setProjectValues] = useState({
+  //   units: 1,
+  //   materials: materialTotals,
+  //   labor: laborTotals,
+  //   other: otherTotals,
+  //   hourlyRate: 0,
+  //   markUp: 1,
+  // });
+  // const { units, materials, labor, other, hourlyRate, markUp } = projectValues;
+
+  const handleSetHourlyRate = (value: any) => {
+    setHourlyRate(parseInt(value, 10));
+  };
+
+  const findMarkUp = () => {
+    const markUpDecimal = pricePerUnit / costPerUnit - 1;
+    const markUpPercent = markUpDecimal * 100;
+    setMarkUp(Math.round(markUpPercent * 100) / 100);
+    console.log(markUp);
+    console.log({ pricePerUnit });
+  };
 
   useEffect(() => {
-    const hourly: number = labor * hourlyRate;
+    const hourly: number = laborTotals * hourlyRate;
     const markUpPercent = markUp / 100 + 1;
-    setCostPerUnit((materials + hourly + other) / units);
+    setCostPerUnit((materialTotals + hourly + otherTotals) / units);
     setPricePerUnit(costPerUnit * markUpPercent);
-  }, [projectValues, materials, other, units, costPerUnit, hourlyRate, labor, markUp]);
+    console.log({ units });
+  }, [materialTotals, otherTotals, units, costPerUnit, hourlyRate, laborTotals, markUp]);
 
   // const handleOnBlur = (value: any) => {
   //   setProjectValues(value);
@@ -128,62 +146,82 @@ const ProjAnalysis = ({
           </Row>
           <Row>
             <Container>
-              <Input
-                color={theme.colors.burntOrange}
-                type="number"
-                name="hourlyRate"
-                defaultValue={hourlyRate}
-                // onBlur={() => handleOnBlur(hourlyRate)}
-                onBlur={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
+              <KeyContainer>
+                <Input
+                  color={theme.colors.burntOrange}
+                  type="number"
+                  name="hourlyRate"
+                  defaultValue={Math.round(hourlyRate * 100) / 100}
+                  // onBlur={() => handleOnBlur(hourlyRate)}
+                  onChange={(e) => setHourlyRate(parseFloat(e.currentTarget.value))}
+                  onBlur={
+                    handleClick
+                    // setProjectValues({
+                    //   ...projectValues,
+                    //   [e.target.name]: parseInt(e.target.value, 10),
+                    // })
+                  }
+                />
+              </KeyContainer>
               <Text color={theme.colors.black}>Hourly Rate</Text>
             </Container>
             <Container>
-              <Input
-                color={theme.colors.burntOrange}
-                type="number"
-                name="units"
-                defaultValue={units}
-                // onBlur={() => handleOnBlur(units)}
-                onBlur={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
+              <KeyContainer>
+                <Input
+                  color={theme.colors.burntOrange}
+                  type="number"
+                  name="units"
+                  defaultValue={Math.round(units * 100) / 100}
+                  // onBlur={() => handleOnBlur(units)}
+                  onChange={(e) => setUnits(parseFloat(e.currentTarget.value))}
+                  onBlur={
+                    handleClick
+                    // setUnits(parseFloat(e.currentTarget.value))
+                    // setProjectValues({
+                    //   ...projectValues,
+                    //   [e.target.name]: parseInt(e.target.value, 10),
+                    // })
+                  }
+                />
+              </KeyContainer>
               <Text color={theme.colors.black}>Total Units</Text>
             </Container>
             <Container>
-              <Input
-                color={theme.colors.burntOrange}
-                // label="Markup (%):"
-                type="number"
-                name="markUp"
-                defaultValue={markUp}
-                // onBlur={() => handleOnBlur(markUp)}
-                onBlur={(e) =>
-                  setProjectValues({
-                    ...projectValues,
-                    [e.target.name]: parseInt(e.target.value, 10),
-                  })
-                }
-              />
+              <KeyContainer>
+                <Input
+                  color={theme.colors.burntOrange}
+                  // label="Markup (%):"
+                  type="number"
+                  name="markUp"
+                  defaultValue={Math.round(markUp * 100) / 100}
+                  onChange={(e) => setMarkUp(parseFloat(e.currentTarget.value))}
+                  // onBlur={() => handleOnBlur(markUp)}
+                  onBlur={handleClick}
+                />
+              </KeyContainer>
               <Text color={theme.colors.black}>Markup (%)</Text>
             </Container>
           </Row>
           <Row>
             <Container>
-              <Input color={theme.colors.black} value={totalCostPerUnit.toFixed(2)} disabled />
+              <KeyContainer key={totalCostPerUnit}>
+                <Input
+                  color={theme.colors.black}
+                  defaultValue={Math.round(totalCostPerUnit * 100) / 100}
+                  // onBlur={findMarkUp}
+                />
+              </KeyContainer>
               <Text color={theme.colors.black}>Cost per Unit</Text>
             </Container>
             <Container>
-              <Input color={theme.colors.black} value={totalPricePerUnit.toFixed(2)} disabled />
+              <KeyContainer key={totalPricePerUnit}>
+                <Input
+                  color={theme.colors.black}
+                  defaultValue={Math.round(totalPricePerUnit * 100) / 100}
+                  // onBlur={findMarkUp}
+                  // onChange={(e) => setTotalPrice(parseInt(e.currentTarget.value, 10))}
+                />
+              </KeyContainer>
               <Text color={theme.colors.black}>Price per Unit</Text>
             </Container>
           </Row>
