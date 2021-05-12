@@ -117,6 +117,7 @@ export const DropDownContent = styled.div<{ isOpen: boolean }>`
 
 export const DropdownWrapper = styled.div`
   width: 1120px;
+  padding: 300px auto;
   margin-right: auto;
   margin-left: auto;
 `;
@@ -186,12 +187,12 @@ export const Text = styled.h1<{ margin: string }>`
 `;
 
 export const Freeze = styled.div`
-  top: 290px;
+  top: 296px;
   bottom: 0;
   left: 0;
   right: 0;
   position: fixed;
-  z-index: 11;
+  z-index: 1;
   background: rgba(98, 141, 157, 0.5);
   align-items: center;
 `;
