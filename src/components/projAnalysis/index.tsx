@@ -146,7 +146,7 @@ const ProjAnalysis = ({
   const findMarkUp = () => {
     const markUpDecimal = pricePerUnit / costPerUnit - 1;
     const markUpPercent = markUpDecimal * 100;
-    setMarkUp(Math.round(markUpPercent * 100) / 100);
+    setMarkUp(markUpPercent);
     setTotalPrice(pricePerUnit);
   };
 
@@ -156,10 +156,10 @@ const ProjAnalysis = ({
     const markUpPercent = markUpDecimal * 100;
     const laborCosts = totalCost - (otherTotals + materialTotals);
     const newLabor = laborCosts / laborTotals;
-    setMarkUp(Math.round(markUpPercent * 100) / 100);
+    setMarkUp(markUpPercent);
     setTotalCost(costPerUnit);
-    setLaborCost(Math.round(laborCosts * 100) / 100);
-    setHourlyRate(Math.round(newLabor * 100) / 100);
+    setLaborCost(laborCosts);
+    setHourlyRate(newLabor);
   };
 
   return (
@@ -190,7 +190,7 @@ const ProjAnalysis = ({
         {/* CPU / PPU */}
         {currentForm === 'costPrice' && (
           <ContentWrapper id="costPrice">
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <Row>
                 <Container>
                   <Input
@@ -205,7 +205,7 @@ const ProjAnalysis = ({
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>{laborTotals.toFixed(2)}</Text>
+                    <Text color={theme.colors.teal}>{Math.round(laborTotals * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Labor Hours</Text>
                 </Container>
@@ -213,19 +213,21 @@ const ProjAnalysis = ({
               <Row>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>$ {materialTotals}</Text>
+                    <Text color={theme.colors.teal}>
+                      $ {Math.round(materialTotals * 100) / 100}
+                    </Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Material Costs</Text>
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>$ {otherTotals}</Text>
+                    <Text color={theme.colors.teal}>$ {Math.round(otherTotals * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Other Costs</Text>
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.black}>
-                    <Text color={theme.colors.black}>$ {laborCost}</Text>
+                    <Text color={theme.colors.black}>$ {Math.round(laborCost * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.black}>Labor Costs</Text>
                 </Container>
@@ -278,7 +280,7 @@ const ProjAnalysis = ({
         {/* Markup */}
         {currentForm === 'markup' && (
           <ContentWrapper id="markup">
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <Row>
                 <Container>
                   <TextContainer color="rgba(53, 43, 39, 0.2)">
@@ -290,7 +292,7 @@ const ProjAnalysis = ({
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>{laborTotals.toFixed(2)}</Text>
+                    <Text color={theme.colors.teal}>{Math.round(laborTotals * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Labor Hours</Text>
                 </Container>
@@ -298,19 +300,21 @@ const ProjAnalysis = ({
               <Row>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>$ {materialTotals}</Text>
+                    <Text color={theme.colors.teal}>
+                      $ {Math.round(materialTotals * 100) / 100}
+                    </Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Material Costs</Text>
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>$ {otherTotals}</Text>
+                    <Text color={theme.colors.teal}>$ {Math.round(otherTotals * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Other Costs</Text>
                 </Container>
                 <Container>
                   <TextContainer color="rgba(53, 43, 39, 0.2)">
-                    <Text color="rgba(53, 43, 39, 0.2)">$ {laborCost}</Text>
+                    <Text color="rgba(53, 43, 39, 0.2)">$ {Math.round(laborCost * 100) / 100}</Text>
                   </TextContainer>
                   <Text color="rgba(53, 43, 39, 0.2)">Labor Costs</Text>
                 </Container>
@@ -356,7 +360,7 @@ const ProjAnalysis = ({
         {/* Hourly Rate */}
         {currentForm === 'hourly' && (
           <ContentWrapper id="hourly">
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <Row>
                 <Container>
                   <TextContainer color={theme.colors.black}>
@@ -366,7 +370,7 @@ const ProjAnalysis = ({
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>{laborTotals.toFixed(2)}</Text>
+                    <Text color={theme.colors.teal}>{Math.round(laborTotals * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Labor Hours</Text>
                 </Container>
@@ -374,19 +378,21 @@ const ProjAnalysis = ({
               <Row>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>$ {materialTotals}</Text>
+                    <Text color={theme.colors.teal}>
+                      $ {Math.round(materialTotals * 100) / 100}
+                    </Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Material Costs</Text>
                 </Container>
                 <Container>
                   <TextContainer color={theme.colors.teal}>
-                    <Text color={theme.colors.teal}>$ {otherTotals}</Text>
+                    <Text color={theme.colors.teal}>$ {Math.round(otherTotals * 100) / 100}</Text>
                   </TextContainer>
                   <Text color={theme.colors.teal}>Other Costs</Text>
                 </Container>
                 <Container>
                   <TextContainer color="rgba(53, 43, 39, 0.2)">
-                    <Text color="rgba(53, 43, 39, 0.2)">$ {laborCost}</Text>
+                    <Text color="rgba(53, 43, 39, 0.2)">$ {Math.round(laborCost * 100) / 100}</Text>
                   </TextContainer>
                   <Text color="rgba(53, 43, 39, 0.2)">Labor Costs</Text>
                 </Container>
@@ -412,7 +418,9 @@ const ProjAnalysis = ({
                     type="number"
                     name="costPerUnit"
                     defaultValue={Math.round(costPerUnit * 100) / 100}
-                    onChange={(e) => setCostPerUnit(parseFloat(e.currentTarget.value))}
+                    onChange={(e) =>
+                      setCostPerUnit(Math.round(parseFloat(e.currentTarget.value) * 100) / 100)
+                    }
                     onBlur={findHourly}
                   />
                   <Text color={theme.colors.black}>Cost per Unit</Text>
