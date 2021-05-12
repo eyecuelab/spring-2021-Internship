@@ -19,13 +19,12 @@ const Wrapper = styled.div`
 
 const TopTear = styled.div`
   position: fixed;
-  margin-top: -50px;
-  margin-left: -40px;
+  margin: -43px 0 0 -40px;
 `;
 const BottomTear = styled.div`
   position: fixed;
   margin-left: -40px;
-  margin-top: 19px;
+  margin-top: 18px;
 `;
 
 const Card = styled.div<{ width: string; color: string }>`
