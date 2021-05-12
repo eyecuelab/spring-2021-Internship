@@ -116,15 +116,11 @@ const ProjAnalysis = ({
   const [laborCost, setLaborCost] = useState(0);
   const [currentForm, setCurrentForm] = useState('costPrice');
 
-  // const handleSetHourlyRate = (value: any) => {
-  //   setHourlyRate(parseInt(value, 10));
-  // };
-
   useEffect(() => {
-    const hourly: number = laborTotals * hourlyRate;
-    setLaborCost(hourly);
+    // const hourly: number = laborTotals * hourlyRate;
+    // setLaborCost(hourly);
     // const markUpPercent = markUp / 100 + 1;
-    setCostPerUnit((materialTotals + hourly + otherTotals) / units);
+    // setCostPerUnit((materialTotals + hourly + otherTotals) / units);
     // setPricePerUnit(costPerUnit * markUpPercent);
   }, [
     materialTotals,
@@ -139,11 +135,12 @@ const ProjAnalysis = ({
 
   const handleOnBlur = () => {
     const markUpPercent = markUp / 100 + 1;
-    // setPricePerUnit(costPerUnit * markUpPercent);
     const hourly: number = laborTotals * hourlyRate;
+    setLaborCost(hourly);
     setTotalCost((materialTotals + hourly + otherTotals) / units);
     setTotalPrice(costPerUnit * markUpPercent);
     setPricePerUnit(costPerUnit * markUpPercent);
+    setCostPerUnit((materialTotals + hourly + otherTotals) / units);
   };
 
   const findMarkUp = () => {
@@ -151,6 +148,18 @@ const ProjAnalysis = ({
     const markUpPercent = markUpDecimal * 100;
     setMarkUp(Math.round(markUpPercent * 100) / 100);
     setTotalPrice(pricePerUnit);
+  };
+
+  const findHourly = () => {
+    const totalCost = costPerUnit * units;
+    const markUpDecimal = pricePerUnit / costPerUnit - 1;
+    const markUpPercent = markUpDecimal * 100;
+    const laborCosts = totalCost - (otherTotals + materialTotals);
+    const newLabor = laborCosts / laborTotals;
+    setMarkUp(Math.round(markUpPercent * 100) / 100);
+    setTotalCost(costPerUnit);
+    setLaborCost(Math.round(laborCosts * 100) / 100);
+    setHourlyRate(Math.round(newLabor * 100) / 100);
   };
 
   return (
@@ -350,14 +359,9 @@ const ProjAnalysis = ({
             <form>
               <Row>
                 <Container>
-                  <Input
-                    color={theme.colors.burntOrange}
-                    type="number"
-                    name="hourlyRate"
-                    defaultValue={Math.round(hourlyRate * 100) / 100}
-                    onChange={(e) => setHourlyRate(parseFloat(e.currentTarget.value))}
-                    onBlur={handleOnBlur}
-                  />
+                  <TextContainer color={theme.colors.black}>
+                    <Text color={theme.colors.black}>$ {Math.round(hourlyRate * 100) / 100}</Text>
+                  </TextContainer>
                   <Text color={theme.colors.black}>Hourly Rate</Text>
                 </Container>
                 <Container>
@@ -381,10 +385,24 @@ const ProjAnalysis = ({
                   <Text color={theme.colors.teal}>Other Costs</Text>
                 </Container>
                 <Container>
-                  <TextContainer color={theme.colors.black}>
-                    <Text color={theme.colors.black}>$ {laborCost}</Text>
+                  <TextContainer color="rgba(53, 43, 39, 0.2)">
+                    <Text color="rgba(53, 43, 39, 0.2)">$ {laborCost}</Text>
                   </TextContainer>
-                  <Text color={theme.colors.black}>Labor Costs</Text>
+                  <Text color="rgba(53, 43, 39, 0.2)">Labor Costs</Text>
+                </Container>
+              </Row>
+              <Row>
+                <Container>
+                  <TextContainer color="rgba(53, 43, 39, 0.2)">
+                    <Text color="rgba(53, 43, 39, 0.2)">{Math.round(units * 100) / 100}</Text>
+                  </TextContainer>
+                  <Text color="rgba(53, 43, 39, 0.2)">Total Units</Text>
+                </Container>
+                <Container>
+                  <TextContainer color="rgba(53, 43, 39, 0.2)">
+                    <Text color="rgba(53, 43, 39, 0.2)">{Math.round(markUp * 100) / 100}</Text>
+                  </TextContainer>
+                  <Text color="rgba(53, 43, 39, 0.2)">Markup (%)</Text>
                 </Container>
               </Row>
               <Row>
@@ -392,41 +410,20 @@ const ProjAnalysis = ({
                   <Input
                     color={theme.colors.burntOrange}
                     type="number"
-                    name="units"
-                    defaultValue={Math.round(units * 100) / 100}
-                    onChange={(e) => setUnits(parseFloat(e.currentTarget.value))}
-                    onBlur={handleOnBlur}
+                    name="costPerUnit"
+                    defaultValue={Math.round(costPerUnit * 100) / 100}
+                    onChange={(e) => setCostPerUnit(parseFloat(e.currentTarget.value))}
+                    onBlur={findHourly}
                   />
-                  <Text color={theme.colors.black}>Total Units</Text>
-                </Container>
-                <Container>
-                  <Input
-                    color={theme.colors.burntOrange}
-                    type="number"
-                    name="markUp"
-                    defaultValue={Math.round(markUp * 100) / 100}
-                    onChange={(e) => setMarkUp(parseFloat(e.currentTarget.value))}
-                    onBlur={handleOnBlur}
-                  />
-                  <Text color={theme.colors.black}>Markup (%)</Text>
-                </Container>
-              </Row>
-              <Row>
-                <Container>
-                  <TextContainer color={theme.colors.black}>
-                    <Text color={theme.colors.black}>
-                      $ {Math.round(totalCostPerUnit * 100) / 100}{' '}
-                    </Text>
-                  </TextContainer>
                   <Text color={theme.colors.black}>Cost per Unit</Text>
                 </Container>
                 <Container>
-                  <TextContainer color={theme.colors.black}>
-                    <Text color={theme.colors.black}>
-                      $ {Math.round(totalPricePerUnit * 100) / 100}
+                  <TextContainer color="rgba(53, 43, 39, 0.2)">
+                    <Text color="rgba(53, 43, 39, 0.2)">
+                      {Math.round(pricePerUnit * 100) / 100}
                     </Text>
                   </TextContainer>
-                  <Text color={theme.colors.black}>Price per Unit</Text>
+                  <Text color="rgba(53, 43, 39, 0.2)">Price per Unit</Text>
                 </Container>
               </Row>
             </form>
