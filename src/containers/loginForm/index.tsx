@@ -7,7 +7,7 @@ import { signIn } from '../../store/slices/userSlice/thunks';
 const Wrapper = styled.div`
   background: ${(props) => props.theme.colors.offWhite};
   padding-top: 150px;
-  height: 100vh;
+  height: calc(100vh - 51px);
 `;
 
 const clientId: string = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID ?? '';
