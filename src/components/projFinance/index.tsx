@@ -16,7 +16,7 @@ type ProjFinanceProps = {
 const Layout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 100vw;
   background: #fcfbf8;
 `;
 

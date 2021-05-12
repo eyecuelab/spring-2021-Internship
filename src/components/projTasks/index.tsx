@@ -10,7 +10,7 @@ import Tear from '../../assets/img/TaskTear.svg';
 const Layout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 100vw;
   background: ${(props) => props.theme.colors.grey};
 `;
 
@@ -21,17 +21,17 @@ const Wrapper = styled.div`
   padding-top: 25px;
   padding-bottom: 110px;
   position: relative;
-  margin-top: -33px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
+  margin: -33px auto 0 auto;
 `;
 
 const Footer = styled.div`
   position: absolute;
   z-index: 2;
   width: 1120px;
-  margin-top: -80px;
+  margin-top: 29px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 `;
 
 const HeaderText = styled.p`
@@ -147,10 +147,10 @@ const ProjTasks = ({
               </Droppable>
             </DragDropContext>
           </ListRow>
+          <Footer>
+            <img src={Tear} width="1120px" alt="torn paper edge" />
+          </Footer>
         </Wrapper>
-        <Footer>
-          <img src={Tear} alt="torn paper edge" />
-        </Footer>
       </Layout>
     </>
   );

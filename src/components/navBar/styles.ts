@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Link as LinkS } from 'react-scroll';
 import Curo from '../../assets/img/Curo.svg';
 
 export const Layout = styled.div`
-  width: 100%;
+  width: 100vw;
   margin-right: auto;
   margin-left: auto;
+  overflow: auto;
 `;
 
 export const Nav = styled.nav`
   background: ${(props) => props.theme.colors.cloudyGreen};
-  width: 100%;
+  width: 100vw;
   height: 72px;
   display: flex;
   top: 0;
@@ -23,13 +23,13 @@ export const NavFooter = styled.div`
   top: 70px;
   position: fixed;
   z-index: 30;
-  width: 100%;
+  width: 100vw;
   margin-left: -200px;
 `;
 
 export const NavTwo = styled.nav`
   background: ${(props) => props.theme.colors.skyBlue};
-  width: 100%;
+  width: 100vw;
   margin-top: 72px;
   height: 65px;
   display: flex;
@@ -42,7 +42,7 @@ export const NavTwoFooter = styled.div`
   top: 72px;
   position: fixed;
   z-index: 10;
-  width: 100%;
+  width: 100vw;
   margin-top: 65px;
   margin-left: -1000px;
 `;

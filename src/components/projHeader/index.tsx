@@ -16,8 +16,9 @@ type HeaderProps = {
 const Layout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
-  background: #fcfbf8;
+  width: 100vw;
+  min-width: 1120px;
+  background: ${(props) => props.theme.colors.offWhite};
 `;
 
 const Wrapper = styled.div`

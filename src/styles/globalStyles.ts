@@ -4,7 +4,15 @@ const GlobalStyles = createGlobalStyle`
 body { 
   margin: auto;
   overflow-x: hidden;
+  
+  
 }
+@media only screen and (max-width: 1120px) {
+  body {
+    overflow-x: auto;
+  }
+}
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
