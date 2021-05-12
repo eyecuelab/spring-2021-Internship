@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import Curo from '../../assets/img/Curo.svg';
 
 const Wrapper = styled.div`
+  position: absolute;
   bottom: 0px;
+  width: 100vw;
   height: 51px;
   background: ${(props) => props.theme.colors.cloudyGreen};
   border-top: 2px ${(props) => props.theme.colors.white} dashed;

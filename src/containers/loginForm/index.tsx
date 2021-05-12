@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { signIn } from '../../store/slices/userSlice/thunks';
 
 const Wrapper = styled.div`
-  margin-top: 150px;
+  background: ${(props) => props.theme.colors.offWhite};
+  padding-top: 150px;
+  height: 100vh;
 `;
 
 const clientId: string = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID ?? '';
