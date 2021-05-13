@@ -60,6 +60,7 @@ export const NavContainer = styled.div`
 
 export const NavLogo = styled.img.attrs({ src: `${Curo}` })`
   height: 48px;
+  width: 134px;
   margin-left: 46px;
 `;
 
@@ -81,9 +82,13 @@ export const NavLink = styled(LinkS)<{ color: string }>`
   cursor: pointer;
   text-decoration: none;
   display: flex;
+  margin-right: 10px;
   font-family: ${(props) => props.theme.font};
   font-size: ${(props) => props.theme.fontSizes.small};
   color: ${(props) => props.color};
+  &:hover {
+    color: #335662;
+  }
 `;
 
 export const AuthButton = styled.button<{ color: string; size: string }>`

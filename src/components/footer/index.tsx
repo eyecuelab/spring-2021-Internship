@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
-  margin-top: 4px;
+  margin-top: 12px;
   width: 1120px;
 `;
 
@@ -27,7 +27,7 @@ const Footer = (): JSX.Element => {
     <>
       <Wrapper>
         <Container>
-          <img src={Curo} alt="Curo logo" />
+          <img src={Curo} alt="Curo logo" style={{ width: '78px', height: '28px' }} />
         </Container>
       </Wrapper>
     </>
