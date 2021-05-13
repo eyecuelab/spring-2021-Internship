@@ -123,7 +123,7 @@ const ProjAnalysis = ({
   const [totalCostPerUnit, setTotalCost] = useState(0.0);
   const [units, setUnits] = useState(projectUnits);
   const [hourlyRate, setHourlyRate] = useState(projectHourly);
-  const [markUp, setMarkUp] = useState(0.0);
+  const [markUp, setMarkUp] = useState(projectMarkup);
   const [laborCost, setLaborCost] = useState(0);
   const [currentForm, setCurrentForm] = useState('costPrice');
 
@@ -150,6 +150,9 @@ const ProjAnalysis = ({
   };
 
   useEffect(() => {
+    setUnits(projectUnits);
+    setHourlyRate(projectHourly);
+    setMarkUp(projectMarkup);
     const price = (materialTotals + projectHourly + otherTotals) / projectUnits;
     const hourly: number = laborTotals * projectHourly;
     const markupDec = projectMarkup / 100 + 1;
@@ -161,13 +164,13 @@ const ProjAnalysis = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projName]);
 
-  useEffect(() => {
-    setUnits(projectUnits);
-    setHourlyRate(projectHourly);
-    setMarkUp(projectMarkup);
-  }, [projectUnits, projectHourly, projectMarkup]);
+  // useEffect(() => {
+
+  //   // console.log({ projectMarkup });
+  // }, [projectUnits, projectHourly, projectMarkup]);
 
   useEffect(() => {
+    console.log({ markUp });
     const markUpPercent = markUp / 100 + 1;
     const hourly: number = laborTotals * hourlyRate;
     setPricePerUnit(costPerUnit * markUpPercent);
@@ -199,11 +202,14 @@ const ProjAnalysis = ({
     );
   };
 
-  const findMarkUp = () => {
-    const markUpDecimal = pricePerUnit / costPerUnit - 1;
+  const findMarkUp = async () => {
+    const markUpDecimal = totalPricePerUnit / costPerUnit - 1;
     const markUpPercent = markUpDecimal * 100;
-    setMarkUp(markUpPercent);
-    setTotalPrice(pricePerUnit);
+    console.log({ markUpPercent });
+    // console.log({ totalPricePerUnit });
+    // console.log(markUpPercent);
+    await setMarkUp(markUpPercent);
+    // setTotalPrice(totalPricePerUnit);
     handleUpdateProject(
       parseInt(projectId, 10),
       projName,
@@ -215,16 +221,16 @@ const ProjAnalysis = ({
     );
   };
 
-  const findHourly = () => {
-    const totalCost = costPerUnit * units;
-    const markUpDecimal = pricePerUnit / costPerUnit - 1;
+  const findHourly = async () => {
+    const totalCost = totalCostPerUnit * units;
+    const markUpDecimal = pricePerUnit / totalCostPerUnit - 1;
     const markUpPercent = markUpDecimal * 100;
     const laborCosts = totalCost - (otherTotals + materialTotals);
     const newLabor = laborCosts / laborTotals;
-    setMarkUp(markUpPercent);
-    setTotalCost(costPerUnit);
-    setLaborCost(laborCosts);
-    setHourlyRate(newLabor);
+    await setMarkUp(markUpPercent);
+    await setTotalCost(totalCostPerUnit);
+    await setLaborCost(laborCosts);
+    await setHourlyRate(newLabor);
     handleUpdateProject(
       parseInt(projectId, 10),
       projName,
@@ -428,7 +434,7 @@ const ProjAnalysis = ({
                     type="number"
                     name="pricePerUnit"
                     defaultValue={Math.round(pricePerUnit * 100) / 100}
-                    onChange={(e) => setPricePerUnit(parseFloat(e.currentTarget.value))}
+                    onChange={(e) => setTotalPrice(parseFloat(e.currentTarget.value))}
                     onBlur={findMarkUp}
                   />
                   <Text color={theme.colors.black}>Price per Unit</Text>
@@ -499,7 +505,7 @@ const ProjAnalysis = ({
                     name="costPerUnit"
                     defaultValue={Math.round(costPerUnit * 100) / 100}
                     onChange={(e) =>
-                      setCostPerUnit(Math.round(parseFloat(e.currentTarget.value) * 100) / 100)
+                      setTotalCost(Math.round(parseFloat(e.currentTarget.value) * 100) / 100)
                     }
                     onBlur={findHourly}
                   />
