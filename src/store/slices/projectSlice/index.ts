@@ -58,6 +58,9 @@ export interface CurrentProject {
   startDate: string;
   endDate: string;
   id: string;
+  hourly: number;
+  units: number;
+  markup: number;
   items: {
     [ItemCategory.Material]: MaterialItem[];
     [ItemCategory.Labor]: LaborItem[];
@@ -85,6 +88,9 @@ export const initialState: ProjectState = {
     startDate: '',
     endDate: '',
     id: '',
+    hourly: 0,
+    units: 1,
+    markup: 0,
     items: { material: [], labor: [], other: [] },
     tasks: { todo: [], doing: [], done: [] },
   },
