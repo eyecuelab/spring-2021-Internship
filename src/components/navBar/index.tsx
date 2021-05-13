@@ -76,22 +76,22 @@ const NavBar = (): JSX.Element => {
           <NavContainer>
             <NavMenu style={{ marginLeft: '38px' }}>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="project" smooth offset={-155}>
+                <NavLink color={theme.colors.teal} to="project" smooth offset={-180}>
                   Project
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="tasks" offset={-155} smooth>
+                <NavLink color={theme.colors.teal} to="tasks" offset={-180} smooth>
                   Tasks
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="costs" offset={-155} smooth>
+                <NavLink color={theme.colors.teal} to="costs" offset={-180} smooth>
                   Cost
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="analysis" offset={-155} smooth>
+                <NavLink color={theme.colors.teal} to="analysis" offset={-180} smooth>
                   Analysis
                 </NavLink>
               </NavItem>
