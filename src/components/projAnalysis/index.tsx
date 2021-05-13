@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import * as selectors from '../../store/selectors';
 import theme from '../../styles/theme';
+import { putProject } from '../../store/slices/projectSlice/thunks';
 
 const Wrapper = styled.div`
   width: 1120px;
@@ -106,41 +109,94 @@ const ProjAnalysis = ({
   laborTotals,
   otherTotals,
 }: ProjAnalysisProps): JSX.Element => {
+  const dispatch = useDispatch();
+  const projName = useSelector(selectors.selectProjectName);
+  const projStartDate = useSelector(selectors.selectProjectStartDate);
+  const projEndDate = useSelector(selectors.selectProjectEndDate);
+  const projectId = useSelector(selectors.selectProjectId);
+  const projectHourly = useSelector(selectors.selectProjectHourly);
+  const projectUnits = useSelector(selectors.selectProjectUnits);
+  const projectMarkup = useSelector(selectors.selectProjectMarkup);
   const [costPerUnit, setCostPerUnit] = useState(0);
   const [pricePerUnit, setPricePerUnit] = useState(0);
   const [totalPricePerUnit, setTotalPrice] = useState(0.0);
   const [totalCostPerUnit, setTotalCost] = useState(0.0);
-  const [units, setUnits] = useState(1);
-  const [hourlyRate, setHourlyRate] = useState(0.0);
+  const [units, setUnits] = useState(projectUnits);
+  const [hourlyRate, setHourlyRate] = useState(projectHourly);
   const [markUp, setMarkUp] = useState(0.0);
   const [laborCost, setLaborCost] = useState(0);
   const [currentForm, setCurrentForm] = useState('costPrice');
 
+  const handleUpdateProject = (
+    projId: number,
+    projectName: string,
+    startDate: string,
+    endDate: string,
+    projHourly: number,
+    projUnits: number,
+    projMarkup: number
+  ) => {
+    dispatch(
+      putProject({
+        projId,
+        projectName,
+        startDate,
+        endDate,
+        hourly: projHourly,
+        units: projUnits,
+        markup: projMarkup,
+      })
+    );
+  };
+
   useEffect(() => {
-    // const hourly: number = laborTotals * hourlyRate;
-    // setLaborCost(hourly);
-    // const markUpPercent = markUp / 100 + 1;
-    // setCostPerUnit((materialTotals + hourly + otherTotals) / units);
-    // setPricePerUnit(costPerUnit * markUpPercent);
+    const price = (materialTotals + projectHourly + otherTotals) / projectUnits;
+    const hourly: number = laborTotals * projectHourly;
+    const markupDec = projectMarkup / 100 + 1;
+    setCostPerUnit(price);
+    setPricePerUnit(price * markupDec);
+    setTotalCost((materialTotals + projectHourly + otherTotals) / projectUnits);
+    setTotalPrice(price * markupDec);
+    setLaborCost(hourly);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projName]);
+
+  useEffect(() => {
+    setUnits(projectUnits);
+    setHourlyRate(projectHourly);
+    setMarkUp(projectMarkup);
+  }, [projectUnits, projectHourly, projectMarkup]);
+
+  useEffect(() => {
+    const markUpPercent = markUp / 100 + 1;
+    const hourly: number = laborTotals * hourlyRate;
+    setPricePerUnit(costPerUnit * markUpPercent);
+    setCostPerUnit((materialTotals + hourly + otherTotals) / units);
   }, [
+    markUp,
     materialTotals,
     otherTotals,
     units,
+    laborTotals,
     costPerUnit,
     hourlyRate,
-    laborTotals,
-    markUp,
     pricePerUnit,
   ]);
 
-  const handleOnBlur = () => {
-    const markUpPercent = markUp / 100 + 1;
+  const handleOnBlur = async () => {
     const hourly: number = laborTotals * hourlyRate;
-    setLaborCost(hourly);
-    setTotalCost((materialTotals + hourly + otherTotals) / units);
-    setTotalPrice(costPerUnit * markUpPercent);
-    setPricePerUnit(costPerUnit * markUpPercent);
-    setCostPerUnit((materialTotals + hourly + otherTotals) / units);
+    await setLaborCost(hourly);
+    await setTotalCost(costPerUnit);
+    await setTotalPrice(pricePerUnit);
+    handleUpdateProject(
+      parseInt(projectId, 10),
+      projName,
+      projStartDate,
+      projEndDate,
+      hourlyRate,
+      units,
+      markUp
+    );
   };
 
   const findMarkUp = () => {
@@ -148,6 +204,15 @@ const ProjAnalysis = ({
     const markUpPercent = markUpDecimal * 100;
     setMarkUp(markUpPercent);
     setTotalPrice(pricePerUnit);
+    handleUpdateProject(
+      parseInt(projectId, 10),
+      projName,
+      projStartDate,
+      projEndDate,
+      hourlyRate,
+      units,
+      markUp
+    );
   };
 
   const findHourly = () => {
@@ -160,6 +225,15 @@ const ProjAnalysis = ({
     setTotalCost(costPerUnit);
     setLaborCost(laborCosts);
     setHourlyRate(newLabor);
+    handleUpdateProject(
+      parseInt(projectId, 10),
+      projName,
+      projStartDate,
+      projEndDate,
+      hourlyRate,
+      units,
+      markUp
+    );
   };
 
   return (
@@ -193,14 +267,16 @@ const ProjAnalysis = ({
             <form onSubmit={(e) => e.preventDefault()}>
               <Row>
                 <Container>
-                  <Input
-                    color={theme.colors.burntOrange}
-                    type="number"
-                    name="hourlyRate"
-                    defaultValue={Math.round(hourlyRate * 100) / 100}
-                    onChange={(e) => setHourlyRate(parseFloat(e.currentTarget.value))}
-                    onBlur={handleOnBlur}
-                  />
+                  <div key={projectHourly}>
+                    <Input
+                      color={theme.colors.burntOrange}
+                      type="number"
+                      name="hourlyRate"
+                      defaultValue={Math.round(projectHourly * 100) / 100}
+                      onChange={(e) => setHourlyRate(parseFloat(e.currentTarget.value))}
+                      onBlur={handleOnBlur}
+                    />
+                  </div>
                   <Text color={theme.colors.black}>Hourly Rate</Text>
                 </Container>
                 <Container>
@@ -234,25 +310,29 @@ const ProjAnalysis = ({
               </Row>
               <Row>
                 <Container>
-                  <Input
-                    color={theme.colors.burntOrange}
-                    type="number"
-                    name="units"
-                    defaultValue={Math.round(units * 100) / 100}
-                    onChange={(e) => setUnits(parseFloat(e.currentTarget.value))}
-                    onBlur={handleOnBlur}
-                  />
+                  <div key={projectUnits}>
+                    <Input
+                      color={theme.colors.burntOrange}
+                      type="number"
+                      name="units"
+                      defaultValue={Math.round(projectUnits * 100) / 100}
+                      onChange={(e) => setUnits(parseFloat(e.currentTarget.value))}
+                      onBlur={handleOnBlur}
+                    />
+                  </div>
                   <Text color={theme.colors.black}>Total Units</Text>
                 </Container>
                 <Container>
-                  <Input
-                    color={theme.colors.burntOrange}
-                    type="number"
-                    name="markUp"
-                    defaultValue={Math.round(markUp * 100) / 100}
-                    onChange={(e) => setMarkUp(parseFloat(e.currentTarget.value))}
-                    onBlur={handleOnBlur}
-                  />
+                  <div key={projectMarkup}>
+                    <Input
+                      color={theme.colors.burntOrange}
+                      type="number"
+                      name="markUp"
+                      defaultValue={Math.round(projectMarkup * 100) / 100}
+                      onChange={(e) => setMarkUp(parseFloat(e.currentTarget.value))}
+                      onBlur={handleOnBlur}
+                    />
+                  </div>
                   <Text color={theme.colors.black}>Markup (%)</Text>
                 </Container>
               </Row>
