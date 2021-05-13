@@ -113,6 +113,7 @@ export const DropDownContent = styled.div<{ isOpen: boolean }>`
   width: 100vw;
   position: fixed;
   background: ${(props) => props.theme.colors.cloudyGreen};
+  filter: drop-shadow(0 7px 0.75rem rgba(53, 43, 39, 0.5));
 `;
 
 export const DropdownWrapper = styled.div`
