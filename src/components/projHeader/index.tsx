@@ -74,6 +74,10 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
   const projStartDate = useSelector(selectors.selectProjectStartDate);
   const projEndDate = useSelector(selectors.selectProjectEndDate);
   const projectId = useSelector(selectors.selectProjectId);
+  const projHourly = useSelector(selectors.selectProjectHourly);
+  const projUnits = useSelector(selectors.selectProjectUnits);
+  const projMarkup = useSelector(selectors.selectProjectMarkup);
+
   const dispatch = useDispatch();
 
   const handleUpdateProject = (
@@ -82,7 +86,17 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
     startDate: string,
     endDate: string
   ) => {
-    dispatch(putProject({ projId, projectName, startDate, endDate }));
+    dispatch(
+      putProject({
+        projId,
+        projectName,
+        startDate,
+        endDate,
+        hourly: projHourly,
+        units: projUnits,
+        markup: projMarkup,
+      })
+    );
   };
 
   const endDate = dayjs(projEndDate).format('MM/DD/YYYY');
