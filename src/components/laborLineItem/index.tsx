@@ -41,7 +41,18 @@ const DetailText = styled.p`
   font-size: ${(props) => props.theme.fontSizes.xsmall};
   font-family: Montserrat;
   position: relative;
+  display: inline-flex-row;
 `;
+
+// const Hours = styled.p`
+//   color: ${(props) => props.theme.colors.teal};
+//   font-size: ${(props) => props.theme.fontSizes.xsmall};
+//   font-family: Montserrat;
+//   // display: flex;
+//   position: absolute;
+//   float: right;
+//   margin-left: 40px;
+// `;
 
 const TrashIcon = styled.img`
   position: absolute;
@@ -59,6 +70,8 @@ const LaborItem = ({
   handleDelete,
   handleUpdateItem,
 }: ItemProps): JSX.Element => {
+  // const hoursFixed = hours.toFixed(2);
+
   const handleNewItemName = (updatedValue: string | number) => {
     handleUpdateItem(
       id,
@@ -103,6 +116,7 @@ const LaborItem = ({
               renderDisplay={Display}
               renderEdit={Edit}
             />
+            {/* <Hours>hr(s)</Hours> */}
           </DetailText>
         </Container>
         <Container style={{ marginLeft: '52px', borderBottom: 'none' }}>
