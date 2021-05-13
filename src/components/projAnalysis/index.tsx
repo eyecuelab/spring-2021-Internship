@@ -72,7 +72,7 @@ const Container = styled.div`
   display: inline;
   height: 102px;
   width: 187px;
-  margin: 17px 59px;
+  margin: 17px 50px;
 `;
 
 const TextContainer = styled.div<{ color: string }>`
