@@ -117,13 +117,12 @@ export const DropDownContent = styled.div<{ isOpen: boolean }>`
 
 export const DropdownWrapper = styled.div`
   width: 1120px;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0 auto;
 `;
 
 export const DropDownHeaderContainer = styled.div`
   position: static;
-  padding: 0;
+  padding: 40px 0 0 0;
   width: 1120px;
 `;
 
@@ -143,6 +142,7 @@ export const DropDownList = styled.ul`
   list-style-type: none;
   display: block;
   padding-inline-start: 0;
+  padding-bottom: 40px;
 `;
 
 export const DropDownContainer = styled.div`
@@ -186,12 +186,12 @@ export const Text = styled.h1<{ margin: string }>`
 `;
 
 export const Freeze = styled.div`
-  top: 290px;
+  top: 296px;
   bottom: 0;
   left: 0;
   right: 0;
   position: fixed;
-  z-index: 11;
+  z-index: 1;
   background: rgba(98, 141, 157, 0.5);
   align-items: center;
 `;
