@@ -14,6 +14,7 @@ import {
   NavLogo,
   AuthButton,
   DropDownLi,
+  ArrowSvg,
 } from './styles';
 import { signOut } from '../../store/slices/userSlice/thunks';
 import Button from '../button';
@@ -114,7 +115,7 @@ const NavBar = (): JSX.Element => {
                   onClick={handleClick}
                 >
                   Project
-                  <RiArrowDownSLine />
+                  <ArrowSvg />
                 </DropDownLi>
               </NavItem>
               <NavItem>
