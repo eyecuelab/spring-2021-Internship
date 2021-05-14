@@ -19,13 +19,12 @@ const Wrapper = styled.div`
 
 const TopTear = styled.div`
   position: fixed;
-  margin-top: -50px;
-  margin-left: -40px;
+  margin: -43px 0 0 -40px;
 `;
 const BottomTear = styled.div`
   position: fixed;
   margin-left: -40px;
-  margin-top: 19px;
+  margin-top: 18px;
 `;
 
 const Card = styled.div<{ width: string; color: string }>`
@@ -33,13 +32,12 @@ const Card = styled.div<{ width: string; color: string }>`
   max-height: 500px;
   z-index: 100000;
   padding: 20px 40px 20px 40px;
-  // justify-content: center;
-  // text-align: center;
   width: ${(props) => props.width};
   background-color: ${(props) => props.color};
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  filter: drop-shadow(0 0 0.75rem rgba(53, 43, 39, 0.6));
 `;
 
 type ModalProps = {

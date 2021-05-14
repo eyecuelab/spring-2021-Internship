@@ -58,7 +58,13 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
   builder.addCase(putProject.pending, (state) => {
     state.projectsList = [...state.projectsList];
   });
-  builder.addCase(putProject.fulfilled, (state) => {
+  builder.addCase(putProject.fulfilled, (state, { payload }) => {
+    state.currentProject.projectName = payload.project.projectName;
+    state.currentProject.startDate = payload.project.startDate;
+    state.currentProject.endDate = payload.project.endDate;
+    state.currentProject.hourly = payload.project.hourly;
+    state.currentProject.units = payload.project.units;
+    state.currentProject.markup = payload.project.markup;
     state.error = '';
   });
   builder.addCase(putProject.rejected, (state, action) => {

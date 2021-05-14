@@ -5,6 +5,7 @@ export type RenderProps = {
   handleOnClick?: () => void;
   handleOnBlur?: () => void;
   handleOnKeyDown?: (e: React.KeyboardEvent) => void;
+  // eslint-disable-next-line
   handleOnChange?: (e: any) => void;
 };
 
@@ -23,6 +24,7 @@ const InlineEdit = ({ value, updateValue, renderDisplay, renderEdit }: Props): J
     setValueState(value);
   }, [value]);
 
+  // eslint-disable-next-line
   const handleOnChange = (e: any) => {
     setValueState(e.currentTarget.value);
   };

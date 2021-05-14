@@ -41,6 +41,7 @@ const DetailText = styled.p`
   font-size: ${(props) => props.theme.fontSizes.xsmall};
   font-family: Montserrat;
   position: relative;
+  display: inline-flex-row;
 `;
 
 const TrashIcon = styled.img`

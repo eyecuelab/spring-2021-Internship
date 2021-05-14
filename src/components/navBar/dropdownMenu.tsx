@@ -42,17 +42,19 @@ const Dropdown = ({ isOpen, handleToggleDropdown }: DropdownProps): JSX.Element 
     const startDate = dayjs(e.startDate).format('MM/DD/YYYY');
     const endDate = dayjs(e.endDate).format('MM/DD/YYYY');
     return (
-      <DropDownContainer onClick={() => handleClick(e.id)}>
-        <DropDownText marginL="21px" marginR="auto" width="523px">
-          {e.projectName}
-        </DropDownText>
-        <DropDownText marginL="22px" marginR="auto" width="100px">
-          {startDate}
-        </DropDownText>
-        <DropDownText marginL="95px" marginR="auto" width="100px">
-          {endDate}
-        </DropDownText>
-      </DropDownContainer>
+      <>
+        <DropDownContainer onClick={() => handleClick(e.id)}>
+          <DropDownText marginL="21px" marginR="auto" width="523px">
+            {e.projectName}
+          </DropDownText>
+          <DropDownText marginL="22px" marginR="auto" width="100px">
+            {startDate}
+          </DropDownText>
+          <DropDownText marginL="95px" marginR="auto" width="100px">
+            {endDate}
+          </DropDownText>
+        </DropDownContainer>
+      </>
     );
   });
 
@@ -71,8 +73,8 @@ const Dropdown = ({ isOpen, handleToggleDropdown }: DropdownProps): JSX.Element 
             </>
           ) : (
             <>
-              <Text margin="100px">Please Add a New Project</Text>
               <Freeze />
+              <Text margin="100px">Please Add a New Project</Text>
             </>
           )}
           <DropDownFooter>

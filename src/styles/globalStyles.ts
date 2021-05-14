@@ -4,6 +4,22 @@ const GlobalStyles = createGlobalStyle`
 body { 
   margin: auto;
   overflow-x: hidden;
+  
+  
+}
+@media only screen and (max-width: 1120px) {
+  body {
+    overflow-x: auto;
+  }
+}
+
+.react-datepicker__input-container > input{
+  width: 584px;
+  height: 54px;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  padding: 18px;
+  margin-bottom: 24px;
 }
 
 input::-webkit-outer-spin-button,

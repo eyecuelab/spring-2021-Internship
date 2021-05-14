@@ -16,7 +16,7 @@ type ProjFinanceProps = {
 const Layout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 100vw;
   background: #fcfbf8;
 `;
 
@@ -45,7 +45,7 @@ const FooterImg = styled.img`
 
 const HeaderText = styled.p`
   position: absolute;
-  top: 57px;
+  top: 67px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;

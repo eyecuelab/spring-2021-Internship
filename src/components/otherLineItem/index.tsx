@@ -68,6 +68,11 @@ const OtherItem = ({
   handleDelete,
   handleUpdateItem,
 }: ItemProps): JSX.Element => {
+  const total = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(itemPrice * quantity);
+  const price = itemPrice;
   const handleNewItemName = (updatedValue: string | number) => {
     handleUpdateItem(
       id,
@@ -108,7 +113,7 @@ const OtherItem = ({
           <DetailText>
             <DollarSign>$</DollarSign>
             <InlineEdit
-              value={itemPrice}
+              value={price}
               updateValue={handleNewItemPrice}
               renderDisplay={Display}
               renderEdit={Edit}
@@ -126,8 +131,7 @@ const OtherItem = ({
           <DetailText>Total</DetailText>
         </Container>
         <Container style={{ marginLeft: '9px', width: '145px', textAlign: 'center' }}>
-          <DollarSign>$</DollarSign>
-          <DetailText>{itemPrice}</DetailText>
+          <DetailText>{total}</DetailText>
         </Container>
       </Wrapper>
     </>

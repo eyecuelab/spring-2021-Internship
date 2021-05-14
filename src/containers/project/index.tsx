@@ -99,9 +99,6 @@ const Project = (): JSX.Element => {
         updatedPosition = LISTS[taskStatus][toIndex - 1].position + 1;
       }
       if (LISTS[formerStatus]) {
-        // if (formerStatus !== LISTS) {
-        //   console.error(`Former Status Unrecognized:"${formerStatus}"`);
-        // }
         const { taskName, id, activity, taskDesc } = LISTS[formerStatus][fromIndex];
         const intId = parseInt(id, 10);
         dispatch(

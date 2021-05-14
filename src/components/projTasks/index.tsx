@@ -10,7 +10,7 @@ import Tear from '../../assets/img/TaskTear.svg';
 const Layout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 100vw;
   background: ${(props) => props.theme.colors.grey};
 `;
 
@@ -21,22 +21,26 @@ const Wrapper = styled.div`
   padding-top: 25px;
   padding-bottom: 110px;
   position: relative;
-  margin-top: -33px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
+  margin: -33px auto 0 auto;
+`;
+
+const Container = styled.div`
+  margin-top: 35px;
 `;
 
 const Footer = styled.div`
   position: absolute;
   z-index: 2;
   width: 1120px;
-  margin-top: -80px;
+  margin-top: 29px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 `;
 
 const HeaderText = styled.p`
   position: absolute;
-  top: 37px;
+  top: 69px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;
@@ -47,7 +51,7 @@ const HeaderText = styled.p`
 
 const ListRow = styled.div`
   display: flex;
-  margin-top: 80px;
+  margin-top: 115px;
   margin-left: 40px;
 `;
 
@@ -56,6 +60,7 @@ const TaskContainer = styled.div`
   border-radius: 3px;
   width: 333px;
   margin: 10px;
+  margin-bottom: 40px;
 `;
 
 const TaskUl = styled.ul`
@@ -83,15 +88,18 @@ const ProjTasks = ({
     <>
       <Layout>
         <Wrapper>
-          <SmallButton
-            buttonText="New Task"
-            size="12px"
-            margin="-10px 0px auto 120px"
-            img={SmButton}
-            color={theme.colors.white}
-            onClick={handleToggleNewTask}
-          />
+          <Container>
+            <SmallButton
+              buttonText="New Task"
+              size="12px"
+              margin="-10px 0px auto 120px"
+              img={SmButton}
+              color={theme.colors.white}
+              onClick={handleToggleNewTask}
+            />
+          </Container>
           <HeaderText id="tasks">Tasks</HeaderText>
+
           <ListRow>
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="todo">
@@ -147,10 +155,10 @@ const ProjTasks = ({
               </Droppable>
             </DragDropContext>
           </ListRow>
+          <Footer>
+            <img src={Tear} width="1120px" alt="torn paper edge" />
+          </Footer>
         </Wrapper>
-        <Footer>
-          <img src={Tear} alt="torn paper edge" />
-        </Footer>
       </Layout>
     </>
   );

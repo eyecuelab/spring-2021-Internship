@@ -1,17 +1,19 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Link as LinkS } from 'react-scroll';
 import Curo from '../../assets/img/Curo.svg';
+import Arrow from '../../assets/img/Arrow.svg';
+import PinkArrow from '../../assets/img/PinkArrow.svg';
 
 export const Layout = styled.div`
-  width: 100%;
+  width: 100vw;
   margin-right: auto;
   margin-left: auto;
+  overflow: auto;
 `;
 
 export const Nav = styled.nav`
   background: ${(props) => props.theme.colors.cloudyGreen};
-  width: 100%;
+  width: 100vw;
   height: 72px;
   display: flex;
   top: 0;
@@ -20,16 +22,16 @@ export const Nav = styled.nav`
 `;
 
 export const NavFooter = styled.div`
-  top: 72px;
+  top: 70px;
   position: fixed;
   z-index: 30;
-  width: 100%;
+  width: 100vw;
   margin-left: -200px;
 `;
 
 export const NavTwo = styled.nav`
   background: ${(props) => props.theme.colors.skyBlue};
-  width: 100%;
+  width: 100vw;
   margin-top: 72px;
   height: 65px;
   display: flex;
@@ -42,7 +44,7 @@ export const NavTwoFooter = styled.div`
   top: 72px;
   position: fixed;
   z-index: 10;
-  width: 100%;
+  width: 100vw;
   margin-top: 65px;
   margin-left: -1000px;
 `;
@@ -60,7 +62,22 @@ export const NavContainer = styled.div`
 
 export const NavLogo = styled.img.attrs({ src: `${Curo}` })`
   height: 48px;
+  width: 134px;
   margin-left: 46px;
+`;
+
+export const ArrowSvg = styled.img.attrs({ src: `${Arrow}` })<{ isOpen: boolean }>`
+  margin-left: 72px;
+  margin-top: 2px;
+  position: absolute;
+  opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
+`;
+
+export const PinkArrowSvg = styled.img.attrs({ src: `${PinkArrow}` })<{ isOpen: boolean }>`
+  margin-left: 72px;
+  margin-top: 2px;
+  position: absolute;
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 `;
 
 export const NavMenu = styled.ul`
@@ -72,7 +89,7 @@ export const NavMenu = styled.ul`
 `;
 
 export const NavItem = styled.li`
-  margin: 0px 10px;
+  margin: 0px 15px;
   width: auto;
   display: flex;
 `;
@@ -81,9 +98,14 @@ export const NavLink = styled(LinkS)<{ color: string }>`
   cursor: pointer;
   text-decoration: none;
   display: flex;
+  margin-right: 10px;
   font-family: ${(props) => props.theme.font};
   font-size: ${(props) => props.theme.fontSizes.small};
   color: ${(props) => props.color};
+  &:hover {
+    transition: 0.2s ease-in-out;
+    color: #335662;
+  }
 `;
 
 export const AuthButton = styled.button<{ color: string; size: string }>`
@@ -113,17 +135,17 @@ export const DropDownContent = styled.div<{ isOpen: boolean }>`
   width: 100vw;
   position: fixed;
   background: ${(props) => props.theme.colors.cloudyGreen};
+  filter: drop-shadow(0 7px 0.75rem rgba(53, 43, 39, 0.5));
 `;
 
 export const DropdownWrapper = styled.div`
   width: 1120px;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0 auto;
 `;
 
 export const DropDownHeaderContainer = styled.div`
   position: static;
-  padding: 0;
+  padding: 40px 0 0 0;
   width: 1120px;
 `;
 
@@ -143,6 +165,7 @@ export const DropDownList = styled.ul`
   list-style-type: none;
   display: block;
   padding-inline-start: 0;
+  padding-bottom: 40px;
 `;
 
 export const DropDownContainer = styled.div`
@@ -160,10 +183,6 @@ export const DropDownFooter = styled.div`
   z-index: 10;
   margin-left: -200px;
 `;
-
-// export const TextWrapper = styled.div<{ width: string }>`
-//   width: ${(props) => props.width};
-// `;
 
 export const DropDownText = styled.div<{ marginL: string; marginR: string; width: string }>`
   color: ${(props) => props.theme.colors.navy};
@@ -186,12 +205,12 @@ export const Text = styled.h1<{ margin: string }>`
 `;
 
 export const Freeze = styled.div`
-  top: 290px;
+  top: 296px;
   bottom: 0;
   left: 0;
   right: 0;
   position: fixed;
-  z-index: 11;
+  z-index: 1;
   background: rgba(98, 141, 157, 0.5);
   align-items: center;
 `;

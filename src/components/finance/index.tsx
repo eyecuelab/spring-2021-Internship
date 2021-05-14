@@ -56,15 +56,6 @@ const Header = styled.h2`
   font-size: ${(props) => props.theme.fontSizes.small};
 `;
 
-const DollarSign = styled.p`
-  color: ${(props) => props.theme.colors.teal};
-  font-size: ${(props) => props.theme.fontSizes.xsmall};
-  font-family: Montserrat;
-  position: absolute;
-  float: left;
-  margin-left: 20px;
-`;
-
 type FinanceProps = {
   columnOne: string;
   columnTwo: string;
@@ -80,6 +71,10 @@ const Finance = ({
   children,
   totals,
 }: FinanceProps): JSX.Element => {
+  const total = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(totals);
   const dispatch = useDispatch();
   const projectId = useSelector(selectors.selectProjectId);
   const intId = parseInt(projectId, 10);
@@ -117,16 +112,23 @@ const Finance = ({
           margin="10px 10px 10px 65px"
           img={SmButton}
           color={theme.colors.white}
-          onClick={() => addItem('Enter Name', 1, 1, columnThree, 'Enter Date', 1.0, intId)}
+          onClick={() =>
+            addItem(
+              'Enter Name',
+              parseFloat('1.00'),
+              1,
+              columnThree,
+              'Enter Date',
+              parseFloat('1.00'),
+              intId
+            )
+          }
         />
         <TotalsWrapper>
           <TotalsText>
             <TotalsContainer style={{ borderBottom: 'none' }}>{columnOne} Total:</TotalsContainer>
             {columnThree === 'material' || columnThree === 'other' ? (
-              <TotalsContainer>
-                <DollarSign>$</DollarSign>
-                {totals}
-              </TotalsContainer>
+              <TotalsContainer>{total}</TotalsContainer>
             ) : (
               <TotalsContainer>{totals} hours</TotalsContainer>
             )}

@@ -1,46 +1,90 @@
-# spring-2020-Internship
+<br>
+<h1 align = "center">
+  <b>Curo</b>
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+<p align = "center">
+  A project management tool for makers
+</p>
 
-## Available Scripts
+<p align = "center"> 
+  Created:  March 29, 2021
+  Last Edited: May 14, 2021
+</p>
 
-In the project directory, you can run:
+<p align = "center">
+  <a href="https://www.github.com/kaila-spraguemcrae">Kaila Sprague McRae</a> & <a href="https://www.github.com/zahnen">Zahnen Garner</a> @ <a href="https://www.github.com/eyecuelab">EyeCue Lab</a> 
+</p>
 
-### `npm start`
+<p align = "center">
+<a href="https://curo-internship-client.herokuapp.com/">Live Site</a>
+</p>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Curo is a project management tool designed to help budding makers pivot their craft from hobby to profession. Curo offers kanban style task management, cost-tracking, and financial analysis tools that work in combination to answer the question so many creatives ask themselves - "Can I really do this?"
 
-### `npm test`
+Curo helps makers on the cusp of entrepreneurship better understand their process, their costs, and their business model. Moreover, Curo is a powerful platform for established makers to easily organize multiple projects and to continue to optimize their process.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Curo was developed using TypeScript, React with Redux Toolkit, Node.js/Express, PostgreSQL.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Demo
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+[Click Here to view live site](https://curo-internship-client.herokuapp.com/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## MVP
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+| ⬜️ | Features                                                                    |
+| :-- | :-------------------------------------------------------------------------- |
+| ✅  | A User can Sign-up Log-in and Log-out                                       |
+| ✅  | A User can create, delete and update multiple projects                      |
+| ✅  | A User can add, delete and update Tasks in kanban style board               |
+| ✅  | A User can drag and drop Tasks in to different columns (To Do, Doing, Done) |
+| ✅  | A User can track materials and other cost by adding line items              |
+| ✅  | A User can track their hours worked by adding line items                    |
+| ✅  | A User can calculate cost per unit and price per unit                       |
+| ✅  | A User can calculate their hourly rate and markup                           |
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## ❓ Support and Contact Details
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Kaila Sprague McRae // kaila.sprague@icloud.com // [LinkedIn](https://www.linkedin.com/in/kaila-sprague-mcrae/)
+- Zahnen Garner // zahnen@gmail.com // [LinkedIn](https://www.linkedin.com/in/zahnen/)
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 💻 Technologies Used
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+_This application required use of the following programs/languages/libraries to create:_
+
+- _[TypeScript](https://www.w3schools.com/js/js_es6.asp)_
+- _[React](https://reactjs.org/)_
+- _[Redux Toolkit](https://redux-toolkit.js.org/)_
+- _[Node.js](https://nodejs.org/en/)_
+- _[Express](https://expressjs.com/)_
+- _[PostgreSQL](_https://www.postgresql.org/)_
+- _[TypeORM](https://typeorm.io/#/)_
+- _[styled-components](https://styled-components.com/)_
+- _[Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2)_
+- _[yarn](https://yarnpkg.com/)_
+- _[Jest](https://jestjs.io/)_
+- _[Jasmine](https://jasmine.github.io/)_
+- _[Babel](https://babeljs.io/)_
+- _[ES Lint](https://eslint.org/)_
+- _[Figma](https://www.figma.com/)_
+- _For a full list of packages/dependencies, feel free to have a look in the file titled package.json_
+
+---
+
+## 📃 License / Acknowledgments
+
+A HUGE thanks to [EyeCue Lab](https://github.com/eyecuelab) and the team that helped us develop Curo.
+
+_Licensed under MIT_
+
+Copyright (c) 2021 Zahnen Garner & Kaila Sprague McRae

@@ -5,6 +5,7 @@ import { UserState } from '.';
 
 const API_URL: string = process.env.REACT_APP_API_URL ?? 'http://localhost:3000';
 
+// eslint-disable-next-line
 export const signIn = createAsyncThunk('user/signIn', async (googleData: any, thunkAPI) => {
   try {
     const response = await axios.post(

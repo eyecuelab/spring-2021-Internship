@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-// margin: ${(props) => props.margin};
+
 const ButtonWrapper = styled.div`
   z-index: 31;
   justify-content: center;
@@ -12,6 +12,7 @@ const ButtonWrapper = styled.div`
 const ButtonImg = styled.img`
   position: fixed;
   z-index: 100;
+  filter: drop-shadow(0 0 0.75rem rgba(53, 43, 39, 0.4));
 `;
 
 const ButtonStyle = styled.button<{

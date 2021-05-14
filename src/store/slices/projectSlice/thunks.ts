@@ -76,11 +76,17 @@ export const putProject = createAsyncThunk(
       projectName,
       startDate,
       endDate,
+      hourly,
+      units,
+      markup,
     }: {
       projId: number;
       projectName: string;
       startDate: string;
       endDate: string;
+      hourly: number;
+      units: number;
+      markup: number;
     },
     thunkAPI
   ) => {
@@ -93,6 +99,9 @@ export const putProject = createAsyncThunk(
             projectName,
             startDate,
             endDate,
+            hourly,
+            units,
+            markup,
           },
         },
         {

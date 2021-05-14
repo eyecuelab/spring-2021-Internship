@@ -3,13 +3,12 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { initialState, UserState } from './index';
 import { signIn, signOut } from './thunks';
 
-const extraReducers = (builder: ActionReducerMapBuilder<UserState>) => {
+const extraReducers = (builder: ActionReducerMapBuilder<UserState>): void => {
   // //////////////SIGN IN OR SIGN UP////////////////
   builder.addCase(signIn.pending, (state) => {
     state.userInfo = initialState.userInfo;
   });
   builder.addCase(signIn.fulfilled, (state, { payload }) => {
-    console.log('what', payload);
     if (payload.user) {
       state.userInfo = payload.user;
     }
@@ -18,16 +17,11 @@ const extraReducers = (builder: ActionReducerMapBuilder<UserState>) => {
     state.userInfo = initialState.userInfo;
   });
   // //////////////SIGN IN OR SIGN UP////////////////
-  builder.addCase(signOut.pending, (state) => {
-    // state.userInfo = initialState.userInfo;
-  });
+  builder.addCase(signOut.pending, () => {});
   builder.addCase(signOut.fulfilled, (state) => {
-    console.log('what is happening', state.userInfo, initialState.userInfo);
     state.userInfo = initialState.userInfo;
   });
-  builder.addCase(signOut.rejected, (state) => {
-    // state.userInfo = initialState.userInfo;
-  });
+  builder.addCase(signOut.rejected, () => {});
 };
 
 export default extraReducers;

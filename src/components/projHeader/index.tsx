@@ -16,14 +16,15 @@ type HeaderProps = {
 const Layout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
-  background: #fcfbf8;
+  width: 100vw;
+  min-width: 1120px;
+  background: ${(props) => props.theme.colors.offWhite};
 `;
 
 const Wrapper = styled.div`
-  margin-top: 100px;
+  margin-top: 120px;
   position: relative;
-  height: 193px;
+  height: 223px;
   width: 1120px;
   margin-left: auto;
   margin-right: auto;
@@ -64,7 +65,7 @@ const DetailText = styled.p`
 const TrashIcon = styled.img`
   position: relative;
   margin-top: 17px;
-  margin-left: 22px;
+  margin-left: 23px;
   cursor: pointer;
 `;
 
@@ -73,6 +74,10 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
   const projStartDate = useSelector(selectors.selectProjectStartDate);
   const projEndDate = useSelector(selectors.selectProjectEndDate);
   const projectId = useSelector(selectors.selectProjectId);
+  const projHourly = useSelector(selectors.selectProjectHourly);
+  const projUnits = useSelector(selectors.selectProjectUnits);
+  const projMarkup = useSelector(selectors.selectProjectMarkup);
+
   const dispatch = useDispatch();
 
   const handleUpdateProject = (
@@ -81,7 +86,17 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
     startDate: string,
     endDate: string
   ) => {
-    dispatch(putProject({ projId, projectName, startDate, endDate }));
+    dispatch(
+      putProject({
+        projId,
+        projectName,
+        startDate,
+        endDate,
+        hourly: projHourly,
+        units: projUnits,
+        markup: projMarkup,
+      })
+    );
   };
 
   const endDate = dayjs(projEndDate).format('MM/DD/YYYY');
@@ -106,8 +121,8 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
           <HeaderText style={{ left: '48px', fontSize: '24px' }} id="project">
             Project
           </HeaderText>
-          <HeaderText style={{ left: '565px', fontSize: '20px' }}>Start Date</HeaderText>
-          <HeaderText style={{ left: '824px', fontSize: '20px' }}>Due Date</HeaderText>
+          <HeaderText style={{ left: '565px', fontSize: '16px' }}>Start Date</HeaderText>
+          <HeaderText style={{ left: '824px', fontSize: '16px' }}>Due Date</HeaderText>
           <Container style={{ left: '49px', width: '418px' }}>
             <DetailText style={{ fontSize: '20px', left: '24px' }}>
               <InlineEdit

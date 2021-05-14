@@ -64,6 +64,21 @@ export const selectProjectList = createSelector(
   (project) => project.projectsList
 );
 
+export const selectProjectHourly = createSelector(
+  [projectSelector],
+  (project) => project.currentProject?.hourly
+);
+
+export const selectProjectUnits = createSelector(
+  [projectSelector],
+  (project) => project.currentProject?.units
+);
+
+export const selectProjectMarkup = createSelector(
+  [projectSelector],
+  (project) => project.currentProject?.markup
+);
+
 export const authSelector = createSelector(selectUser, (user) => user);
 
 export const selectUUID = createSelector([authSelector], (user) => user?.userInfo?.uuid);
