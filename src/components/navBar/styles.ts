@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link as LinkS } from 'react-scroll';
 import Curo from '../../assets/img/Curo.svg';
 import Arrow from '../../assets/img/Arrow.svg';
+import PinkArrow from '../../assets/img/PinkArrow.svg';
 
 export const Layout = styled.div`
   width: 100vw;
@@ -65,8 +66,18 @@ export const NavLogo = styled.img.attrs({ src: `${Curo}` })`
   margin-left: 46px;
 `;
 
-export const ArrowSvg = styled.img.attrs({ src: `${Arrow}` })`
-  margin-left: 6px;
+export const ArrowSvg = styled.img.attrs({ src: `${Arrow}` })<{ isOpen: boolean }>`
+  margin-left: 72px;
+  margin-top: 2px;
+  position: absolute;
+  opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
+`;
+
+export const PinkArrowSvg = styled.img.attrs({ src: `${PinkArrow}` })<{ isOpen: boolean }>`
+  margin-left: 72px;
+  margin-top: 2px;
+  position: absolute;
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 `;
 
 export const NavMenu = styled.ul`
