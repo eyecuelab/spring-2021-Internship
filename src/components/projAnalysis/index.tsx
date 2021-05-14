@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   width: 1120px;
   display: flex;
   margin: 0 auto;
-  padding-top: 100px;
+  padding-top: 90px;
 `;
 
 const HeaderText = styled.p`
@@ -33,6 +33,13 @@ const NavContainer = styled.div`
   padding: 0 250px;
   align-items: center;
   justify-content: space-between;
+`;
+
+const NavHeaderContainer = styled.div`
+  align-items: center;
+  border-radius: 10px;
+  height: 35px;
+  padding: 6px;
 `;
 
 const NavHeader = styled.h2`
@@ -246,7 +253,9 @@ const ProjAnalysis = ({
       <Wrapper>
         <HeaderText id="analysis">Analysis</HeaderText>
         <NavContainer>
-          <NavHeader>Find My:</NavHeader>
+          <NavHeaderContainer>
+            <NavHeader>Find My:</NavHeader>
+          </NavHeaderContainer>
           <NavTextContainer
             color={
               currentForm === 'costPrice' ? 'rgba(218, 127, 91, 0.2)' : 'rgba(218, 127, 91, 0)'
