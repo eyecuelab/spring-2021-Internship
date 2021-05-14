@@ -29,7 +29,7 @@ const NavContainer = styled.div`
   width: 1120px;
   height: 70px;
   position: absolute;
-  margin: 60px auto 100px auto;
+  margin: 40px auto 80px auto;
   padding: 0 250px;
   align-items: center;
   justify-content: space-between;
@@ -67,7 +67,7 @@ const NavText = styled.p`
 
 const ContentWrapper = styled.div`
   display: flex;
-  margin: 170px auto;
+  margin: 150px auto 100px auto;
 `;
 
 const Row = styled.div`
