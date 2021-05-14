@@ -29,7 +29,7 @@ const NavContainer = styled.div`
   width: 1120px;
   height: 70px;
   position: absolute;
-  margin: 70px auto 100px auto;
+  margin: 60px auto 100px auto;
   padding: 0 250px;
   align-items: center;
   justify-content: space-between;
@@ -60,7 +60,7 @@ const NavText = styled.p`
 
 const ContentWrapper = styled.div`
   display: flex;
-  margin: 120px auto;
+  margin: 170px auto;
 `;
 
 const Row = styled.div`
@@ -72,7 +72,7 @@ const Container = styled.div`
   display: inline;
   height: 102px;
   width: 187px;
-  margin: 36px 59px;
+  margin: 17px 50px;
 `;
 
 const TextContainer = styled.div<{ color: string }>`
@@ -170,7 +170,6 @@ const ProjAnalysis = ({
   // }, [projectUnits, projectHourly, projectMarkup]);
 
   useEffect(() => {
-    console.log({ markUp });
     const markUpPercent = markUp / 100 + 1;
     const hourly: number = laborTotals * hourlyRate;
     setPricePerUnit(costPerUnit * markUpPercent);

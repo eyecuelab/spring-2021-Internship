@@ -8,6 +8,7 @@ const ButtonWrapper = styled.div<{ margin: string }>`
 
 const ButtonImg = styled.img`
   position: absolute;
+  filter: drop-shadow(10px 10px 0.75rem rgba(53, 43, 39, 0.2));
 `;
 
 const ButtonStyle = styled.button<{
