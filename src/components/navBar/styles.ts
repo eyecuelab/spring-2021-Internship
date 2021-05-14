@@ -90,12 +90,6 @@ export const NavLink = styled(LinkS)<{ color: string }>`
   font-size: ${(props) => props.theme.fontSizes.small};
   color: ${(props) => props.color};
   margin: 0px 2px;
-
-  &:hover {
-    color: #fff;
-    // color: #362c28;
-    transition: 0.2s ease-in-out;
-  }
 `;
 
 export const AuthButton = styled.button<{ color: string; size: string }>`
