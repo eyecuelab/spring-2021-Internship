@@ -22,9 +22,9 @@ const Layout = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin-top: 100px;
+  margin-top: 120px;
   position: relative;
-  height: 193px;
+  height: 223px;
   width: 1120px;
   margin-left: auto;
   margin-right: auto;

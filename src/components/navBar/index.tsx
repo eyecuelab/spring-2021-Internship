@@ -15,6 +15,7 @@ import {
   AuthButton,
   DropDownLi,
   ArrowSvg,
+  PinkArrowSvg,
 } from './styles';
 import { signOut } from '../../store/slices/userSlice/thunks';
 import Button from '../button';
@@ -86,22 +87,22 @@ const NavBar = (): JSX.Element => {
           <NavContainer>
             <NavMenu style={{ marginLeft: '38px' }}>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="project" smooth offset={-180}>
+                <NavLink color={theme.colors.teal} to="project" smooth offset={-190}>
                   Project
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="tasks" offset={-180} smooth>
+                <NavLink color={theme.colors.teal} to="tasks" offset={-190} smooth>
                   Tasks
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="costs" offset={-180} smooth>
+                <NavLink color={theme.colors.teal} to="costs" offset={-190} smooth>
                   Cost
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink color={theme.colors.teal} to="analysis" offset={-180} smooth>
+                <NavLink color={theme.colors.teal} to="analysis" offset={-190} smooth>
                   Analysis
                 </NavLink>
               </NavItem>
@@ -124,7 +125,8 @@ const NavBar = (): JSX.Element => {
                   onClick={handleClick}
                 >
                   Project
-                  <ArrowSvg />
+                  <ArrowSvg isOpen={isOpenDropdown} />
+                  <PinkArrowSvg isOpen={isOpenDropdown} />
                 </DropDownLi>
               </NavItem>
               <NavItem>
