@@ -24,6 +24,11 @@ const Wrapper = styled.div`
   margin: -33px auto 0 auto;
 `;
 
+const Container = styled.div`
+  margin-top: 35px;
+  // position: absolute;
+`;
+
 const Footer = styled.div`
   position: absolute;
   z-index: 2;
@@ -36,7 +41,7 @@ const Footer = styled.div`
 
 const HeaderText = styled.p`
   position: absolute;
-  top: 37px;
+  top: 69px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;
@@ -47,7 +52,7 @@ const HeaderText = styled.p`
 
 const ListRow = styled.div`
   display: flex;
-  margin-top: 80px;
+  margin-top: 115px;
   margin-left: 40px;
 `;
 
@@ -56,6 +61,7 @@ const TaskContainer = styled.div`
   border-radius: 3px;
   width: 333px;
   margin: 10px;
+  margin-bottom: 40px;
 `;
 
 const TaskUl = styled.ul`
@@ -83,15 +89,18 @@ const ProjTasks = ({
     <>
       <Layout>
         <Wrapper>
-          <SmallButton
-            buttonText="New Task"
-            size="12px"
-            margin="-10px 0px auto 120px"
-            img={SmButton}
-            color={theme.colors.white}
-            onClick={handleToggleNewTask}
-          />
+          <Container>
+            <SmallButton
+              buttonText="New Task"
+              size="12px"
+              margin="-10px 0px auto 120px"
+              img={SmButton}
+              color={theme.colors.white}
+              onClick={handleToggleNewTask}
+            />
+          </Container>
           <HeaderText id="tasks">Tasks</HeaderText>
+
           <ListRow>
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="todo">
