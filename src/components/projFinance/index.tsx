@@ -45,7 +45,7 @@ const FooterImg = styled.img`
 
 const HeaderText = styled.p`
   position: absolute;
-  top: 57px;
+  top: 67px;
   font-family: ${(props) => props.theme.font};
   color: ${(props) => props.theme.colors.black};
   opacity: 0.2;
