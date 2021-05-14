@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RenderProps, Props } from '../../components/inlineEdit';
+import { RenderProps } from '../../components/inlineEdit';
 
 const Button = styled.button`
   background: none;

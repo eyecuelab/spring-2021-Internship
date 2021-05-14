@@ -32,8 +32,6 @@ const Card = styled.div<{ width: string; color: string }>`
   max-height: 500px;
   z-index: 100000;
   padding: 20px 40px 20px 40px;
-  // justify-content: center;
-  // text-align: center;
   width: ${(props) => props.width};
   background-color: ${(props) => props.color};
   position: relative;

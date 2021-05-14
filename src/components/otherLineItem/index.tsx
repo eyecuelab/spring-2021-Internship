@@ -73,7 +73,6 @@ const OtherItem = ({
     currency: 'USD',
   }).format(itemPrice * quantity);
   const price = itemPrice;
-  // .toFixed(2);
   const handleNewItemName = (updatedValue: string | number) => {
     handleUpdateItem(
       id,

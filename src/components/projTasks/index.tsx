@@ -26,7 +26,6 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   margin-top: 35px;
-  // position: absolute;
 `;
 
 const Footer = styled.div`

@@ -171,11 +171,6 @@ const ProjAnalysis = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projName]);
 
-  // useEffect(() => {
-
-  //   // console.log({ projectMarkup });
-  // }, [projectUnits, projectHourly, projectMarkup]);
-
   useEffect(() => {
     const markUpPercent = markUp / 100 + 1;
     const hourly: number = laborTotals * hourlyRate;
@@ -211,11 +206,7 @@ const ProjAnalysis = ({
   const findMarkUp = async () => {
     const markUpDecimal = totalPricePerUnit / costPerUnit - 1;
     const markUpPercent = markUpDecimal * 100;
-    console.log({ markUpPercent });
-    // console.log({ totalPricePerUnit });
-    // console.log(markUpPercent);
     await setMarkUp(markUpPercent);
-    // setTotalPrice(totalPricePerUnit);
     handleUpdateProject(
       parseInt(projectId, 10),
       projName,

@@ -184,10 +184,6 @@ export const DropDownFooter = styled.div`
   margin-left: -200px;
 `;
 
-// export const TextWrapper = styled.div<{ width: string }>`
-//   width: ${(props) => props.width};
-// `;
-
 export const DropDownText = styled.div<{ marginL: string; marginR: string; width: string }>`
   color: ${(props) => props.theme.colors.navy};
   font-family: ${(props) => props.theme.font};

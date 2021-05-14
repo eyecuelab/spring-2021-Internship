@@ -1,13 +1,10 @@
 import React from 'react';
-import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal } from '../modal';
 import { TaskItem } from '../../store/slices/projectSlice';
 import theme from '../../styles/theme';
-// import { Display, Edit } from '../../containers/project/components';
-// import InlineEdit from '../inlineEdit';
 import { updateTask } from '../../store/slices/projectSlice/thunks';
 
 const Header = styled.h1`
@@ -74,7 +71,6 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
     updatedPosition: number
   ) => {
     const intId = parseInt(taskId, 10);
-    console.log({ taskName });
     dispatch(updateTask({ taskName, intId, taskStatus, taskDesc, updatedPosition }));
   };
 
@@ -83,8 +79,8 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  // eslint-disable-next-line
   const onSubmit = (data: any) => {
-    console.log('submit?');
     handleUpdateTask(data.taskName, task.id, task.taskStatus, data.taskDesc, task.position);
     toggleModal();
   };
@@ -117,19 +113,6 @@ const TaskDetail = ({ toggleModal, task, deleteTask }: TaskDetailProps): JSX.Ele
       </Modal>
     </>
   );
-  // return (
-  //   <>
-  //     <Modal width="664px" toggleModal={toggleModal} color={theme.colors.burntOrange}>
-  //       <>
-  //         <h2>Task Detail</h2>
-  //         <h3>{task.taskName}</h3>
-  //         <h4>Status: {task.taskStatus}</h4>
-  //         <h4>{task.taskDesc}</h4>
-  //
-  //       </>
-  //     </Modal>
-  //   </>
-  // );
 };
 
 export default TaskDetail;

@@ -68,13 +68,11 @@ const Item = ({
   handleDelete,
   handleUpdateItem,
 }: ItemProps): JSX.Element => {
-  // const dispatch = useDispatch();
   const total = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   }).format(itemPrice * quantity);
   const price = itemPrice;
-  // .toFixed(2);
 
   const handleNewItemName = (updatedValue: string | number) => {
     handleUpdateItem(

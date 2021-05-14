@@ -34,7 +34,7 @@ const clientId: string = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID ?? '';
 
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
-
+  // eslint-disable-next-line
   function handleLogin(googleData: any) {
     dispatch(signIn(googleData));
   }

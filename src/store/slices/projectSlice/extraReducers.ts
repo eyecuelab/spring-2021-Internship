@@ -59,7 +59,6 @@ const extraReducers = (builder: ActionReducerMapBuilder<ProjectState>): void => 
     state.projectsList = [...state.projectsList];
   });
   builder.addCase(putProject.fulfilled, (state, { payload }) => {
-    console.log(payload);
     state.currentProject.projectName = payload.project.projectName;
     state.currentProject.startDate = payload.project.startDate;
     state.currentProject.endDate = payload.project.endDate;

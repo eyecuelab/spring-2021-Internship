@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-// margin: ${(props) => props.margin};
+
 const ButtonWrapper = styled.div`
   z-index: 31;
   justify-content: center;

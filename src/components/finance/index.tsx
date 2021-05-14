@@ -56,15 +56,6 @@ const Header = styled.h2`
   font-size: ${(props) => props.theme.fontSizes.small};
 `;
 
-const DollarSign = styled.p`
-  color: ${(props) => props.theme.colors.teal};
-  font-size: ${(props) => props.theme.fontSizes.xsmall};
-  font-family: Montserrat;
-  position: absolute;
-  float: left;
-  margin-left: 20px;
-`;
-
 type FinanceProps = {
   columnOne: string;
   columnTwo: string;

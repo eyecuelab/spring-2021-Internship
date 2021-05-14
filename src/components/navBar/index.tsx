@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RiArrowDownSLine } from 'react-icons/ri';
 import {
   Layout,
   Nav,
@@ -76,7 +75,6 @@ const NavBar = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(projectList);
     if (projectList.length === 0) setisOpenDropdown(true);
   }, [projectList]);
 

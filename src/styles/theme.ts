@@ -1,5 +1,3 @@
-// import { ThemeProvider } from 'styled-components';
-
 const theme = {
   colors: {
     cloudyGreen: '#5B9574',
