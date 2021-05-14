@@ -39,6 +39,7 @@ const Card = styled.div<{ width: string; color: string }>`
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  filter: drop-shadow(0 0 0.75rem rgba(53, 43, 39, 0.6));
 `;
 
 type ModalProps = {

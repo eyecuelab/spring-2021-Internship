@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link as LinkS } from 'react-scroll';
 import Curo from '../../assets/img/Curo.svg';
+import Arrow from '../../assets/img/Arrow.svg';
 
 export const Layout = styled.div`
   width: 100vw;
@@ -63,6 +64,10 @@ export const NavLogo = styled.img.attrs({ src: `${Curo}` })`
   margin-left: 46px;
 `;
 
+export const ArrowSvg = styled.img.attrs({ src: `${Arrow}` })`
+  margin-left: 6px;
+`;
+
 export const NavMenu = styled.ul`
   list-style-type: none;
   width: 1120px;
@@ -72,7 +77,7 @@ export const NavMenu = styled.ul`
 `;
 
 export const NavItem = styled.li`
-  margin: 0px 10px;
+  margin: 0px 15px;
   width: auto;
   display: flex;
 `;
@@ -84,6 +89,7 @@ export const NavLink = styled(LinkS)<{ color: string }>`
   font-family: ${(props) => props.theme.font};
   font-size: ${(props) => props.theme.fontSizes.small};
   color: ${(props) => props.color};
+  margin: 0px 2px;
 `;
 
 export const AuthButton = styled.button<{ color: string; size: string }>`
@@ -113,6 +119,7 @@ export const DropDownContent = styled.div<{ isOpen: boolean }>`
   width: 100vw;
   position: fixed;
   background: ${(props) => props.theme.colors.cloudyGreen};
+  filter: drop-shadow(0 7px 0.75rem rgba(53, 43, 39, 0.5));
 `;
 
 export const DropdownWrapper = styled.div`
