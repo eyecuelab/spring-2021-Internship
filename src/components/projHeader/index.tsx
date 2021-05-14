@@ -65,7 +65,7 @@ const DetailText = styled.p`
 const TrashIcon = styled.img`
   position: relative;
   margin-top: 17px;
-  margin-left: 22px;
+  margin-left: 23px;
   cursor: pointer;
 `;
 
@@ -121,8 +121,8 @@ const ProjHeader = ({ deleteProject }: HeaderProps): JSX.Element => {
           <HeaderText style={{ left: '48px', fontSize: '24px' }} id="project">
             Project
           </HeaderText>
-          <HeaderText style={{ left: '565px', fontSize: '20px' }}>Start Date</HeaderText>
-          <HeaderText style={{ left: '824px', fontSize: '20px' }}>Due Date</HeaderText>
+          <HeaderText style={{ left: '565px', fontSize: '16px' }}>Start Date</HeaderText>
+          <HeaderText style={{ left: '824px', fontSize: '16px' }}>Due Date</HeaderText>
           <Container style={{ left: '49px', width: '418px' }}>
             <DetailText style={{ fontSize: '20px', left: '24px' }}>
               <InlineEdit

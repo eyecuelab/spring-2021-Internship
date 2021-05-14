@@ -23,7 +23,7 @@ import LgButton from '../../assets/img/LgButton.svg';
 import GreenTear from '../../assets/img/GNavTear.svg';
 import BlueTear from '../../assets/img/BNavTear.svg';
 import Dropdown from './dropdownMenu';
-import { postProject, getProjects } from '../../store/slices/projectSlice/thunks';
+import { postProject, getProjects, getProjectById } from '../../store/slices/projectSlice/thunks';
 import NewProjectModal from '../newProjectModal';
 import * as selectors from '../../store/selectors';
 
@@ -34,6 +34,14 @@ const NavBar = (): JSX.Element => {
   const [isOpenDropdown, setisOpenDropdown] = useState(false);
   const [isOpenNewProj, setisOpenNewProj] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (projectList.length > 0) {
+      dispatch(getProjectById(projectList[projectList.length - 1].id));
+      setisOpenDropdown(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectList.length]);
 
   const handleToggleDropdown = () => {
     setisOpenDropdown(!isOpenDropdown);
@@ -58,6 +66,7 @@ const NavBar = (): JSX.Element => {
     uuid: string
   ) => {
     dispatch(postProject({ projectName, startDate, endDate, uuid }));
+    setisOpenDropdown(false);
   };
 
   const handleClick = () => {

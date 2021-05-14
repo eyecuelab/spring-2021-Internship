@@ -11,5 +11,5 @@ test('renders the default app page', () => {
     </Provider>
   );
 
-  expect(getByText(/Log in with Google/i)).toBeInTheDocument();
+  expect(getByText(/Please log in with Google to continue/i)).toBeInTheDocument();
 });
